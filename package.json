@@ -1,0 +1,28 @@
+{
+  "name": "bs-puppeteer",
+  "version": "0.1.0",
+  "main": "src/Puppeteer.re",
+  "scripts": {
+    "build": "bsb -make-world",
+    "start": "bsb -make-world -w",
+    "clean": "bsb -clean-world"
+  },
+  "author": "Zach Ploskey <zach@ploskey.com>",
+  "keywords": [
+    "BuckleScript",
+    "Puppeteer",
+    "headless",
+    "browser",
+    "scraping"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "puppeteer": "^0.12.0"
+  },
+  "devDependencies": {
+    "@types/puppeteer": "^0.12",
+    "bs-platform": "^1.10",
+    "bs-jest": "^0.2",
+    "reasonably-typed": "git+ssh://git@github.com/ReasonablyTyped/ReasonablyTyped.git#master"
+  }
+}
