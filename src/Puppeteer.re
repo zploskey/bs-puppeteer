@@ -1,3 +1,4 @@
+/*type t = "puppeteer" [@@bs.module "puppeteer"];*/
 type promise 'a = Js.Promise.t 'a;
 
 module Keyboard = {
@@ -245,14 +246,14 @@ module Request = {
 
 module Response = {
   type t;
-  external buffer : unit => promise Buffer.t = "" [@@bs.val];
-  external ok : bool = "" [@@bs.val];
-  external headers : headers = "" [@@bs.val];
-  external request : unit => Request.t = "" [@@bs.get];
-  external status : int = "" [@@bs.val];
-  external text : unit => promise string = "" [@@bs.get];
-  external url : string = "" [@@bs.val];
-  external json : unit => promise Js.Json.t = "" [@@bs.get];
+  external buffer : t => promise Buffer.t = "" [@@bs.get];
+  external ok : t => bool = "" [@@bs.get];
+  external headers : t => headers = "" [@@bs.get];
+  external request : t => Request.t = "" [@@bs.get];
+  external status : t => int = "" [@@bs.get];
+  external text : t => promise string = "" [@@bs.get];
+  external url : t => string = "" [@@bs.get];
+  external json : t  => promise Js.Json.t = "" [@@bs.get];
 };
 
 type serializable =
@@ -325,6 +326,20 @@ module Frame = {
     response: Response;
   }
  */
+/*export interface NavigationOptions {
+  timeout?: number;
+  waitUntil?: "load" | "networkidle" | "networkIdleTimeout";
+  networkIdleInflight?: number;
+  networkIdleTimeout?: number;
+}*/
+type navigationOptions = Js.t {
+  .
+  timeout: float,
+  waitUntil: waitEvent,
+  networkIdleInflight: float,
+  networkIdleTimeout: float
+};
+
 module Page = {
   include FrameBase;
   /* authenticate(credentials: AuthOptions | null): Promise<void>; */
@@ -334,11 +349,15 @@ module Page = {
      event: K,
      handler: (e: EventObj[K], ...args: any[]) => void
    ): void; */
-  external click : selector::string => options::option ClickOptions.t => promise unit =
+  external click : t => selector::string => options::option ClickOptions.t => promise unit =
     "" [@@bs.send];
-  external close : unit => promise unit = "" [@@bs.send];
-  external content : unit => promise string = "" [@@bs.get]; /* send? */
-  external setExtraHTTPHeaders : headers::headers => promise unit = "" [@@bs.send];
+  external close : t => unit => promise unit = "" [@@bs.send];
+  external content : t => promise string = "" [@@bs.get]; /* send? */
+  external setExtraHTTPHeaders : t => headers::headers => promise unit = "" [@@bs.send];
+  /*goto(url: string, options?: Partial<NavigationOptions>): Promise<Response>;*/
+
+  external goto : t => url::string => options::navigationOptions? => promise (Response.t) = "" [@@bs.send];
+  
   /* TODO: the rest of Page */
   /* cookies(...urls: string[]): Promise<Cookie[]>; */
   /*  type 'cookie;
@@ -358,7 +377,6 @@ module Page = {
         /*
            goBack(options?: Partial<NavigationOptions>): Promise<Response>;
            goForward(options?: Partial<NavigationOptions>): Promise<Response>;
-           goto(url: string, options?: Partial<NavigationOptions>): Promise<Response>;
          */
         external hover : selector::string => promise unit = "" [@@bs.send];
         external keyboard : Keyboard.t = "" [@@bs.val];
@@ -396,10 +414,10 @@ module Page = {
 
 module Browser = {
   type t;
-  external close : unit => promise unit = "" [@@bs.send];
-  external newPage : unit => promise Page.t = "" [@@bs.send];
-  external version : unit => promise string = "" [@@bs.send];
-  external wsEndpoint : unit => string = "" [@@bs.send];
+  external close : t => promise unit = "" [@@bs.send];
+  external newPage : t => promise Page.t = "" [@@bs.send];
+  external version : t => promise string = "" [@@bs.send];
+  external wsEndpoint : t => string = "" [@@bs.send];
 };
 
 module LaunchOptions = {
@@ -455,20 +473,11 @@ module ConnectOptions = {
   external ignoreHTTPSErrors : option bool = "" [@@bs.val];
 };
 
-
 /** Attaches Puppeteer to an existing Chromium instance **/
-external connect : options::option ConnectOptions.t => promise Browser.t = "" [@@bs.val];
-
+external connect : options::ConnectOptions.t? => promise Browser.t = "" [@@bs.val];
 
 /** Path where Puppeteer expects to find bundled Chromium **/
-external executablePath : string => unit = "" [@@bs.val];
+external executablePath : string = "" [@@bs.val] [@@bs.module "puppeteer"];
 
-external launchWithOpts : options::LaunchOptions.t => promise Browser.t =
-  "puppeteer.launch" [@@bs.val];
-
-let launch ::options=? =>
-  /*promise Browser.t = */
-  switch options {
-  | Some opts => launchWithOpts options::opts
-  | None => launchWithOpts options::()
-  };
+external launch : options::LaunchOptions.t? => promise Browser.t =
+  "" [@@bs.val] [@@bs.module "puppeteer"];

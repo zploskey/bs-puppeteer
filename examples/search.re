@@ -1,38 +1,20 @@
-/**
- * Copyright 2017 Google Inc. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-/*const puppeteer = require('puppeteer');*/
-/*(async() => {*/
-/*const browser = await puppeteer.launch();*/
-Puppeteer.
-let browser = Puppeteer.launch ();
-/*const page = await browser.newPage();
-  await page.goto('https://google.com', {waitUntil: 'networkidle'});
-  // Type our query into the search bar
-  await page.type('puppeteer');
+/** Do a search on googs **/
+open Puppeteer;
 
-  await page.click('input[type="submit"]');
+let resolve = Js.Promise.resolve;
+let await p => p |> resolve;
 
-  // Wait for the results to show up
-  await page.waitForSelector('h3 a');
+Js.log ("Executable: " ^ Puppeteer.executablePath);
 
-  // Extract the results from the page
-  const links = await page.evaluate(() => {
-    const anchors = Array.from(document.querySelectorAll('h3 a'));
-    return anchors.map(anchor => anchor.textContent);
-  });
-  console.log(links.join('\n'));
-  await browser.close(); */
-/*})();*/
+/*let unwrap package => switch package {
+| Js.Promise.(t payload => then_ payload)
+| Js.Promise.t unit => failwith ("There was nothing there")
+};*/
+
+let browser = await Puppeteer.launch;
+let page = await Browser.newPage;
+Page.goto page "www.google.com" |> await |> resolve;
+
+
+
+

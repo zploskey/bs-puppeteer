@@ -5,7 +5,8 @@
   "scripts": {
     "build": "bsb -make-world",
     "start": "bsb -make-world -w",
-    "clean": "bsb -clean-world"
+    "clean": "bsb -clean-world",
+    "examples": "node lib/js/examples/search.js"
   },
   "author": "Zach Ploskey <zach@ploskey.com>",
   "keywords": [
