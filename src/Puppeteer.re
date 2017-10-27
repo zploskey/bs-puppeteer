@@ -1,11 +1,8 @@
-/*type t = "puppeteer" [@@bs.module "puppeteer"];*/
-type promise 'a = Js.Promise.t 'a;
-
 module Keyboard = {
   type t;
-  external down : t => string => option (Js.Dict.t string) => promise unit = "" [@@bs.send];
-  external sendCharacter : t => string => promise unit = "" [@@bs.send];
-  external up : t => string => promise unit = "" [@@bs.send];
+  external down : t => string => option (Js.Dict.t string) => Js.Promise.t unit = "" [@@bs.send];
+  external sendCharacter : t => string => Js.Promise.t unit = "" [@@bs.send];
+  external up : t => string => Js.Promise.t unit = "" [@@bs.send];
 };
 
 type mouseButton =
@@ -34,16 +31,16 @@ module ClickOptions = {
 
 module Mouse = {
   type t;
-  external click : x::float => y::float => options::ClickOptions.t => promise unit =
+  external click : x::float => y::float => options::ClickOptions.t => Js.Promise.t unit =
     "" [@@bs.send];
-  external down : options::option MousePressOptions.t => promise unit = "" [@@bs.send];
-  external move : x::float => y::float => option (Js.Dict.t int) => promise unit = "" [@@bs.send];
-  external up : options::option MousePressOptions.t => promise unit = "" [@@bs.send];
+  external down : options::option MousePressOptions.t => Js.Promise.t unit = "" [@@bs.send];
+  external move : x::float => y::float => option (Js.Dict.t int) => Js.Promise.t unit = "" [@@bs.send];
+  external up : options::option MousePressOptions.t => Js.Promise.t unit = "" [@@bs.send];
 };
 
 module Touchscreen = {
   type t;
-  external tap : x::float => y::float => promise unit = "" [@@bs.send];
+  external tap : x::float => y::float => Js.Promise.t unit = "" [@@bs.send];
 };
 
 type tracingOptions = {
@@ -52,8 +49,8 @@ type tracingOptions = {
 };
 
 module Tracing = {
-  external start : options::tracingOptions => promise unit = "" [@@bs.send];
-  external stop : unit => promise unit = "" [@@bs.send];
+  external start : options::tracingOptions => Js.Promise.t unit = "" [@@bs.send];
+  external stop : unit => Js.Promise.t unit = "" [@@bs.send];
 };
 
 /*
@@ -191,11 +188,11 @@ module PDFOptions = {
  */
 module ElementHandle = {
   type t;
-  external click : options::option ClickOptions.t => promise unit = "" [@@bs.send];
-  external dispose : unit => promise unit = "" [@@bs.send];
-  external hover : unit => promise unit = "" [@@bs.send];
-  external tap : unit => promise unit = "" [@@bs.send];
-  external uploadFile : filePaths::array string => promise unit = "" [@@bs.send];
+  external click : options::option ClickOptions.t => Js.Promise.t unit = "" [@@bs.send];
+  external dispose : unit => Js.Promise.t unit = "" [@@bs.send];
+  external hover : unit => Js.Promise.t unit = "" [@@bs.send];
+  external tap : unit => Js.Promise.t unit = "" [@@bs.send];
+  external uploadFile : filePaths::array string => Js.Promise.t unit = "" [@@bs.send];
 };
 
 /* export type Headers = Record<string, string>; */
@@ -234,8 +231,8 @@ module Overrides = {
 
 module Request = {
   type t;
-  external abort : unit => promise unit = "" [@@bs.send];
-  external continue : overrides::option Overrides.t => promise unit = "" [@@bs.send];
+  external abort : unit => Js.Promise.t unit = "" [@@bs.send];
+  external continue : overrides::option Overrides.t => Js.Promise.t unit = "" [@@bs.send];
   external headers : headers = "" [@@bs.val];
   external method_ : httpMethod = "" [@@bs.val];
   external postData : string = "" [@@bs.val]; /* TODO: or undefined */
@@ -246,14 +243,14 @@ module Request = {
 
 module Response = {
   type t;
-  external buffer : t => promise Buffer.t = "" [@@bs.get];
+  external buffer : t => Js.Promise.t Buffer.t = "" [@@bs.get];
   external ok : t => bool = "" [@@bs.get];
   external headers : t => headers = "" [@@bs.get];
   external request : t => Request.t = "" [@@bs.get];
   external status : t => int = "" [@@bs.get];
-  external text : t => promise string = "" [@@bs.get];
+  external text : t => Js.Promise.t string = "" [@@bs.get];
   external url : t => string = "" [@@bs.get];
-  external json : t  => promise Js.Json.t = "" [@@bs.get];
+  external json : t  => Js.Promise.t Js.Json.t = "" [@@bs.get];
 };
 
 type serializable =
@@ -264,8 +261,8 @@ type serializable =
 
 module FrameBase = {
   type t;
-  external select : selector::string => promise ElementHandle.t = "$" [@@bs.val];
-  external selectAll : selector::string => promise (array ElementHandle.t) = "$$" [@@bs.val];
+  external select : selector::string => Js.Promise.t ElementHandle.t = "$" [@@bs.val];
+  external selectAll : selector::string => Js.Promise.t (array ElementHandle.t) = "$$" [@@bs.val];
   /*
    $eval(
      selector: string,
@@ -280,8 +277,8 @@ module Frame = {
   external isDetached : unit => bool = "" [@@bs.get];
   external name : unit => string = "" [@@bs.get];
   external parentFrame : unit => t = "" [@@bs.get]; /* TODO: can be undefined as well */
-  external addScriptTag : url::string => promise unit = "" [@@bs.send];
-  external injectFile : filePath::string => promise unit = "" [@@bs.send];
+  external addScriptTag : url::string => Js.Promise.t unit = "" [@@bs.send];
+  external injectFile : filePath::string => Js.Promise.t unit = "" [@@bs.send];
   /*
       evaluate<T = string>(
         fn: T | EvaluateFn<T>,
@@ -334,10 +331,10 @@ module Frame = {
 }*/
 type navigationOptions = Js.t {
   .
-  timeout: float,
-  waitUntil: waitEvent,
-  networkIdleInflight: float,
-  networkIdleTimeout: float
+  timeout: Js.Nullable.t float,
+  waitUntil: Js.Nullable.t waitEvent,
+  networkIdleInflight: Js.Nullable.t float,
+  networkIdleTimeout: Js.Nullable.t float
 };
 
 module Page = {
@@ -349,14 +346,14 @@ module Page = {
      event: K,
      handler: (e: EventObj[K], ...args: any[]) => void
    ): void; */
-  external click : t => selector::string => options::option ClickOptions.t => promise unit =
+  external click : t => selector::string => options::option ClickOptions.t => Js.Promise.t unit =
     "" [@@bs.send];
-  external close : t => unit => promise unit = "" [@@bs.send];
-  external content : t => promise string = "" [@@bs.get]; /* send? */
-  external setExtraHTTPHeaders : t => headers::headers => promise unit = "" [@@bs.send];
+  external close : t => unit => Js.Promise.t unit = "" [@@bs.send];
+  external content : t => Js.Promise.t string = "" [@@bs.get]; /* send? */
+  external setExtraHTTPHeaders : t => headers::headers => unit => Js.Promise.t unit = "" [@@bs.send];
   /*goto(url: string, options?: Partial<NavigationOptions>): Promise<Response>;*/
 
-  external goto : t => url::string => options::navigationOptions? => promise (Response.t) = "" [@@bs.send];
+  external goto : t => url::string => options::navigationOptions? => unit => Js.Promise.t Response.t = "" [@@bs.send];
   
   /* TODO: the rest of Page */
   /* cookies(...urls: string[]): Promise<Cookie[]>; */
@@ -414,70 +411,74 @@ module Page = {
 
 module Browser = {
   type t;
-  external close : t => promise unit = "" [@@bs.send];
-  external newPage : t => promise Page.t = "" [@@bs.send];
-  external version : t => promise string = "" [@@bs.send];
+  external close : t => Js.Promise.t unit = "" [@@bs.send];
+  external newPage : t => Js.Promise.t Page.t = "" [@@bs.send];
+  external version : t => Js.Promise.t string = "" [@@bs.send];
   external wsEndpoint : t => string = "" [@@bs.send];
 };
 
-module LaunchOptions = {
-  type t;
-
+type launchOptions = Js.t {
+  .
   /** Whether to ignore HTTPS errors during navigation. Defaults to false. **/
-  external ignoreHTTPSErrors : option bool = "" [@@bs.val];
+  ignoreHTTPSErrors : Js.Nullable.t bool,
 
   /** Whether to run Chromium in headless mode. Defaults to true. */
-  external headless : option bool = "" [@@bs.val];
+  headless : Js.Nullable.t bool,
 
   /**
    * Path to a Chromium executable to run instead of bundled Chromium. If
    * executablePath is a relative path, then it is resolved relative to current
    * working directory.
    */
-  external executablePath : option string = "" [@@bs.val];
+  executablePath : Js.Nullable.t string,
 
   /**
    * Slows down Puppeteer operations by the specified amount of milliseconds.
    * Useful so that you can see what is going on.
    */
-  external slowMo : option float = "" [@@bs.val];
+  slowMo : Js.Nullable.t float,
 
   /**
    * Additional arguments to pass to the Chromium instance. List of Chromium
    * flags can be found here.
    */
-  external args : option (array string) = "" [@@bs.val];
+  args : Js.Nullable.t (array string),
 
   /** Close chrome process on Ctrl-C. Defaults to true. */
-  external handleSIGINT : option bool = "" [@@bs.val];
+  handleSIGINT : Js.Nullable.t bool,
 
   /**
    * Maximum time in milliseconds to wait for the Chrome instance to start.
    * Defaults to 30000 (30 seconds). Pass 0 to disable timeout.
    */
-  external timeout : option int = "" [@@bs.val];
+  timeout : Js.Nullable.t int,
 
   /**
    * Whether to pipe browser process stdout and stderr into process.stdout and
    * process.stderr. Defaults to false.
    */
-  external dumpio : option bool = "" [@@bs.val];
+  dumpio : Js.Nullable.t bool,
 
   /** Path to a User Data Directory. */
-  external userDataDir : option string = "" [@@bs.val];
+  userDataDir : Js.Nullable.t string
 };
 
-module ConnectOptions = {
+/*module ConnectOptions = {
   type t;
   external browserWSEndpoint : option string = "" [@@bs.val];
   external ignoreHTTPSErrors : option bool = "" [@@bs.val];
+};*/
+type connectOptions = Js.t {
+  .
+  browserWSEndpoint : Js.Nullable.t string,
+  ignoreHTTPSErrors : Js.Nullable.t bool
 };
 
 /** Attaches Puppeteer to an existing Chromium instance **/
-external connect : options::ConnectOptions.t? => promise Browser.t = "" [@@bs.val];
+external connect : options::connectOptions? => unit => Js.Promise.t Browser.t = "" [@@bs.val];
 
 /** Path where Puppeteer expects to find bundled Chromium **/
 external executablePath : string = "" [@@bs.val] [@@bs.module "puppeteer"];
 
-external launch : options::LaunchOptions.t? => promise Browser.t =
+external launch : options::launchOptions? => unit => Js.Promise.t Browser.t =
   "" [@@bs.val] [@@bs.module "puppeteer"];
