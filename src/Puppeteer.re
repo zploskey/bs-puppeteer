@@ -7,36 +7,36 @@ module Keyboard = {
   external up : t => string => Js.Promise.t unit = "" [@@bs.send];
 };
 
+/* Possibly useful for handling button preferences, but currently unused. */
 type mouseButton =
   | Left
   | Right
   | Middle;
 
-module MousePressOptions = {
-  type t;
-  external button : option mouseButton = "" [@@bs.val];
-  external clickCount : int = "" [@@bs.val];
-};
-
-type clickOptions = {
+ /* TODO: handle options "left", "right", "middle" only */
+type mousePressOptions = Js.t {
   .
-  /* defaults to left */
-  "button": Js.Nullable.t mouseButton,
-
-  /* defaults to 1 */
-  "clickCount": Js.Nullable.t int,
-
-  /* Time to wait between mousedown and mouseup in milliseconds. Defaults to 0. */
-  "delay": Js.Nullable.t float
+  button: Js.Nullable.t string,
+  clickCount: int
 };
+
+/* TODO: handle options "left", "right", "middle" only */
+type clickOptions = Js.t {
+  .
+  button: Js.Nullable.t string,
+  clickCount: Js.Nullable.t int,
+  delay: Js.Nullable.t float
+};
+
+type mouseMovements = Js.Dict.t int;
 
 module Mouse = {
   type t;
   external click : x::float => y::float => options::clickOptions? => unit => Js.Promise.t unit =
     "" [@@bs.send];
-  external down : options::option MousePressOptions.t => Js.Promise.t unit = "" [@@bs.send];
-  external move : x::float => y::float => option (Js.Dict.t int) => Js.Promise.t unit = "" [@@bs.send];
-  external up : options::option MousePressOptions.t => Js.Promise.t unit = "" [@@bs.send];
+  external down : options::mousePressOptions? => unit => Js.Promise.t unit = "" [@@bs.send];
+  external move : x::float => y::float => movements::mouseMovements? => unit => Js.Promise.t unit = "" [@@bs.send];
+  external up : options::mousePressOptions? => unit => Js.Promise.t unit = "" [@@bs.send];
 };
 
 module Touchscreen = {
@@ -44,10 +44,10 @@ module Touchscreen = {
   external tap : x::float => y::float => Js.Promise.t unit = "" [@@bs.send];
 };
 
-type tracingOptions = {
+type tracingOptions = Js.t {
   .
-  "path": string,
-  "screenshots": Js.Nullable.t bool
+  path: string,
+  screenshots: Js.Nullable.t bool
 };
 
 module Tracing = {
@@ -79,9 +79,10 @@ type pageEvents =
   | RequestFinished
   | Response;
 
-module AuthOptions = {
-  external username : string = "" [@@bs.val];
-  external password : string = "" [@@bs.val];
+type authOptions = Js.t {
+  .
+  username: string,
+  password: string
 };
 
 /*
@@ -351,7 +352,7 @@ module Page = {
   /*goto(url: string, options?: Partial<NavigationOptions>): Promise<Response>;*/
 
   external goto : t => url::string => options::navigationOptions? => unit => Js.Promise.t Response.t = "" [@@bs.send];
-  
+
   /* TODO: the rest of Page */
   /* cookies(...urls: string[]): Promise<Cookie[]>; */
   /*  type 'cookie;
@@ -474,3 +475,4 @@ external executablePath : string = "" [@@bs.val] [@@bs.module "puppeteer"];
 
 external launch : options::launchOptions? => unit => Js.Promise.t Browser.t =
   "" [@@bs.val] [@@bs.module "puppeteer"];
+
