@@ -21,13 +21,13 @@ module MousePressOptions = {
 type clickOptions = {
   .
   /* defaults to left */
-  button : Js.Nullable.t mouseButton,
+  "button": Js.Nullable.t mouseButton,
 
   /* defaults to 1 */
-  clickCount : Js.Nullable.t int,
+  "clickCount": Js.Nullable.t int,
 
   /* Time to wait between mousedown and mouseup in milliseconds. Defaults to 0. */
-  delay : Js.Nullable.t float
+  "delay": Js.Nullable.t float
 };
 
 module Mouse = {
@@ -46,8 +46,8 @@ module Touchscreen = {
 
 type tracingOptions = {
   .
-  path: string,
-  screenshots: Js.Nullable.t bool
+  "path": string,
+  "screenshots": Js.Nullable.t bool
 };
 
 module Tracing = {
@@ -192,7 +192,7 @@ module ElementHandle = {
 };
 
 /* export type Headers = Record<string, string>; */
-type headers = Js.Dict.t string;
+type headers = stringDict;
 
 type httpMethod =
   | GET
