@@ -20,14 +20,13 @@ module MousePressOptions = {
 
 type clickOptions = {
   .
-  /** defaults to left **/
+  /* defaults to left */
   button : Js.Nullable.t mouseButton,
 
-  /** defaults to 1 **/
+  /* defaults to 1 */
   clickCount : Js.Nullable.t int,
 
-  /** Time to wait between mousedown and mouseup in milliseconds.
-      Defaults to 0. **/
+  /* Time to wait between mousedown and mouseup in milliseconds. Defaults to 0. */
   delay : Js.Nullable.t float
 };
 
@@ -141,13 +140,13 @@ module PDFOptions = {
 
 /*
    export interface PDFOptions {
-     /** If no path is provided, the PDF won't be saved to the disk. */
+     /* If no path is provided, the PDF won't be saved to the disk. */
      path?: string;
      scale?: number;
      displayHeaderFooter?: boolean;
      printBackground?: boolean;
      landscape?: boolean;
-     /**
+     /*
       * Paper ranges to print, e.g., '1-5, 8, 11-13'. Defaults to the empty
       * string, which means print all pages.
       */
@@ -166,7 +165,7 @@ module PDFOptions = {
    export interface ScreenshotOptions {
      path?: string;
      type?: "jpeg" | "png";
-     /** The quality of the image, between 0-100. Not applicable to png images. */
+     /* The quality of the image, between 0-100. Not applicable to png images. */
      quality?: number;
      fullPage?: boolean;
      clip?: {
@@ -417,47 +416,47 @@ module Browser = {
 
 type launchOptions = {
   .
-  /** Whether to ignore HTTPS errors during navigation. Defaults to false. **/
+  /* Whether to ignore HTTPS errors during navigation. Defaults to false. */
   "ignoreHTTPSErrors": Js.Nullable.t bool,
 
-  /** Whether to run Chromium in headless mode. Defaults to true. **/
+  /* Whether to run Chromium in headless mode. Defaults to true. */
   "headless": Js.Nullable.t bool,
 
-  /**
+  /*
    * Path to a Chromium executable to run instead of bundled Chromium. If
    * executablePath is a relative path, then it is resolved relative to current
    * working directory.
-   **/
+   */
   "executablePath": Js.Nullable.t string,
 
-  /**
+  /*
    * Slows down Puppeteer operations by the specified amount of milliseconds.
    * Useful so that you can see what is going on.
-   **/
+   */
   "slowMo": Js.Nullable.t float,
 
-  /**
+  /*
    * Additional arguments to pass to the Chromium instance. List of Chromium
    * flags can be found here.
-   **/
+   */
   "args": Js.Nullable.t (array string),
 
-  /** Close chrome process on Ctrl-C. Defaults to true. */
+  /* Close chrome process on Ctrl-C. Defaults to true. */
   "handleSIGINT": Js.Nullable.t bool,
 
-  /**
+  /*
    * Maximum time in milliseconds to wait for the Chrome instance to start.
    * Defaults to 30000 (30 seconds). Pass 0 to disable timeout.
-   **/
+   */
   "timeout": Js.Nullable.t int,
 
-  /**
+  /*
    * Whether to pipe browser process stdout and stderr into process.stdout and
    * process.stderr. Defaults to false.
-   **/
+   */
   "dumpio": Js.Nullable.t bool,
 
-  /** Path to a User Data Directory. **/
+  /* Path to a User Data Directory. */
   "userDataDir": Js.Nullable.t string
 };
 
@@ -467,10 +466,10 @@ type connectOptions = {
   "ignoreHTTPSErrors": Js.Nullable.t bool
 };
 
-/** Attaches Puppeteer to an existing Chromium instance **/
+/* Attaches Puppeteer to an existing Chromium instance */
 external connect : options::connectOptions? => unit => Js.Promise.t Browser.t = "" [@@bs.val];
 
-/** Path where Puppeteer expects to find bundled Chromium **/
+/* Path where Puppeteer expects to find bundled Chromium */
 external executablePath : string = "" [@@bs.val] [@@bs.module "puppeteer"];
 
 external launch : options::launchOptions? => unit => Js.Promise.t Browser.t =
