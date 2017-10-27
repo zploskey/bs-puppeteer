@@ -1,6 +1,8 @@
+type stringDict = Js.Dict.t string;
+
 module Keyboard = {
   type t;
-  external down : t => string => option (Js.Dict.t string) => Js.Promise.t unit = "" [@@bs.send];
+  external down : t => string => options::stringDict? => unit => Js.Promise.t unit = "" [@@bs.send];
   external sendCharacter : t => string => Js.Promise.t unit = "" [@@bs.send];
   external up : t => string => Js.Promise.t unit = "" [@@bs.send];
 };
