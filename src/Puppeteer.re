@@ -46,13 +46,15 @@ module Touchscreen = {
 };
 
 type tracingOptions = {
+  .
   path: string,
-  screenshots: option bool
+  screenshots: Js.Nullable.t bool
 };
 
 module Tracing = {
-  external start : options::tracingOptions => Js.Promise.t unit = "" [@@bs.send];
-  external stop : unit => Js.Promise.t unit = "" [@@bs.send];
+  type t;
+  external start : t => options::tracingOptions? => unit => Js.Promise.t unit = "" [@@bs.send];
+  external stop : t => Js.Promise.t unit = "" [@@bs.send];
 };
 
 /*
@@ -459,11 +461,6 @@ type launchOptions = Js.t {
   userDataDir : Js.Nullable.t string
 };
 
-/*module ConnectOptions = {
-  type t;
-  external browserWSEndpoint : option string = "" [@@bs.val];
-  external ignoreHTTPSErrors : option bool = "" [@@bs.val];
-};*/
 type connectOptions = Js.t {
   .
   browserWSEndpoint: Js.Nullable.t string,
