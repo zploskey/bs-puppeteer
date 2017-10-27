@@ -1,20 +1,7 @@
-/** Do a search on googs **/
-open Puppeteer;
-
-let resolve = Js.Promise.resolve;
-let await p => p |> resolve;
+let browser = Puppeteer.launch ();
+/*  |> then_ (fun browser => resolve (browser##newPage))
+  |> catch (fun err => resolve (raise "Couldn't get page")) */
 
 Js.log ("Executable: " ^ Puppeteer.executablePath);
-
-/*let unwrap package => switch package {
-| Js.Promise.(t payload => then_ payload)
-| Js.Promise.t unit => failwith ("There was nothing there")
-};*/
-
-let browser = await Puppeteer.launch;
-let page = await Browser.newPage;
-Page.goto page "www.google.com" |> await |> resolve;
-
-
-
-
+/*let page = Browser.newPage |> resolve;*/
+/*Page.goto page "www.google.com" |> await |> resolve;*/
