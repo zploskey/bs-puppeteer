@@ -4,9 +4,10 @@
   "name": "bs-puppeteer",
   "version": "0.1.0",
   "sources": [
-    "src", "examples"
+    "src",
+    "examples"
   ],
   "bs-dependencies" : [
   ],
-  "namespace": true
+  "namespace": false
 }
