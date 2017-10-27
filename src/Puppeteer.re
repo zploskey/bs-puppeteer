@@ -18,22 +18,22 @@ module MousePressOptions = {
   external clickCount : int = "" [@@bs.val];
 };
 
-module ClickOptions = {
-  type t;
-  /* defaults to left */
-  external button : option mouseButton = "" [@@bs.val];
+type clickOptions = {
+  .
+  /** defaults to left **/
+  button : Js.Nullable.t mouseButton,
 
-  /** defaults to 1 */
-  external clickCount : option int = "" [@@bs.val];
+  /** defaults to 1 **/
+  clickCount : Js.Nullable.t int,
 
   /** Time to wait between mousedown and mouseup in milliseconds.
-   *  Defaults to 0. **/
-  external delay : option float = "" [@@bs.val];
+      Defaults to 0. **/
+  delay : Js.Nullable.t float
 };
 
 module Mouse = {
   type t;
-  external click : x::float => y::float => options::ClickOptions.t => Js.Promise.t unit =
+  external click : x::float => y::float => options::clickOptions? => unit => Js.Promise.t unit =
     "" [@@bs.send];
   external down : options::option MousePressOptions.t => Js.Promise.t unit = "" [@@bs.send];
   external move : x::float => y::float => option (Js.Dict.t int) => Js.Promise.t unit = "" [@@bs.send];
@@ -116,13 +116,6 @@ type waitEvent =
   | Networkidle
   | NetworkIdleTimeout;
 
-module NavigationOptions = {
-  external timeout : option float = "" [@@bs.val];
-  external waitUntil : option waitEvent = "" [@@bs.val];
-  external networkIdleInflight : option float = "" [@@bs.val];
-  external networkIdleTimeout : option float = "" [@@bs.val];
-};
-
 type pdfFormat =
   | Letter
   | Legal
@@ -190,10 +183,10 @@ module PDFOptions = {
  */
 module ElementHandle = {
   type t;
-  external click : options::option ClickOptions.t => Js.Promise.t unit = "" [@@bs.send];
-  external dispose : unit => Js.Promise.t unit = "" [@@bs.send];
-  external hover : unit => Js.Promise.t unit = "" [@@bs.send];
-  external tap : unit => Js.Promise.t unit = "" [@@bs.send];
+  external click : options::clickOptions? => unit => Js.Promise.t unit = "" [@@bs.send];
+  external dispose : t => Js.Promise.t unit = "" [@@bs.send];
+  external hover : t => Js.Promise.t unit = "" [@@bs.send];
+  external tap : t => Js.Promise.t unit = "" [@@bs.send];
   external uploadFile : filePaths::array string => Js.Promise.t unit = "" [@@bs.send];
 };
 
@@ -223,18 +216,18 @@ type resourceType =
   | Manifest
   | Other;
 
-module Overrides = {
-  type t;
-  external url : option string = "" [@@bs.val];
-  external method_ : option httpMethod = "" [@@bs.val];
-  external postData : option string = "" [@@bs.val];
-  external headers : option headers = "" [@@bs.val];
+type overrides = {
+  .
+  url: Js.Nullable.t  string,
+  method_: Js.Nullable.t  httpMethod,
+  postData: Js.Nullable.t  string,
+  headers: Js.Nullable.t  headers
 };
 
 module Request = {
   type t;
   external abort : unit => Js.Promise.t unit = "" [@@bs.send];
-  external continue : overrides::option Overrides.t => Js.Promise.t unit = "" [@@bs.send];
+  external continue : overrides::overrides? => unit => Js.Promise.t unit = "" [@@bs.send];
   external headers : headers = "" [@@bs.val];
   external method_ : httpMethod = "" [@@bs.val];
   external postData : string = "" [@@bs.val]; /* TODO: or undefined */
@@ -325,6 +318,7 @@ module Frame = {
     response: Response;
   }
  */
+
 /*export interface NavigationOptions {
   timeout?: number;
   waitUntil?: "load" | "networkidle" | "networkIdleTimeout";
@@ -348,7 +342,7 @@ module Page = {
      event: K,
      handler: (e: EventObj[K], ...args: any[]) => void
    ): void; */
-  external click : t => selector::string => options::option ClickOptions.t => Js.Promise.t unit =
+  external click : t => selector::string => options::clickOptions? => Js.Promise.t unit =
     "" [@@bs.send];
   external close : t => unit => Js.Promise.t unit = "" [@@bs.send];
   external content : t => Js.Promise.t string = "" [@@bs.get]; /* send? */
@@ -472,8 +466,8 @@ type launchOptions = Js.t {
 };*/
 type connectOptions = Js.t {
   .
-  browserWSEndpoint : Js.Nullable.t string,
-  ignoreHTTPSErrors : Js.Nullable.t bool
+  browserWSEndpoint: Js.Nullable.t string,
+  ignoreHTTPSErrors: Js.Nullable.t bool
 };
 
 /** Attaches Puppeteer to an existing Chromium instance **/
