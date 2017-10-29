@@ -21,8 +21,8 @@
     "puppeteer": "^0.12.0"
   },
   "devDependencies": {
+    "bs-platform": "^2.0.0",
     "@types/puppeteer": "^0.12",
-    "bs-platform": "^1.10",
     "bs-jest": "^0.2",
     "reasonably-typed": "git+ssh://git@github.com/ReasonablyTyped/ReasonablyTyped.git#master"
   }

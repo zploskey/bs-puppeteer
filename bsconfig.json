@@ -9,5 +9,6 @@
   ],
   "bs-dependencies" : [
   ],
-  "namespace": false
+  "namespace": false,
+  "refmt": 3,
 }
