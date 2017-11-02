@@ -234,7 +234,7 @@ module Response = {
   [@bs.get] external headers : t => headers = "";
   [@bs.get] external request : t => Request.t = "";
   [@bs.get] external status : t => int = "";
-  [@bs.get] external text : t => Js.Promise.t(string) = "";
+  [@bs.send.pipe : t] external text : t => Js.Promise.t(string) = "";
   [@bs.get] external url : t => string = "";
   [@bs.get] external json : t => Js.Promise.t(Js.Json.t) = "";
 };
@@ -341,7 +341,7 @@ module Page = {
   [@bs.send] external setExtraHTTPHeaders : (t, ~headers: headers, unit) => Js.Promise.t(unit) =
     "";
   /*goto(url: string, options?: Partial<NavigationOptions>): Promise<Response>;*/
-  [@bs.send]
+  [@bs.send.pipe : t]
   external goto :
     (t, ~url: string, ~options: navigationOptions=?, unit) => Js.Promise.t(Response.t) =
     "";
@@ -349,7 +349,6 @@ module Page = {
   /* cookies(...urls: string[]): Promise<Cookie[]>; */
   /*  type 'cookie;
         external cookies : urls::array string => promise (array 'cookie) = "" [@@bs.send];
-        /*
          deleteCookie(
            ...cookies: Array<{
              name: string;
@@ -358,7 +357,7 @@ module Page = {
              path?: string;
              secure?: boolean;
            }>
-         ): Promise<void>; */
+         ): Promise<void>;
         external focus : selector::string => promise unit = "" [@@bs.send];
         external frames : unit => array Frame.t = "" [@@bs.get]; /* send? */
         /*
@@ -401,8 +400,8 @@ module Page = {
 
 module Browser = {
   type t;
-  [@bs.send] external close : t => Js.Promise.t(unit) = "";
-  [@bs.send] external newPage : t => Js.Promise.t(Page.t) = "";
+  [@bs.send.pipe : t] external close : Js.Promise.t(unit) = "";
+  [@bs.send.pipe : t] external newPage : Js.Promise.t(Page.t) = "";
   [@bs.send] external version : t => Js.Promise.t(string) = "";
   [@bs.send] external wsEndpoint : t => string = "";
 };
@@ -454,7 +453,7 @@ type connectOptions = {
 [@bs.val] external connect : (~options: connectOptions=?, unit) => Js.Promise.t(Browser.t) = "";
 
 /* Path where Puppeteer expects to find bundled Chromium */
-[@bs.val] [@bs.module "puppeteer"] external executablePath : string = "";
+[@bs.val] [@bs.module "puppeteer"] external executablePath : unit => string = "";
 
 [@bs.val] [@bs.module "puppeteer"]
 external launch : (~options: launchOptions=?, unit) => Js.Promise.t(Browser.t) =
