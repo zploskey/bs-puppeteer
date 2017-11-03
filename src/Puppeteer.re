@@ -53,7 +53,6 @@ external launch : (~options: Launcher.launchOptions=?, unit) => Js.Promise.t(Bro
    export interface ScreenshotOptions {
      path?: string;
      type?: "jpeg" | "png";
-     /* The quality of the image, between 0-100. Not applicable to png images. */
      quality?: number;
      fullPage?: boolean;
      clip?: {
