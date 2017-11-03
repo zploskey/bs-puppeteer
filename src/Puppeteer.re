@@ -2,7 +2,9 @@ type stringDict = Js.Dict.t(string);
 
 module Keyboard = {
   type t;
-  [@bs.send.pipe : t] external down : (string, ~options: stringDict=?, unit) => Js.Promise.t(unit) = "";
+  [@bs.send.pipe : t]
+  external down : (string, ~options: stringDict=?, unit) => Js.Promise.t(unit) =
+    "";
   [@bs.send.pipe : t] external sendCharacter : string => Js.Promise.t(unit) = "";
   [@bs.send.pipe : t] external up : string => Js.Promise.t(unit) = "";
 };
@@ -29,11 +31,13 @@ module Mouse = {
   [@bs.send.pipe : t]
   external click : (~x: float, ~y: float, ~options: clickOptions=?, unit) => Js.Promise.t(unit) =
     "";
-  [@bs.send.pipe : t] external down : (~options: mousePressOptions=?, unit) => Js.Promise.t(unit) = "";
+  [@bs.send.pipe : t] external down : (~options: mousePressOptions=?, unit) => Js.Promise.t(unit) =
+    "";
   [@bs.send.pipe : t]
   external move : (~x: float, ~y: float, ~movements: mouseMovements=?, unit) => Js.Promise.t(unit) =
     "";
-  [@bs.send.pipe : t] external up : (~options: mousePressOptions=?, unit) => Js.Promise.t(unit) = "";
+  [@bs.send.pipe : t] external up : (~options: mousePressOptions=?, unit) => Js.Promise.t(unit) =
+    "";
 };
 
 module Touchscreen = {
@@ -45,7 +49,8 @@ type tracingOptions = {. "path": string, "screenshots": Js.Nullable.t(bool)};
 
 module Tracing = {
   type t;
-  [@bs.send.pipe : t] external start : (~options: tracingOptions=?, unit) => Js.Promise.t(unit) = "";
+  [@bs.send.pipe : t] external start : (~options: tracingOptions=?, unit) => Js.Promise.t(unit) =
+    "";
   [@bs.send.pipe : t] external stop : Js.Promise.t(unit) = "";
 };
 
@@ -218,7 +223,8 @@ type overrides = {
 module Request = {
   type t;
   [@bs.send.pipe : t] external abort : Js.Promise.t(unit) = "";
-  [@bs.send.pipe : t] external continue : (~overrides: overrides=?, unit) => Js.Promise.t(unit) = "";
+  [@bs.send.pipe : t] external continue : (~overrides: overrides=?, unit) => Js.Promise.t(unit) =
+    "";
   [@bs.val] external headers : headers = "";
   [@bs.val] external method_ : httpMethod = "";
   [@bs.val] external postData : string = ""; /* TODO: or undefined */
@@ -339,10 +345,11 @@ module Page = {
   [@bs.send.pipe : t] external close : Js.Promise.t(unit) = "";
   [@bs.get] external content : t => Js.Promise.t(string) = ""; /* send? */
   /*goto(url: string, options?: Partial<NavigationOptions>): Promise<Response>;*/
-  [@bs.send.pipe : t] external goto :
-    (~url: string, ~options: navigationOptions=?, unit) => Js.Promise.t(Response.t) =
+  [@bs.send.pipe : t]
+  external goto : (~url: string, ~options: navigationOptions=?, unit) => Js.Promise.t(Response.t) =
     "";
-  [@bs.send.pipe : t] external setExtraHTTPHeaders : (~headers: headers, unit) => Js.Promise.t(unit) =
+  [@bs.send.pipe : t]
+  external setExtraHTTPHeaders : (~headers: headers, unit) => Js.Promise.t(unit) =
     "";
   /* TODO: the rest of Page */
   /* cookies(...urls: string[]): Promise<Cookie[]>; */
