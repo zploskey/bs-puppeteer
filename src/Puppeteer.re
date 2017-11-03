@@ -2,9 +2,9 @@ type stringDict = Js.Dict.t(string);
 
 module Keyboard = {
   type t;
-  [@bs.send] external down : (t, string, ~options: stringDict=?, unit) => Js.Promise.t(unit) = "";
-  [@bs.send] external sendCharacter : (t, string) => Js.Promise.t(unit) = "";
-  [@bs.send] external up : (t, string) => Js.Promise.t(unit) = "";
+  [@bs.send.pipe : t] external down : (string, ~options: stringDict=?, unit) => Js.Promise.t(unit) = "";
+  [@bs.send.pipe : t] external sendCharacter : string => Js.Promise.t(unit) = "";
+  [@bs.send.pipe : t] external up : string => Js.Promise.t(unit) = "";
 };
 
 /* Possibly useful for handling button preferences, but currently unused. */
@@ -26,27 +26,27 @@ type mouseMovements = Js.Dict.t(int);
 
 module Mouse = {
   type t;
-  [@bs.send]
+  [@bs.send.pipe : t]
   external click : (~x: float, ~y: float, ~options: clickOptions=?, unit) => Js.Promise.t(unit) =
     "";
-  [@bs.send] external down : (~options: mousePressOptions=?, unit) => Js.Promise.t(unit) = "";
-  [@bs.send]
+  [@bs.send.pipe : t] external down : (~options: mousePressOptions=?, unit) => Js.Promise.t(unit) = "";
+  [@bs.send.pipe : t]
   external move : (~x: float, ~y: float, ~movements: mouseMovements=?, unit) => Js.Promise.t(unit) =
     "";
-  [@bs.send] external up : (~options: mousePressOptions=?, unit) => Js.Promise.t(unit) = "";
+  [@bs.send.pipe : t] external up : (~options: mousePressOptions=?, unit) => Js.Promise.t(unit) = "";
 };
 
 module Touchscreen = {
   type t;
-  [@bs.send] external tap : (~x: float, ~y: float) => Js.Promise.t(unit) = "";
+  [@bs.send.pipe : t] external tap : (~x: float, ~y: float) => Js.Promise.t(unit) = "";
 };
 
 type tracingOptions = {. "path": string, "screenshots": Js.Nullable.t(bool)};
 
 module Tracing = {
   type t;
-  [@bs.send] external start : (t, ~options: tracingOptions=?, unit) => Js.Promise.t(unit) = "";
-  [@bs.send] external stop : t => Js.Promise.t(unit) = "";
+  [@bs.send.pipe : t] external start : (~options: tracingOptions=?, unit) => Js.Promise.t(unit) = "";
+  [@bs.send.pipe : t] external stop : Js.Promise.t(unit) = "";
 };
 
 /*
@@ -174,11 +174,11 @@ module PDFOptions = {
  */
 module ElementHandle = {
   type t;
-  [@bs.send] external click : (~options: clickOptions=?, unit) => Js.Promise.t(unit) = "";
-  [@bs.send] external dispose : t => Js.Promise.t(unit) = "";
-  [@bs.send] external hover : t => Js.Promise.t(unit) = "";
-  [@bs.send] external tap : t => Js.Promise.t(unit) = "";
-  [@bs.send] external uploadFile : (~filePaths: array(string)) => Js.Promise.t(unit) = "";
+  [@bs.send.pipe : t] external click : (~options: clickOptions=?, unit) => Js.Promise.t(unit) = "";
+  [@bs.send.pipe : t] external dispose : Js.Promise.t(unit) = "";
+  [@bs.send.pipe : t] external hover : Js.Promise.t(unit) = "";
+  [@bs.send.pipe : t] external tap : Js.Promise.t(unit) = "";
+  [@bs.send.pipe : t] external uploadFile : (~filePaths: array(string)) => Js.Promise.t(unit) = "";
 };
 
 /* export type Headers = Record<string, string>; */
@@ -217,13 +217,13 @@ type overrides = {
 
 module Request = {
   type t;
-  [@bs.send] external abort : unit => Js.Promise.t(unit) = "";
-  [@bs.send] external continue : (~overrides: overrides=?, unit) => Js.Promise.t(unit) = "";
+  [@bs.send.pipe : t] external abort : Js.Promise.t(unit) = "";
+  [@bs.send.pipe : t] external continue : (~overrides: overrides=?, unit) => Js.Promise.t(unit) = "";
   [@bs.val] external headers : headers = "";
   [@bs.val] external method_ : httpMethod = "";
   [@bs.val] external postData : string = ""; /* TODO: or undefined */
   [@bs.val] external resourceType : resourceType = "";
-  [@bs.get] external response : unit => t = ""; /* TODO: can be null */
+  [@bs.get] external response : unit => Js.Nullable.t(t) = "";
   [@bs.val] external url : string = "";
 };
 
@@ -260,12 +260,12 @@ module FrameBase = {
 
 module Frame = {
   include FrameBase;
-  [@bs.get] external childFrames : unit => array(t) = "";
-  [@bs.get] external isDetached : unit => bool = "";
-  [@bs.get] external name : unit => string = "";
-  [@bs.get] external parentFrame : unit => t = ""; /* TODO: can be undefined as well */
-  [@bs.send] external addScriptTag : (~url: string) => Js.Promise.t(unit) = "";
-  [@bs.send] external injectFile : (~filePath: string) => Js.Promise.t(unit) = "";
+  [@bs.get] external childFrames : t => array(t) = "";
+  [@bs.get] external isDetached : t => bool = "";
+  [@bs.get] external name : t => string = "";
+  [@bs.get] external parentFrame : t => t = ""; /* TODO: can be undefined as well */
+  [@bs.send.pipe : t] external addScriptTag : (~url: string) => Js.Promise.t(unit) = "";
+  [@bs.send.pipe : t] external injectFile : (~filePath: string) => Js.Promise.t(unit) = "";
   /*
       evaluate<T = string>(
         fn: T | EvaluateFn<T>,
@@ -333,17 +333,16 @@ module Page = {
      event: K,
      handler: (e: EventObj[K], ...args: any[]) => void
    ): void; */
-  [@bs.send]
-  external click : (t, ~selector: string, ~options: clickOptions=?) => Js.Promise.t(unit) =
-    "";
-  [@bs.send] external close : (t, unit) => Js.Promise.t(unit) = "";
-  [@bs.get] external content : t => Js.Promise.t(string) = ""; /* send? */
-  [@bs.send] external setExtraHTTPHeaders : (t, ~headers: headers, unit) => Js.Promise.t(unit) =
-    "";
-  /*goto(url: string, options?: Partial<NavigationOptions>): Promise<Response>;*/
   [@bs.send.pipe : t]
-  external goto :
-    (t, ~url: string, ~options: navigationOptions=?, unit) => Js.Promise.t(Response.t) =
+  external click : (~selector: string, ~options: clickOptions=?, unit) => Js.Promise.t(unit) =
+    "";
+  [@bs.send.pipe : t] external close : Js.Promise.t(unit) = "";
+  [@bs.get] external content : t => Js.Promise.t(string) = ""; /* send? */
+  /*goto(url: string, options?: Partial<NavigationOptions>): Promise<Response>;*/
+  [@bs.send.pipe : t] external goto :
+    (~url: string, ~options: navigationOptions=?, unit) => Js.Promise.t(Response.t) =
+    "";
+  [@bs.send.pipe : t] external setExtraHTTPHeaders : (~headers: headers, unit) => Js.Promise.t(unit) =
     "";
   /* TODO: the rest of Page */
   /* cookies(...urls: string[]): Promise<Cookie[]>; */
@@ -402,8 +401,8 @@ module Browser = {
   type t;
   [@bs.send.pipe : t] external close : Js.Promise.t(unit) = "";
   [@bs.send.pipe : t] external newPage : Js.Promise.t(Page.t) = "";
-  [@bs.send] external version : t => Js.Promise.t(string) = "";
-  [@bs.send] external wsEndpoint : t => string = "";
+  [@bs.send.pipe : t] external version : Js.Promise.t(string) = "";
+  [@bs.send.pipe : t] external wsEndpoint : string = "";
 };
 
 type launchOptions = {
