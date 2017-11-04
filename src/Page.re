@@ -40,6 +40,12 @@ external goto :
 [@bs.send.pipe : t]
 external setExtraHTTPHeaders : (~headers: Js.Dict.t(string), unit) => Js.Promise.t(unit) =
   "";
+
+type typeOptions = {. "delay": float};
+
+[@bs.send.pipe : t]
+external type_ : (~text: string, ~options: typeOptions=?, unit) => Js.Promise.t(unit) =
+  "type";
 /* TODO: the rest of Page */
 /* cookies(...urls: string[]): Promise<Cookie[]>; */
 /*  type 'cookie;
@@ -88,6 +94,5 @@ external setExtraHTTPHeaders : (~headers: Js.Dict.t(string), unit) => Js.Promise
        tap(selector: string): Promise<void>;
        touchscreen: Touchscreen;
        tracing: Tracing;
-       type(text: string, options?: { delay: number }): Promise<void>;
        viewport(): Viewport;
      } */ */
