@@ -3,3 +3,10 @@
 npm-debug.log
 /lib/bs/
 /node_modules/
+.bsb.lock
+
+yarn.lock
+package-lock.json
+
+# for now ignore all compiled code
+/lib
