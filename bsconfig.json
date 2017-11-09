@@ -4,11 +4,16 @@
   "name": "bs-puppeteer",
   "version": "0.1.0",
   "sources": [
-    "src",
-    "examples"
+    {
+      "dir": "src",
+      "public": "all",
+    },
+    {
+      "dir": "examples",
+      "type": "dev",
+    },
   ],
   "bs-dependencies" : [
   ],
-  "namespace": false,
   "refmt": 3,
 }
