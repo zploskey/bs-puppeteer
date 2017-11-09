@@ -5,8 +5,14 @@
   "scripts": {
     "build": "bsb -make-world",
     "start": "bsb -make-world -w",
-    "clean": "bsb -clean-world",
-    "examples": "node lib/js/examples/search.js"
+    "clean": "bsb -clean-world"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zploskey/bs-puppeteer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zploskey/bs-puppeteer/issues"
   },
   "author": "Zach Ploskey <zach@ploskey.com>",
   "keywords": [
