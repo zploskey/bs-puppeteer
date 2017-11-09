@@ -16,13 +16,14 @@ type pageEvents =
 
 type authOptions = {. "username": string, "password": string};
 
-/* authenticate(credentials: AuthOptions | null): Promise<void>; */
-/*
+/* TODO: authentication and on events
+authenticate(credentials: AuthOptions | null): Promise<void>;
  on(event: "console", handler: (...args: any[]) => void): void;
  on<K extends keyof EventObj>(
    event: K,
    handler: (e: EventObj[K], ...args: any[]) => void
- ): void; */
+ ): void;
+*/
 [@bs.send.pipe : t]
 external click : (string, ~options: Click.clickOptions=?, unit) => Js.Promise.t(unit) =
   "";
@@ -34,7 +35,7 @@ external click : (string, ~options: Click.clickOptions=?, unit) => Js.Promise.t(
 /*goto(url: string, options?: Partial<NavigationOptions>): Promise<Response>;*/
 [@bs.send.pipe : t]
 external goto :
-  (~url: string, ~options: Navigation.navigationOptions=?, unit) => Js.Promise.t(Response.t) =
+  (string, ~options: Navigation.navigationOptions=?, unit) => Js.Promise.t(Response.t) =
   "";
 
 [@bs.send.pipe : t]

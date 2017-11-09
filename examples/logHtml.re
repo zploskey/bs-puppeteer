@@ -10,7 +10,7 @@ let logHtml = () =>
   |> then_((browser) => browser |> Browser.newPage)
   |> then_(
        (page) =>
-         page |> Page.goto(~url="https://google.com", ()) |> then_((res) => res |> Response.text)
+         page |> Page.goto("https://google.com", ()) |> then_((res) => res |> Response.text)
      )
   |> then_((text) => Js.log(text) |> resolve)
   |> then_(() => Node.Process.exit(0) |> resolve);
