@@ -24,7 +24,7 @@ type authOptions = {. "username": string, "password": string};
    handler: (e: EventObj[K], ...args: any[]) => void
  ): void; */
 [@bs.send.pipe : t]
-external click : (~selector: string, ~options: Click.clickOptions=?, unit) => Js.Promise.t(unit) =
+external click : (string, ~options: Click.clickOptions=?, unit) => Js.Promise.t(unit) =
   "";
 
 [@bs.send.pipe : t] external close : Js.Promise.t(unit) = "";
