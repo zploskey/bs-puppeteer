@@ -9,32 +9,14 @@ let search = () =>
   |> then_((browser) => browser |> Browser.newPage)
   |> then_(
        (page) => {
-         let _ = page |> Page.goto("https://google.com", ());
-         page |> resolve
-       }
-     )
-  |> then_(
-       (page) => {
-         let _ = page |> Page.type_("puppeteer", ());
-         page |> resolve
-       }
-     )
-  |> then_(
-       (page) => {
-         let _ = page |> Page.click("input[type='submit']", ());
-         page |> resolve
-       }
-     )
-  |> then_(
-       (page) => {
-         let _ = page |> Page.waitForSelector("h3 a", ());
-         page |> resolve
+         let navOptions = Navigation.make_navigationOptions(~timeout=20000., ());
+         page
+         |> Page.goto("https://google.com", ~options=navOptions, ())
+         |> then_((_) => page |> Page.type_("puppeteer", ()))
+         |> then_(() => page |> Page.click("input[type='submit']", ()))
+         |> then_(() => page |> Page.waitForSelector("h3 a", ()))
        }
      );
 
-/* TODO: get evaluate working
-|> then((page) => {
-    page |> Page.evaluate()
-  })*/
-
+/* TODO: select elements matching "h3 a" and get their text */
 search();
