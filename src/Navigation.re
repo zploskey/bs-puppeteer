@@ -10,3 +10,9 @@ type navigationOptions = {
   "networkIdleInflight": Js.Nullable.t(float),
   "networkIdleTimeout": Js.Nullable.t(float)
 };
+
+[@bs.obj]
+external make_navigationOptions :
+  (~timeout: float=?, ~waitUntil: waitEvent=?, ~networkIdleInflight: float=?, ~networkIdleTimeout: float=?, unit) =>
+  navigationOptions =
+  "";
