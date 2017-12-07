@@ -17,13 +17,13 @@ type pageEvents =
 type authOptions = {. "username": string, "password": string};
 
 /* TODO: authentication and on events
-authenticate(credentials: AuthOptions | null): Promise<void>;
- on(event: "console", handler: (...args: any[]) => void): void;
- on<K extends keyof EventObj>(
-   event: K,
-   handler: (e: EventObj[K], ...args: any[]) => void
- ): void;
-*/
+   authenticate(credentials: AuthOptions | null): Promise<void>;
+    on(event: "console", handler: (...args: any[]) => void): void;
+    on<K extends keyof EventObj>(
+      event: K,
+      handler: (e: EventObj[K], ...args: any[]) => void
+    ): void;
+   */
 [@bs.send.pipe : t]
 external click : (string, ~options: Click.clickOptions=?, unit) => Js.Promise.t(unit) =
   "";
@@ -36,6 +36,23 @@ external click : (string, ~options: Click.clickOptions=?, unit) => Js.Promise.t(
 [@bs.send.pipe : t]
 external goto :
   (string, ~options: Navigation.navigationOptions=?, unit) => Js.Promise.t(Response.t) =
+  "";
+
+type screenshotOptions = {
+  .
+  "clip": Js.Nullable.t({. "x": float, "y": float, "width": float, "height": float}),
+  "fullPage": Js.Nullable.t(bool),
+  "omitBackground": Js.Nullable.t(bool),
+  "path": Js.Nullable.t(string),
+  "quality": Js.Nullable.t(float),
+  /* TODO: Should handle the two options. */
+  "_type": Js.Nullable.t(string) /* "jpeg" | "png" */
+};
+
+/* screenshot(options?: ScreenshotOptions): Promise<Buffer>; */
+[@bs.send.pipe : t]
+external screenshot :
+  (~options: screenshotOptions=?, unit) => Js.Promise.t(Js.Typed_array.ArrayBuffer.t) =
   "";
 
 [@bs.send.pipe : t]
@@ -85,7 +102,6 @@ external type_ : (string, ~options: typeOptions=?, unit) => Js.Promise.t(unit) =
        type pressOptions = {. "text": string, "delay": float};
        external press : key::string => options::option pressOptions => promise unit = "" [@@bs.send];
        external reload : options::option NavigationOptions.t => promise Response.t = "" [@@bs.send]; /*
-       screenshot(options?: ScreenshotOptions): Promise<Buffer>;
        setContent(html: string): Promise<void>;
        setCookie(...cookies: Cookie[]): Promise<void>;
        setJavaScriptEnabled(enabled: boolean): Promise<void>;

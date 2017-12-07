@@ -50,20 +50,6 @@ external launch : (~options: Launcher.launchOptions=?, unit) => Js.Promise.t(Bro
 
     export type EvaluateFn<T> = (elem?: ElementHandle) => Promise<T>;
 
-   export interface ScreenshotOptions {
-     path?: string;
-     type?: "jpeg" | "png";
-     quality?: number;
-     fullPage?: boolean;
-     clip?: {
-       x: number;
-       y: number;
-       width: number;
-       height: number;
-     };
-     omitBackground?: boolean;
-   }
-
    export interface PageFnOptions {
      polling?: "raf" | "mutation" | number;
      timeout?: number;
