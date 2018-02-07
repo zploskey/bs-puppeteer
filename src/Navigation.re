@@ -1,18 +1,20 @@
-type waitEvent =
-  | Load
-  | Networkidle
-  | NetworkIdleTimeout;
+/* TODO: allow calling makeOptions with waitUntil: array(string), an array of load event */
 
-type navigationOptions = {
-  .
-  "timeout": Js.Nullable.t(float),
-  "waitUntil": Js.Nullable.t(waitEvent), /* "load" | "networkidle" | "networkIdleTimeout" */
-  "networkIdleInflight": Js.Nullable.t(float),
-  "networkIdleTimeout": Js.Nullable.t(float)
-};
+[@bs.deriving jsConverter]
+type loadEvent = [ | `load | `domcontentloaded | `networkidle0 | `networkidle2];
+
+type loadEvents =
+  | LoadEvent(loadEvent)
+  | LoadEvents(array(loadEvent));
 
 [@bs.obj]
-external make_navigationOptions :
-  (~timeout: float=?, ~waitUntil: waitEvent=?, ~networkIdleInflight: float=?, ~networkIdleTimeout: float=?, unit) =>
-  navigationOptions =
+external makeOptions :
+  (
+    ~timeout: float=?,
+    ~waitUntil: [@bs.string] [ | `load | `domcontentloaded | `networkidle0 | `networkidle2]=?,
+    unit
+  ) =>
+  _ =
   "";
+
+type options = {. "timeout": Js.undefined(float), "waitUntil": Js.undefined(string)};

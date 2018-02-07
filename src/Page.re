@@ -35,7 +35,7 @@ external click : (string, ~options: Click.clickOptions=?, unit) => Js.Promise.t(
 /*goto(url: string, options?: Partial<NavigationOptions>): Promise<Response>;*/
 [@bs.send.pipe : t]
 external goto :
-  (string, ~options: Navigation.navigationOptions=?, unit) => Js.Promise.t(Response.t) =
+  (string, ~options: Navigation.options=?, unit) => Js.Promise.t(Response.t) =
   "";
 
 type screenshotOptions = {
