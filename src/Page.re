@@ -40,14 +40,28 @@ external goto :
 
 type screenshotOptions = {
   .
-  "clip": Js.Nullable.t({. "x": float, "y": float, "width": float, "height": float}),
-  "fullPage": Js.Nullable.t(bool),
-  "omitBackground": Js.Nullable.t(bool),
-  "path": Js.Nullable.t(string),
-  "quality": Js.Nullable.t(float),
+  "path": Js.undefined(string),
+  "_type": Js.undefined(string), /* "jpeg" | "png" (default) */
+  "quality": Js.undefined(float),
+  "fullPage": Js.undefined(bool),
+  "clip": Js.undefined({. "x": float, "y": float, "width": float, "height": float}),
+  "omitBackground": Js.undefined(bool),
   /* TODO: Should handle the two options. */
-  "_type": Js.Nullable.t(string) /* "jpeg" | "png" */
 };
+
+[@bs.obj]
+external makeScreenshotOptions :
+  (
+    ~path: string=?,
+    ~_type: string=?,
+    ~quality: float=?,
+    ~fullPage: bool=?,
+    ~clip: {. "x": float, "y": float, "width": float, "height": float}=?,
+    ~omitBackground: bool=?,
+    unit
+  ) =>
+  _ =
+  "";
 
 /* screenshot(options?: ScreenshotOptions): Promise<Buffer>; */
 [@bs.send.pipe : t]
