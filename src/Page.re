@@ -34,8 +34,7 @@ external click : (string, ~options: Click.clickOptions=?, unit) => Js.Promise.t(
 
 /*goto(url: string, options?: Partial<NavigationOptions>): Promise<Response>;*/
 [@bs.send.pipe : t]
-external goto :
-  (string, ~options: Navigation.options=?, unit) => Js.Promise.t(Response.t) =
+external goto : (string, ~options: Navigation.options=?, unit) => Js.Promise.t(Response.t) =
   "";
 
 type screenshotOptions = {
@@ -45,7 +44,7 @@ type screenshotOptions = {
   "quality": Js.undefined(float),
   "fullPage": Js.undefined(bool),
   "clip": Js.undefined({. "x": float, "y": float, "width": float, "height": float}),
-  "omitBackground": Js.undefined(bool),
+  "omitBackground": Js.undefined(bool)
   /* TODO: Should handle the two options. */
 };
 
