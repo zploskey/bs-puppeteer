@@ -39,12 +39,12 @@ external goto : (string, ~options: Navigation.options=?, unit) => Js.Promise.t(R
 
 type screenshotOptions = {
   .
-  "path": Js.undefined(string),
-  "_type": Js.undefined(string), /* "jpeg" | "png" (default) */
-  "quality": Js.undefined(float),
-  "fullPage": Js.undefined(bool),
-  "clip": Js.undefined({. "x": float, "y": float, "width": float, "height": float}),
-  "omitBackground": Js.undefined(bool)
+  "path": Js.Nullable.t(string),
+  "_type": Js.Nullable.t(string), /* "jpeg" | "png" (default) */
+  "quality": Js.Nullable.t(float),
+  "fullPage": Js.Nullable.t(bool),
+  "clip": Js.Nullable.t({. "x": float, "y": float, "width": float, "height": float}),
+  "omitBackground": Js.Nullable.t(bool)
   /* TODO: Should handle the two options. */
 };
 
