@@ -76,24 +76,21 @@ let makeLaunchOptions =
       ~devtools: option(bool)=?,
       ()
     )
-    : launchOptions => {
-  let optBoolToJs = (optBool) =>
-    Js.Option.map([@bs] ((opt) => Js.Boolean.to_js_boolean(opt)), optBool);
+    : launchOptions =>
   makeLaunchOptions(
-    ~ignoreHTTPSErrors=?optBoolToJs(ignoreHTTPSErrors),
-    ~headless=?optBoolToJs(headless),
+    ~ignoreHTTPSErrors=?Util.optBoolToJs(ignoreHTTPSErrors),
+    ~headless=?Util.optBoolToJs(headless),
     ~executablePath?,
     ~slowMo?,
     ~args?,
-    ~ignoreDefaultArgs=?optBoolToJs(ignoreDefaultArgs),
-    ~handleSIGINT=?optBoolToJs(handleSIGINT),
-    ~handleSIGTERM=?optBoolToJs(handleSIGTERM),
-    ~handleSIGHUP=?optBoolToJs(handleSIGHUP),
+    ~ignoreDefaultArgs=?Util.optBoolToJs(ignoreDefaultArgs),
+    ~handleSIGINT=?Util.optBoolToJs(handleSIGINT),
+    ~handleSIGTERM=?Util.optBoolToJs(handleSIGTERM),
+    ~handleSIGHUP=?Util.optBoolToJs(handleSIGHUP),
     ~timeout?,
-    ~dumpio=?optBoolToJs(dumpio),
+    ~dumpio=?Util.optBoolToJs(dumpio),
     ~userDataDir?,
     ~env?,
-    ~devtools=?optBoolToJs(devtools),
+    ~devtools=?Util.optBoolToJs(devtools),
     ()
-  )
-};
+  );
