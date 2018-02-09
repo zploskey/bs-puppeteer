@@ -9,5 +9,9 @@
   "package-specs": {
     "module": "es6-global",
   },
-  "refmt": 3
+  "warnings": {
+    "number": "-44",
+    "error": ""
+  },
+  "refmt": 3,
 }
