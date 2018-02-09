@@ -1,11 +1,11 @@
-open Puppeteer;
+open BsPuppeteer;
 
 open Js.Promise;
 
-Js.log("Executable: " ++ executablePath());
+Js.log("Executable: " ++ Puppeteer.executablePath());
 
 let search = () =>
-  launch()
+  Puppeteer.launch()
   |> then_((browser) => browser |> Browser.newPage)
   |> then_(
        (page) => {

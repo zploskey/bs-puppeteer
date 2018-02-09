@@ -1,9 +1,9 @@
+open BsPuppeteer;
+
 open Js.Promise;
 
-open Puppeteer;
-
 let takeScreenshot = () =>
-  launch()
+  Puppeteer.launch()
   |> then_(
        (browser) =>
          browser

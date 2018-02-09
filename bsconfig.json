@@ -1,19 +1,13 @@
-// This is the configuration file used by BuckleScript's build system bsb. Its documentation lives here: http://bucklescript.github.io/bucklescript/docson/#build-schema.json
-// BuckleScript comes with its own parser for bsconfig.json, which is normal JSON, with the extra support of comments and trailing commas.
 {
   "name": "bs-puppeteer",
   "version": "0.1.0",
+  "namespace": true,
   "sources": [
-    {
-      "dir": "src",
-      "public": "all",
-    },
-    {
-      "dir": "examples",
-      "type": "dev",
-    },
+    "src",
+    "examples",
   ],
-  "bs-dependencies" : [
-  ],
-  "refmt": 3,
+  "package-specs": {
+    "module": "es6-global",
+  },
+  "refmt": 3
 }
