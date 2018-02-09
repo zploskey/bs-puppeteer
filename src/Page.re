@@ -59,7 +59,7 @@ external makeScreenshotOptions :
     ~omitBackground: bool=?,
     unit
   ) =>
-  _ =
+  screenshotOptions =
   "";
 
 /* screenshot(options?: ScreenshotOptions): Promise<Buffer>; */
