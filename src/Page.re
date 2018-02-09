@@ -64,24 +64,25 @@ external makeScreenshotOptions :
   screenshotOptions =
   "";
 
-let makeScreenshotOptions = (
-  ~path: option(string)=?,
-~_type: option(string)=?,
-~quality: option(float)=?,
-~fullPage: option(bool)=?,
-~clip: option(clip)=?,
-~omitBackground: option(bool)=?,
-()
-) => makeScreenshotOptions(
-  ~path?,
-  ~_type?,
-  ~quality?,
-  ~fullPage=?Util.optBoolToJs(fullPage),
-  ~clip?,
-  ~omitBackground=?Util.optBoolToJs(omitBackground),
-  ()
-);
-
+let makeScreenshotOptions =
+    (
+      ~path: option(string)=?,
+      ~_type: option(string)=?,
+      ~quality: option(float)=?,
+      ~fullPage: option(bool)=?,
+      ~clip: option(clip)=?,
+      ~omitBackground: option(bool)=?,
+      ()
+    ) =>
+  makeScreenshotOptions(
+    ~path?,
+    ~_type?,
+    ~quality?,
+    ~fullPage=?Util.optBoolToJs(fullPage),
+    ~clip?,
+    ~omitBackground=?Util.optBoolToJs(omitBackground),
+    ()
+  );
 
 /* screenshot(options?: ScreenshotOptions): Promise<Buffer>; */
 [@bs.send.pipe : t]
