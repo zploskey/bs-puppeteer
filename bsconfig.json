@@ -4,7 +4,7 @@
   "namespace": true,
   "sources": [
     "src",
-    "examples",
+    {"dir": "examples", "public": []},
   ],
   "package-specs": {
     "module": "es6-global",
