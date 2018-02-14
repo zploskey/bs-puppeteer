@@ -13,9 +13,7 @@
     "url": "git+https://github.com/zploskey/bs-puppeteer.git"
   },
   "homepage": "https://github.com/zploskey/bs-puppeteer#readme",
-  "bugs": {
-    "url": "https://github.com/zploskey/bs-puppeteer/issues"
-  },
+  "bugs": "https://github.com/zploskey/bs-puppeteer/issues",
   "author": "Zach Ploskey <zach@ploskey.com>",
   "keywords": [
     "BuckleScript",
