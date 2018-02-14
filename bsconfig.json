@@ -6,9 +6,6 @@
     "src",
     {"dir": "examples", "public": []},
   ],
-  "package-specs": {
-    "module": "es6-global",
-  },
   "warnings": {
     "number": "-44",
     "error": ""
