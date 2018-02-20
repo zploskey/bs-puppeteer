@@ -27,7 +27,6 @@
     "puppeteer": "^1.1.0"
   },
   "devDependencies": {
-    "@types/puppeteer": "^1.0",
     "bs-platform": "^2.2.0"
   }
 }
