@@ -14,7 +14,7 @@ Many features have no been implemented.
 The initial goal is to get basic web-scraping and interaction capabilities.
 See [examples](https://github.com/bs-puppeteer/bs-puppeteer/tree/master/examples)
 for use cases that are being tested.
-Features of the Puppeteer API are implemented as I need or get to them.
+Features of the Puppeteer API are implemented as we need or get to them.
 If you would like to add or fix some bindings, see [contributing](#contributing).
 
 ## Creating a project using bs-puppeteer
