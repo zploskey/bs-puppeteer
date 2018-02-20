@@ -24,7 +24,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "puppeteer": "^1.0"
+    "puppeteer": "^1.1.0"
   },
   "devDependencies": {
     "@types/puppeteer": "^1.0",
