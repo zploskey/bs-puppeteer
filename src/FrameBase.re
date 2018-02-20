@@ -2,18 +2,48 @@ type t;
 
 type serializable = Js.Json.t;
 
-[@bs.val] external select : (~selector: string) => Js.Promise.t(ElementHandle.t) = "$";
-
-[@bs.val] external selectAll : (~selector: string) => Js.Promise.t(array(ElementHandle.t)) = "$$";
-
-type selectorOptions = {. "visibile": bool, "timeout": float};
+[@bs.send.pipe : t]
+external selectOne :
+  (~selector: string) => Js.Promise.t(Js.null(ElementHandle.t)) =
+  "$";
 
 [@bs.send.pipe : t]
-external waitForSelector : (string, ~options: selectorOptions=?, unit) => Js.Promise.t(unit) =
+external selectAll :
+  (~selector: string) => Js.Promise.t(array(ElementHandle.t)) =
+  "$$";
+
+[@bs.send.pipe : t]
+external selectXPath : (~xpath: string) => Js.Promise.t(array(ElementHandle.t)) =
+  "$x";
+
+type selectorOptions = {
+  .
+  "visible": Js.nullable(bool),
+  "hidden": Js.nullable(bool),
+  "timeout": Js.nullable(float)
+};
+
+[@bs.obj]
+external makeSelectorOptions :
+  (~visible: Js.boolean=?, ~hidden: Js.boolean=?, ~timeout: float=?, unit) =>
+  selectorOptions =
   "";
-/*
- $eval(
-   selector: string,
-   fn: (...args: Array<Serializable | ElementHandle>) => void
- ): Promise<Serializable>; */
-/* external $eval : selector::string => (fn::fun ...args : array serializable => unit) => promise serializable = "$eval" [@@bs.val]; */
+
+let makeSelectorOptions = (~visible=?, ~hidden=?, ~timeout=?, ()) =>
+  makeSelectorOptions(
+    ~visible=?Util.optBoolToJs(visible),
+    ~hidden=?Util.optBoolToJs(hidden),
+    ~timeout?,
+    ()
+  );
+
+[@bs.send.pipe : t]
+external waitForSelector :
+  (string, ~options: selectorOptions=?, unit) => Js.Promise.t(unit) =
+  "";
+
+[@bs.send.pipe : t]
+external waitForXPath :
+  (~xpath: string, ~options: selectorOptions=?, unit) =>
+  Js.Promise.t(ElementHandle.t) =
+  "";
