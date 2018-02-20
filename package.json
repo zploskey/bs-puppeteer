@@ -10,10 +10,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zploskey/bs-puppeteer.git"
+    "url": "git+https://github.com/bs-puppeteer/bs-puppeteer.git"
   },
-  "homepage": "https://github.com/zploskey/bs-puppeteer#readme",
-  "bugs": "https://github.com/zploskey/bs-puppeteer/issues",
+  "homepage": "https://github.com/bs-puppeteer/bs-puppeteer#readme",
+  "bugs": "https://github.com/bs-puppeteer/bs-puppeteer/issues",
   "author": "Zach Ploskey <zach@ploskey.com>",
   "keywords": [
     "BuckleScript",
@@ -28,6 +28,6 @@
   },
   "devDependencies": {
     "@types/puppeteer": "^1.0",
-    "bs-platform": "^2.1.0"
+    "bs-platform": "^2.2.0"
   }
 }

@@ -12,7 +12,7 @@ from Bucklescript or Reason.
 These bindings are a work in progress.
 Many features have no been implemented.
 The initial goal is to get basic web-scraping and interaction capabilities.
-See [examples](https://github.com/zploskey/bs-puppeteer/tree/master/examples)
+See [examples](https://github.com/bs-puppeteer/bs-puppeteer/tree/master/examples)
 for use cases that are being tested.
 Features of the Puppeteer API are implemented as I need or get to them.
 If you would like to add or fix some bindings, see [contributing](#contributing).
@@ -32,7 +32,7 @@ for more information about starting a project.
 Add bs-puppeteer as a dependency.
 This will install the currently supported version of Puppeteer.
 ```
-npm add --save https://github.com/zploskey/bs-puppeteer.git
+npm add --save https://github.com/bs-puppeteer/bs-puppeteer.git
 ```
 
 Edit your bsconfig.json file to add `bs-puppeteer` to bs-dependencies:
@@ -55,7 +55,7 @@ One-off builds can be done with `npm run build`.
 
 Contributions are welcome.
 ```
-git clone https://github.com/zploskey/bs-puppeteer.git
+git clone https://github.com/bs-puppeteer/bs-puppeteer.git
 cd reason-react
 npm install
 npm start
