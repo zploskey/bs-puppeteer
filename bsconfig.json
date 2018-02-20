@@ -1,10 +1,12 @@
 {
   "name": "bs-puppeteer",
-  "version": "0.1.0",
   "namespace": true,
   "sources": [
     "src",
-    {"dir": "examples", "public": []},
+    {
+      "dir": "examples",
+      "public": []
+    },
   ],
   "warnings": {
     "number": "-44",
