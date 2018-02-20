@@ -37,7 +37,6 @@ external click : (string, ~options: Click.clickOptions=?, unit) => Js.Promise.t(
 external goto : (string, ~options: Navigation.options=?, unit) => Js.Promise.t(Response.t) =
   "";
 
-type clip = {. "x": float, "y": float, "width": float, "height": float};
 
 type screenshotOptions = {
   .
@@ -45,7 +44,7 @@ type screenshotOptions = {
   "_type": Js.Nullable.t(string), /* "jpeg" | "png" (default) */
   "quality": Js.Nullable.t(float),
   "fullPage": Js.Nullable.t(bool),
-  "clip": Js.Nullable.t(clip),
+  "clip": Js.Nullable.t(BoundingBox.t),
   "omitBackground": Js.Nullable.t(bool)
   /* TODO: Should handle the two options. */
 };
@@ -57,7 +56,7 @@ external makeScreenshotOptions :
     ~_type: string=?,
     ~quality: float=?,
     ~fullPage: Js.boolean=?,
-    ~clip: clip=?,
+    ~clip: BoundingBox.t=?,
     ~omitBackground: Js.boolean=?,
     unit
   ) =>
@@ -70,7 +69,7 @@ let makeScreenshotOptions =
       ~_type: option(string)=?,
       ~quality: option(float)=?,
       ~fullPage: option(bool)=?,
-      ~clip: option(clip)=?,
+      ~clip: option(BoundingBox.t)=?,
       ~omitBackground: option(bool)=?,
       ()
     ) =>

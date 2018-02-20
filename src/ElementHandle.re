@@ -1,5 +1,7 @@
 type t;
 
+[@bs.send.pipe : t] external boundingBox : Js.Promise.t(BoundingBox.t) = "";
+
 [@bs.send.pipe : t] external click : (~options: Click.clickOptions=?, unit) => Js.Promise.t(unit) =
   "";
 
