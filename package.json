@@ -1,6 +1,6 @@
 {
   "name": "bs-puppeteer",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Bucklescript bindings for Puppeteer (headless chrome browser) written in Reason",
   "main": "src/Puppeteer.re",
   "scripts": {
@@ -24,10 +24,9 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "puppeteer": "^1.0"
+    "puppeteer": "^1.1.0"
   },
   "devDependencies": {
-    "@types/puppeteer": "^1.0",
     "bs-platform": "^2.2.0"
   }
 }
