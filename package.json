@@ -6,7 +6,8 @@
   "scripts": {
     "build": "bsb -make-world",
     "start": "bsb -make-world -w",
-    "clean": "bsb -clean-world"
+    "clean": "bsb -clean-world",
+    "test": "jest --watch"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
     "puppeteer": "^1.1.0"
   },
   "devDependencies": {
+    "@glennsl/bs-jest": "^0.4.2",
     "bs-platform": "^2.2.0"
   }
 }
