@@ -115,6 +115,19 @@ describe("Page", () => {
          )
     )
   );
+  testPromise("screenshot()", () =>
+    Js.Promise.(
+      page^
+      |> Page.screenshot()
+      |> then_(buf =>
+           buf
+           |> Js_typed_array.ArrayBuffer.byteLength
+           |> expect
+           |> toBeGreaterThanOrEqual(3236)
+           |> Js.Promise.resolve
+         )
+    )
+  );
   afterAllPromise(() =>
     Js.Promise.(Page.close(page^) |> then_(() => Browser.close(browser^)))
   );
