@@ -4,6 +4,14 @@ open BsPuppeteer;
 
 open Expect;
 
+describe("Puppeteer", () => {
+  test("executablePath", () =>
+    Puppeteer.executablePath()
+    |> expect
+    |> toContainString("/Chromium")
+  )
+});
+
 describe("Browser", () => {
   let browser = ref(Browser.empty());
   beforeAllPromise(() =>
@@ -32,7 +40,7 @@ describe("Browser", () => {
     Js.Promise.(
       Browser.version(browser^)
       |> then_(version =>
-           version |> expect |> toContainString("HeadlessChrome") |> resolve
+           version |> expect |> toMatchRe([%bs.re "/^HeadlessChrome/"]) |> resolve
          )
     )
   );
