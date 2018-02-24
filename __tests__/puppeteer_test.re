@@ -4,13 +4,11 @@ open BsPuppeteer;
 
 open Expect;
 
-describe("Puppeteer", () => {
+describe("Puppeteer", () =>
   test("executablePath", () =>
-    Puppeteer.executablePath()
-    |> expect
-    |> toContainString("/Chromium")
+    Puppeteer.executablePath() |> expect |> toContainString("/Chromium")
   )
-});
+);
 
 describe("Browser", () => {
   let browser = ref(Browser.empty());
@@ -40,7 +38,10 @@ describe("Browser", () => {
     Js.Promise.(
       Browser.version(browser^)
       |> then_(version =>
-           version |> expect |> toMatchRe([%bs.re "/^HeadlessChrome/"]) |> resolve
+           version
+           |> expect
+           |> toMatchRe([%bs.re "/^HeadlessChrome/"])
+           |> resolve
          )
     )
   );
@@ -67,8 +68,8 @@ describe("Page", () => {
     Js.Promise.(
       Page.select(page^, ~selector="body")
       |> then_(elementHandle =>
-         elementHandle |> expect |> ExpectJs.toBeTruthy |> Js.Promise.resolve
-      )
+           elementHandle |> expect |> ExpectJs.toBeTruthy |> Js.Promise.resolve
+         )
     )
   );
   testPromise("content()", () =>
@@ -81,8 +82,7 @@ describe("Page", () => {
          )
     )
   );
-  testPromise(
-    "$$()", () =>
+  testPromise("$$()", () =>
     Js.Promise.(
       Page.selectAll(page^, ~selector="html,body")
       |> then_(elementHandles =>
@@ -92,18 +92,30 @@ describe("Page", () => {
          )
     )
   );
-  testPromise(
-    "click()",
-    () =>
+  testPromise("click()", () =>
     Js.Promise.(
-      page^ |> Page.click("body", ())
+      page^
+      |> Page.click("body", ())
       |> then_(() => pass |> Js.Promise.resolve)
     )
   );
-  afterAllPromise(() =>
+  testPromise("goto()", () =>
     Js.Promise.(
-      Page.close(page^)
-      |> then_(() => Browser.close(browser^))
+      Browser.newPage(browser^)
+      |> then_(page => {
+           let options = Navigation.makeOptions(~timeout=25000., ());
+           page |> Page.goto("https://google.com", ~options, ());
+         })
+      |> then_(res => res |> Response.text)
+      |> then_(text =>
+           text
+           |> expect
+           |> toContainString("<title>Google</title>")
+           |> Js.Promise.resolve
+         )
     )
+  );
+  afterAllPromise(() =>
+    Js.Promise.(Page.close(page^) |> then_(() => Browser.close(browser^)))
   );
 });
