@@ -128,6 +128,13 @@ describe("Page", () => {
          )
     )
   );
+  testPromise("waitForSelector()", () =>
+    Js.Promise.(
+      page^
+      |> Page.waitForSelector("body", ())
+      |> then_(() => pass |> Js.Promise.resolve)
+    )
+  );
   afterAllPromise(() =>
     Js.Promise.(Page.close(page^) |> then_(() => Browser.close(browser^)))
   );
