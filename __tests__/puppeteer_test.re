@@ -66,7 +66,7 @@ describe("Page", () => {
   );
   testPromise("$()", () =>
     Js.Promise.(
-      Page.select(page^, ~selector="body")
+      Page.selectOne(page^, ~selector="body")
       |> then_(elementHandle =>
            elementHandle |> expect |> ExpectJs.toBeTruthy |> Js.Promise.resolve
          )
