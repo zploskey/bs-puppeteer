@@ -1,5 +1,7 @@
 include FrameBase;
 
+external empty : unit => t = "%identity";
+
 type pageEvents =
   | Console
   | Dialog
@@ -30,7 +32,7 @@ external click : (string, ~options: Click.clickOptions=?, unit) => Js.Promise.t(
 
 [@bs.send.pipe : t] external close : Js.Promise.t(unit) = "";
 
-[@bs.get] external content : t => Js.Promise.t(string) = ""; /* send? */
+[@bs.send] external content : t => Js.Promise.t(string) = "";
 
 /*goto(url: string, options?: Partial<NavigationOptions>): Promise<Response>;*/
 [@bs.send.pipe : t]
