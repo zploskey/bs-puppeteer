@@ -92,6 +92,16 @@ describe("Page", () => {
          )
     )
   );
+  testPromise("$x", () =>
+    Js.Promise.(
+      Page.selectXPath(page^, ~xpath="/html/body")
+      |> then_(elementHandles =>
+           expect(elementHandles)
+           |> ExpectJs.toHaveLength(1)
+           |> Js.Promise.resolve
+         )
+    )
+  );
   testPromise("click()", () =>
     Js.Promise.(
       page^
