@@ -4,6 +4,18 @@ open BsPuppeteer;
 
 open Expect;
 
+let getElementValueJs = [%raw
+  {| function (element) { return element.value; } |}
+];
+
+let testPagePath =
+  Node.Path.resolve(
+    [%bs.node __dirname] |> Js.Option.getWithDefault(""),
+    "../../../__tests__/fixtures/testPage.html"
+  );
+
+let testPageContent = Node.Fs.readFileAsUtf8Sync(testPagePath);
+
 describe("Puppeteer", () =>
   test("executablePath", () =>
     Puppeteer.executablePath() |> expect |> toContainString("/Chromium")
@@ -167,6 +179,21 @@ describe("Page", () => {
          )
       /* TODO: Better way to verify extra HTTP headers */
       |> then_(() => pass |> Js.Promise.resolve)
+    )
+  );
+  testPromise("type()", () =>
+    Js.Promise.(
+      Browser.newPage(browser^)
+      |> then_(page =>
+           all2((resolve(page), Page.setContent(page, testPageContent)))
+         )
+      |> then_(((page, _)) =>
+           all2((resolve(page), Page.type_(page, "#input", "hello world", ())))
+         )
+      |> then_(((page, _)) =>
+           Page.selectOneEval(page, "#input", getElementValueJs)
+         )
+      |> then_(value => value |> expect |> toBe("hello world") |> resolve)
     )
   );
   afterAllPromise(() =>

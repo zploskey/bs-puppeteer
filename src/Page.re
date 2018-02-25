@@ -34,6 +34,8 @@ external click : (string, ~options: Click.clickOptions=?, unit) => Js.Promise.t(
 
 [@bs.send] external content : t => Js.Promise.t(string) = "";
 
+[@bs.send] external setContent : (t, string) => Js.Promise.t(unit) = "";
+
 /*goto(url: string, options?: Partial<NavigationOptions>): Promise<Response>;*/
 [@bs.send.pipe : t]
 external goto : (string, ~options: Navigation.options=?, unit) => Js.Promise.t(Response.t) =
@@ -97,8 +99,8 @@ external setExtraHTTPHeaders : (~headers: Js.Dict.t(string), unit) => Js.Promise
 
 type typeOptions = {. "delay": float};
 
-[@bs.send.pipe : t]
-external type_ : (string, ~options: typeOptions=?, unit) => Js.Promise.t(unit) =
+[@bs.send]
+external type_ : (t, string, string, ~options: typeOptions=?, unit) => Js.Promise.t(unit) =
   "type";
 /* TODO: the rest of Page */
 /* cookies(...urls: string[]): Promise<Cookie[]>; */

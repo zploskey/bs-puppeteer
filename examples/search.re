@@ -12,7 +12,7 @@ let search = () =>
          let options = Navigation.makeOptions(~timeout=20000., ~waitUntil=`load, ());
          page
          |> Page.goto("https://google.com", ~options, ())
-         |> then_((_) => page |> Page.type_("puppeteer", ()))
+         |> then_((_) => Page.type_(page, "#lst-ib", "puppeteer", ()))
          |> then_(() => page |> Page.click("input[type='submit']", ()))
          |> then_(() => page |> Page.waitForSelector("h3 a", ()))
        }
