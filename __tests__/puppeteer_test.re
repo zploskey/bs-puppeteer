@@ -158,6 +158,17 @@ describe("Page", () => {
          )
     )
   );
+  testPromise("setExtraHTTPHeaders", () =>
+    Js.Promise.(
+      page^
+      |> Page.setExtraHTTPHeaders(
+           ~headers=Js.Dict.fromList([("extra-http-header", "header01")]),
+           ()
+         )
+      /* TODO: Better way to verify extra HTTP headers */
+      |> then_(() => pass |> Js.Promise.resolve)
+    )
+  );
   afterAllPromise(() =>
     Js.Promise.(Page.close(page^) |> then_(() => Browser.close(browser^)))
   );
