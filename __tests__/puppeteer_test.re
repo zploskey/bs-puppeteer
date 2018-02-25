@@ -145,6 +145,19 @@ describe("Page", () => {
       |> then_(() => pass |> Js.Promise.resolve)
     )
   );
+  testPromise("waitForXPath()", () =>
+    Js.Promise.(
+      page^
+      |> Page.waitForXPath(
+           ~xpath="/html/body",
+           ~options=Page.makeSelectorOptions(~timeout=100., ()),
+           ()
+         )
+      |> then_(elementHandle =>
+           elementHandle |> expect |> ExpectJs.toBeTruthy |> Js.Promise.resolve
+         )
+    )
+  );
   afterAllPromise(() =>
     Js.Promise.(Page.close(page^) |> then_(() => Browser.close(browser^)))
   );
