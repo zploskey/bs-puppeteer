@@ -80,7 +80,7 @@ describe("Page", () => {
     Js.Promise.(
       Page.selectOne(page^, ~selector="body")
       |> then_(elementHandle =>
-           elementHandle |> expect |> ExpectJs.toBeTruthy |> Js.Promise.resolve
+           elementHandle |> expect |> ExpectJs.toBeTruthy |> resolve
          )
     )
   );
@@ -90,7 +90,7 @@ describe("Page", () => {
       |> then_(content =>
            expect(content)
            |> ExpectJs.toBe("<html><head></head><body></body></html>")
-           |> Js.Promise.resolve
+           |> resolve
          )
     )
   );
@@ -100,7 +100,7 @@ describe("Page", () => {
       |> then_(elementHandles =>
            expect(elementHandles)
            |> ExpectJs.toHaveLength(2)
-           |> Js.Promise.resolve
+           |> resolve
          )
     )
   );
@@ -110,7 +110,7 @@ describe("Page", () => {
       |> then_(elementHandles =>
            expect(elementHandles)
            |> ExpectJs.toHaveLength(1)
-           |> Js.Promise.resolve
+           |> resolve
          )
     )
   );
@@ -118,7 +118,7 @@ describe("Page", () => {
     Js.Promise.(
       page^
       |> Page.click("body", ())
-      |> then_(() => pass |> Js.Promise.resolve)
+      |> then_(() => pass |> resolve)
     )
   );
   testPromise("goto()", () =>
@@ -133,7 +133,7 @@ describe("Page", () => {
            text
            |> expect
            |> toContainString("<title>Google</title>")
-           |> Js.Promise.resolve
+           |> resolve
          )
     )
   );
@@ -146,7 +146,7 @@ describe("Page", () => {
            |> Js_typed_array.ArrayBuffer.byteLength
            |> expect
            |> toBeGreaterThanOrEqual(3236)
-           |> Js.Promise.resolve
+           |> resolve
          )
     )
   );
@@ -154,7 +154,7 @@ describe("Page", () => {
     Js.Promise.(
       page^
       |> Page.waitForSelector("body", ())
-      |> then_(() => pass |> Js.Promise.resolve)
+      |> then_(() => pass |> resolve)
     )
   );
   testPromise("waitForXPath()", () =>
@@ -166,7 +166,7 @@ describe("Page", () => {
            ()
          )
       |> then_(elementHandle =>
-           elementHandle |> expect |> ExpectJs.toBeTruthy |> Js.Promise.resolve
+           elementHandle |> expect |> ExpectJs.toBeTruthy |> resolve
          )
     )
   );
@@ -178,7 +178,7 @@ describe("Page", () => {
            ()
          )
       /* TODO: Better way to verify extra HTTP headers */
-      |> then_(() => pass |> Js.Promise.resolve)
+      |> then_(() => pass |> resolve)
     )
   );
   testPromise("type()", () =>
