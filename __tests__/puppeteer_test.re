@@ -18,7 +18,7 @@ let testPageContent = Node.Fs.readFileAsUtf8Sync(testPagePath);
 
 describe("Puppeteer", () =>
   test("executablePath", () =>
-    Puppeteer.executablePath() |> expect |> toContainString("/Chromium")
+    Puppeteer.executablePath() |> expect |> toContainString("chromium")
   )
 );
 
