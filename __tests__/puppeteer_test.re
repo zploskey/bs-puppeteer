@@ -180,7 +180,10 @@ describe("Page", () => {
            all2((resolve(page), page |> Page.setContent(testPageContent)))
          )
       |> then_(((page, _)) =>
-           all2((resolve(page), Page.type_(page, "#input", "hello world", ())))
+           all2((
+             resolve(page),
+             page |> Page.type_("#input", "hello world", ())
+           ))
          )
       |> then_(((page, _)) =>
            page |> Page.selectOneEval("#input", getElementValueJs)

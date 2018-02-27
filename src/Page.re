@@ -99,8 +99,8 @@ external setExtraHTTPHeaders : (~headers: Js.Dict.t(string), unit) => Js.Promise
 
 type typeOptions = {. "delay": float};
 
-[@bs.send]
-external type_ : (t, string, string, ~options: typeOptions=?, unit) => Js.Promise.t(unit) =
+[@bs.send.pipe : t]
+external type_ : (string, string, ~options: typeOptions=?, unit) => Js.Promise.t('a) =
   "type";
 /* TODO: the rest of Page */
 /* cookies(...urls: string[]): Promise<Cookie[]>; */
