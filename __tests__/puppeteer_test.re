@@ -98,9 +98,7 @@ describe("Page", () => {
     Js.Promise.(
       Page.selectAll(page^, ~selector="html,body")
       |> then_(elementHandles =>
-           expect(elementHandles)
-           |> ExpectJs.toHaveLength(2)
-           |> resolve
+           expect(elementHandles) |> ExpectJs.toHaveLength(2) |> resolve
          )
     )
   );
@@ -108,17 +106,13 @@ describe("Page", () => {
     Js.Promise.(
       Page.selectXPath(page^, ~xpath="/html/body")
       |> then_(elementHandles =>
-           expect(elementHandles)
-           |> ExpectJs.toHaveLength(1)
-           |> resolve
+           expect(elementHandles) |> ExpectJs.toHaveLength(1) |> resolve
          )
     )
   );
   testPromise("click()", () =>
     Js.Promise.(
-      page^
-      |> Page.click("body", ())
-      |> then_(() => pass |> resolve)
+      page^ |> Page.click("body", ()) |> then_(() => pass |> resolve)
     )
   );
   testPromise("goto()", () =>
@@ -152,9 +146,7 @@ describe("Page", () => {
   );
   testPromise("waitForSelector()", () =>
     Js.Promise.(
-      page^
-      |> Page.waitForSelector("body", ())
-      |> then_(() => pass |> resolve)
+      page^ |> Page.waitForSelector("body", ()) |> then_(() => pass |> resolve)
     )
   );
   testPromise("waitForXPath()", () =>
@@ -191,7 +183,7 @@ describe("Page", () => {
            all2((resolve(page), Page.type_(page, "#input", "hello world", ())))
          )
       |> then_(((page, _)) =>
-           Page.selectOneEval(page, "#input", getElementValueJs)
+           page |> Page.selectOneEval("#input", getElementValueJs)
          )
       |> then_(value => value |> expect |> toBe("hello world") |> resolve)
     )

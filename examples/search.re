@@ -18,13 +18,13 @@ let search = () =>
             |> then_(() => page |> Page.click("input[type='submit']", ()))
             |> then_(() => page |> Page.waitForSelector("h3 a", ()))
             |> then_(() =>
-                 Page.selectOneEval(
-                   page,
-                   "h3 a",
-                   [%raw
-                     {| function (element) { return element.textContent; } |}
-                   ]
-                 )
+                 page
+                 |> Page.selectOneEval(
+                      "h3 a",
+                      [%raw
+                        {| function (element) { return element.textContent; } |}
+                      ]
+                    )
                )
             |> then_(text => Js.log2("Got:", text) |> resolve)
             |> then_((_) => Browser.close(browser))

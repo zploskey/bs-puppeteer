@@ -48,6 +48,6 @@ external waitForXPath :
   Js.Promise.t(ElementHandle.t) =
   "";
 
-[@bs.send]
-external selectOneEval : (t, string, unit => unit) => Js.Promise.t('a) =
+[@bs.send.pipe : t]
+external selectOneEval : (string, unit => unit) => Js.Promise.t('a) =
   "$eval";
