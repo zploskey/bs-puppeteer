@@ -177,7 +177,7 @@ describe("Page", () => {
     Js.Promise.(
       Browser.newPage(browser^)
       |> then_(page =>
-           all2((resolve(page), Page.setContent(page, testPageContent)))
+           all2((resolve(page), page |> Page.setContent(testPageContent)))
          )
       |> then_(((page, _)) =>
            all2((resolve(page), Page.type_(page, "#input", "hello world", ())))

@@ -34,7 +34,7 @@ external click : (string, ~options: Click.clickOptions=?, unit) => Js.Promise.t(
 
 [@bs.send] external content : t => Js.Promise.t(string) = "";
 
-[@bs.send] external setContent : (t, string) => Js.Promise.t(unit) = "";
+[@bs.send.pipe : t] external setContent : string => Js.Promise.t(unit) = "";
 
 /*goto(url: string, options?: Partial<NavigationOptions>): Promise<Response>;*/
 [@bs.send.pipe : t]
