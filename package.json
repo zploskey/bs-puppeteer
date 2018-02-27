@@ -5,9 +5,10 @@
   "main": "src/Puppeteer.re",
   "scripts": {
     "build": "bsb -make-world",
-    "start": "bsb -make-world -w",
     "clean": "bsb -clean-world",
-    "test": "jest --watch"
+    "start": "bsb -make-world -w",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "repository": {
     "type": "git",
