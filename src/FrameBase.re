@@ -47,3 +47,7 @@ external waitForXPath :
   (~xpath: string, ~options: selectorOptions=?, unit) =>
   Js.Promise.t(ElementHandle.t) =
   "";
+
+[@bs.send.pipe : t]
+external selectOneEval : (string, unit => unit) => Js.Promise.t('a) =
+  "$eval";

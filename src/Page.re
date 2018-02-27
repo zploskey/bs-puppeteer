@@ -1,5 +1,7 @@
 include FrameBase;
 
+external empty : unit => t = "%identity";
+
 type pageEvents =
   | Console
   | Dialog
@@ -30,7 +32,9 @@ external click : (string, ~options: Click.clickOptions=?, unit) => Js.Promise.t(
 
 [@bs.send.pipe : t] external close : Js.Promise.t(unit) = "";
 
-[@bs.get] external content : t => Js.Promise.t(string) = ""; /* send? */
+[@bs.send] external content : t => Js.Promise.t(string) = "";
+
+[@bs.send.pipe : t] external setContent : string => Js.Promise.t(unit) = "";
 
 /*goto(url: string, options?: Partial<NavigationOptions>): Promise<Response>;*/
 [@bs.send.pipe : t]
@@ -96,7 +100,7 @@ external setExtraHTTPHeaders : (~headers: Js.Dict.t(string), unit) => Js.Promise
 type typeOptions = {. "delay": float};
 
 [@bs.send.pipe : t]
-external type_ : (string, ~options: typeOptions=?, unit) => Js.Promise.t(unit) =
+external type_ : (string, string, ~options: typeOptions=?, unit) => Js.Promise.t('a) =
   "type";
 /* TODO: the rest of Page */
 /* cookies(...urls: string[]): Promise<Cookie[]>; */
