@@ -1,32 +1,32 @@
-# Bucklescript Puppeteer (bs-puppeteer)
+# BuckleScript Puppeteer (bs-puppeteer)
 
-Bucklescript bindings to
+BuckleScript bindings to
 [Puppeteer](https://github.com/GoogleChrome/puppeteer)
 (the Headless Chrome Node API)
 written in [Reason](https://reasonml.github.io).
 This allows programmatic control of an instance of the Chrome or Chromium browser
-from Bucklescript or Reason.
+from BuckleScript or Reason.
 
 ## Status
 
 These bindings are a work in progress.
 Many features have no been implemented.
 The initial goal is to get basic web-scraping and interaction capabilities.
-See [examples](https://github.com/bs-puppeteer/bs-puppeteer/tree/master/examples)
+See [examples](examples/)
 for use cases that are being tested.
 Features of the Puppeteer API are implemented as we need or get to them.
 If you would like to add or fix some bindings, see [contributing](#contributing).
 
 ## Creating a project using bs-puppeteer
 
-Create a new bucklescript project if you have not already:
+Create a new BuckleScript project if you have not already:
 ```
 npm install -g bs-platform
 bsb -init my-project -theme basic-reason
 cd my-project
 ```
 See the
-[Bucklescript documentation](https://bucklescript.github.io/docs/en/installation.html)
+[BuckleScript documentation](https://bucklescript.github.io/docs/en/installation.html)
 for more information about starting a project.
 
 Add bs-puppeteer as a dependency.
@@ -35,7 +35,7 @@ This will install the currently supported version of Puppeteer.
 npm add --save https://github.com/bs-puppeteer/bs-puppeteer.git
 ```
 
-Edit your bsconfig.json file to add `bs-puppeteer` to bs-dependencies:
+Edit your `bsconfig.json` file to add `bs-puppeteer` to `bs-dependencies`:
 ```
   "bs-dependencies" : [
     "bs-puppeteer",
@@ -56,7 +56,7 @@ One-off builds can be done with `npm run build`.
 Contributions are welcome.
 ```
 git clone https://github.com/bs-puppeteer/bs-puppeteer.git
-cd reason-react
+cd bs-puppeteer
 npm install
 npm start
 ```
