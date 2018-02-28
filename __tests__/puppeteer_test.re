@@ -281,6 +281,60 @@ describe("Page", () => {
       |> then_(() => pass |> Js.Promise.resolve)
     )
   );
+  testPromise("cookies()", () =>
+    Js.Promise.(
+      page^
+      |> Page.setCookie([|
+           Page.makeCookie(
+             ~name="foo",
+             ~value="bar",
+             ~url="http://localhost",
+             ()
+           )
+         |])
+      |> then_(() => page^ |> Page.cookies([|"http://localhost"|]))
+      |> then_(cookies => cookies |> expect |> toHaveLength(1) |> resolve)
+    )
+  );
+  testPromise("setCookie()", () =>
+    Js.Promise.(
+      page^
+      |> Page.setCookie([|
+           Page.makeCookie(
+             ~name="foo",
+             ~value="bar",
+             ~url="http://localhost",
+             ()
+           ),
+           Page.makeCookie(
+             ~name="foo2",
+             ~value="bar2",
+             ~url="http://localhost2",
+             ()
+           )
+         |])
+      |> then_(() =>
+           page^ |> Page.cookies([|"http://localhost", "http://localhost2"|])
+         )
+      |> then_(cookies => cookies |> expect |> toHaveLength(2) |> resolve)
+    )
+  );
+  testPromise("deleteCookie()", () =>
+    Js.Promise.(
+      page^
+      |> Page.setCookie([|
+           Page.makeCookie(
+             ~name="foo",
+             ~value="bar",
+             ~url="http://localhost",
+             ()
+           )
+         |])
+      |> then_(() => page^ |> Page.deleteCookie([||]))
+      |> then_(() => page^ |> Page.cookies([||]))
+      |> then_(cookies => cookies |> expect |> toHaveLength(0) |> resolve)
+    )
+  );
   afterAllPromise(() =>
     Js.Promise.(Page.close(page^) |> then_(() => Browser.close(browser^)))
   );
