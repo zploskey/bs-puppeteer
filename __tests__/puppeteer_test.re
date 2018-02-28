@@ -22,11 +22,14 @@ let noSandbox =
     ()
   );
 
-describe("Puppeteer", () =>
+describe("Puppeteer", () => {
   test("executablePath", () =>
     Puppeteer.executablePath() |> expect |> toContainString("chromium")
-  )
-);
+  );
+  test("defaultArgs()", () =>
+    Puppeteer.defaultArgs() |> expect |> toHaveLength(17)
+  );
+});
 
 describe("Browser", () => {
   let browser = ref(Browser.empty());

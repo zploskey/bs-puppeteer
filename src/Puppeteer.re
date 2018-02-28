@@ -12,6 +12,9 @@ type connectOptions = {
 [@bs.val] [@bs.module "puppeteer"]
 external launch : (~options: Launcher.launchOptions=?, unit) => Js.Promise.t(Browser.t) =
   "";
+
+[@bs.val] [@bs.module "puppeteer"]
+external defaultArgs : unit => array(string) = "";
 /*
  * TODO: Write bindings to these interfaces.
  *
