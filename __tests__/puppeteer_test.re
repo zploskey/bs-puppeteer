@@ -16,11 +16,15 @@ let getElementOuterHTMLJs = [%raw
   {| function (element) { return element.outerHTML; } |}
 ];
 
-let testPagePath =
+let fixturesPath =
   Node.Path.resolve(
     [%bs.node __dirname] |> Js.Option.getWithDefault(""),
-    "../../../__tests__/fixtures/testPage.html"
+    "../../../__tests__/fixtures/"
   );
+
+let testPagePath = Node.Path.resolve(fixturesPath, "./testPage.html");
+
+let testPageJsPath = Node.Path.resolve(fixturesPath, "./testPage.js");
 
 let testPageContent = Node.Fs.readFileAsUtf8Sync(testPagePath);
 
@@ -226,6 +230,25 @@ describe("Page", () => {
            page |> Page.selectOneEval("#input", getElementValueJs)
          )
       |> then_(value => value |> expect |> toBe("hello world") |> resolve)
+    )
+  );
+  testPromise("addScriptTag()", () =>
+    Js.Promise.(
+      Browser.newPage(browser^)
+      |> then_(page =>
+           page
+           |> Page.addScriptTag(~path=testPageJsPath)
+           |> then_(_elementHandle => Page.content(page))
+           |> then_(content =>
+                Page.close(page)
+                |> then_(() =>
+                     content
+                     |> expect
+                     |> toContainString("// This is \"testPage.js\"")
+                     |> resolve
+                   )
+              )
+         )
     )
   );
   afterAllPromise(() =>

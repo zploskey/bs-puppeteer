@@ -2,6 +2,18 @@ type t;
 
 type serializable = Js.Json.t;
 
+type tagOptions = {
+  .
+  "content": Js.undefined(string),
+  "path": Js.undefined(string),
+  "url": Js.undefined(string)
+};
+
+[@bs.obj]
+external makeTagOptions :
+  (~url: string=?, ~path: string=?, ~content: string=?, unit) => _ =
+  "";
+
 [@bs.send.pipe : t]
 external selectOne :
   (~selector: string) => Js.Promise.t(Js.null(ElementHandle.t)) =
@@ -57,3 +69,16 @@ external selectOneEval : (string, unit => unit) => Js.Promise.t('a) =
 [@bs.send.pipe : t]
 external selectAllEval : (string, unit => unit) => Js.Promise.t('a) =
   "$$eval";
+
+[@bs.send]
+external _addScriptTag : (t, tagOptions) => Js.Promise.t(ElementHandle.t) =
+  "addScriptTag";
+
+let addScriptTag =
+    (
+      ~url: option(string)=?,
+      ~path: option(string)=?,
+      ~content: option(string)=?,
+      t
+    ) =>
+  _addScriptTag(t, makeTagOptions(~url?, ~path?, ~content?, ()));
