@@ -32,6 +32,22 @@ type cookie = {
   "sameSite": Js.undefined(string)
 };
 
+type viewport = {
+  .
+  "width": int,
+  "height": int,
+  "deviceScaleFactor": int,
+  "isMobile": Js.boolean,
+  "hasTouch": Js.boolean,
+  "isLandscape": Js.boolean
+};
+
+type emulateOption = {
+  .
+  "viewport": viewport,
+  "userAgent": string
+};
+
 [@bs.obj]
 external makeCookie :
   (
@@ -89,3 +105,8 @@ external cookies : array(string) => Js.Promise.t(array(cookie)) = "";
 
 [@bs.send.pipe : t] [@bs.splice]
 external setCookie : array(cookie) => Js.Promise.t(unit) = "";
+
+[@bs.send.pipe : t]
+external emulate : emulateOption => Js.Promise.t(unit) = "";
+
+[@bs.send.pipe : t] external viewport : unit => viewport = "";

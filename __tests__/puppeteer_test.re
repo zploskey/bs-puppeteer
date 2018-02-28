@@ -138,7 +138,7 @@ describe("Page", () => {
       page^
       |> Page.selectAllEval("html,body", getLengthOfElementsJs)
       |> then_(serializable =>
-           serializable |> expect |> toBe(2) |> Js.Promise.resolve
+           serializable |> expect |> toBe(2) |> resolve
          )
     )
   );
@@ -149,7 +149,7 @@ describe("Page", () => {
       |> then_(serializable =>
            expect(serializable)
            |> toBe("<html><head></head><body></body></html>")
-           |> Js.Promise.resolve
+           |> resolve
          )
     )
   );
@@ -278,7 +278,7 @@ describe("Page", () => {
       |> Page.authenticate(
            Js.Null.return({"username": "foo", "password": "bar"})
          )
-      |> then_(() => pass |> Js.Promise.resolve)
+      |> then_(() => pass |> resolve)
     )
   );
   testPromise("cookies()", () =>
@@ -333,6 +333,36 @@ describe("Page", () => {
       |> then_(() => page^ |> Page.deleteCookie([||]))
       |> then_(() => page^ |> Page.cookies([||]))
       |> then_(cookies => cookies |> expect |> toHaveLength(0) |> resolve)
+    )
+  );
+  testPromise("emulate()", () =>
+    Js.Promise.(
+      page^
+      |> Page.emulate({
+           "viewport": {
+             "width": 320,
+             "height": 480,
+             "deviceScaleFactor": 2,
+             "isMobile": Js.true_,
+             "hasTouch": Js.true_,
+             "isLandscape": Js.true_
+           },
+           "userAgent": ""
+         })
+      |> then_(() =>
+           page^
+           |> Page.viewport()
+           |> expect
+           |> ExpectJs.toMatchObject({
+                "width": 320,
+                "height": 480,
+                "deviceScaleFactor": 2,
+                "isMobile": Js.true_,
+                "hasTouch": Js.true_,
+                "isLandscape": Js.true_
+              })
+           |> resolve
+         )
     )
   );
   afterAllPromise(() =>
