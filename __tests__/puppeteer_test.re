@@ -12,6 +12,10 @@ let getLengthOfElementsJs = [%raw
   {| function (elements) { return elements.length; } |}
 ];
 
+let getElementOuterHTMLJs = [%raw
+  {| function (element) { return element.outerHTML; } |}
+];
+
 let testPagePath =
   Node.Path.resolve(
     [%bs.node __dirname] |> Js.Option.getWithDefault(""),
@@ -129,6 +133,17 @@ describe("Page", () => {
       |> Page.selectAllEval("html,body", getLengthOfElementsJs)
       |> then_(serializable =>
            serializable |> expect |> toBe(2) |> Js.Promise.resolve
+         )
+    )
+  );
+  testPromise("$eval()", () =>
+    Js.Promise.(
+      page^
+      |> Page.selectOneEval("html", getElementOuterHTMLJs)
+      |> then_(serializable =>
+           expect(serializable)
+           |> toBe("<html><head></head><body></body></html>")
+           |> Js.Promise.resolve
          )
     )
   );
