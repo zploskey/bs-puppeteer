@@ -41,56 +41,10 @@ external click : (string, ~options: Click.clickOptions=?, unit) => Js.Promise.t(
 external goto : (string, ~options: Navigation.options=?, unit) => Js.Promise.t(Response.t) =
   "";
 
-
-type screenshotOptions = {
-  .
-  "path": Js.Nullable.t(string),
-  "_type": Js.Nullable.t(string), /* "jpeg" | "png" (default) */
-  "quality": Js.Nullable.t(float),
-  "fullPage": Js.Nullable.t(bool),
-  "clip": Js.Nullable.t(BoundingBox.t),
-  "omitBackground": Js.Nullable.t(bool)
-  /* TODO: Should handle the two options. */
-};
-
-[@bs.obj]
-external makeScreenshotOptions :
-  (
-    ~path: string=?,
-    ~_type: string=?,
-    ~quality: float=?,
-    ~fullPage: Js.boolean=?,
-    ~clip: BoundingBox.t=?,
-    ~omitBackground: Js.boolean=?,
-    unit
-  ) =>
-  screenshotOptions =
-  "";
-
-let makeScreenshotOptions =
-    (
-      ~path: option(string)=?,
-      ~_type: option(string)=?,
-      ~quality: option(float)=?,
-      ~fullPage: option(bool)=?,
-      ~clip: option(BoundingBox.t)=?,
-      ~omitBackground: option(bool)=?,
-      ()
-    ) =>
-  makeScreenshotOptions(
-    ~path?,
-    ~_type?,
-    ~quality?,
-    ~fullPage=?Util.optBoolToJs(fullPage),
-    ~clip?,
-    ~omitBackground=?Util.optBoolToJs(omitBackground),
-    ()
-  );
-
 /* screenshot(options?: ScreenshotOptions): Promise<Buffer>; */
 [@bs.send.pipe : t]
 external screenshot :
-  (~options: screenshotOptions=?, unit) => Js.Promise.t(Js.Typed_array.ArrayBuffer.t) =
+  (~options: Screenshot.options=?, unit) => Js.Promise.t(Js.Typed_array.ArrayBuffer.t) =
   "";
 
 [@bs.send.pipe : t]

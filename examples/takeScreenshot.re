@@ -13,7 +13,7 @@ let takeScreenshot = () =>
             |> then_((_) => {
                  Js.log("screenshotting");
                  let options =
-                   Page.makeScreenshotOptions(~path="./screenshot.png", ());
+                   Screenshot.makeOptions(~path="./screenshot.png", ());
                  page |> Page.screenshot(~options, ());
                })
           )
