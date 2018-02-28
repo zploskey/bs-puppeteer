@@ -16,6 +16,12 @@ let testPagePath =
 
 let testPageContent = Node.Fs.readFileAsUtf8Sync(testPagePath);
 
+let noSandbox =
+  Launcher.makeLaunchOptions(
+    ~args=[|"--no-sandbox", "--disable-setuid-sandbox"|],
+    ()
+  );
+
 describe("Puppeteer", () =>
   test("executablePath", () =>
     Puppeteer.executablePath() |> expect |> toContainString("chromium")
@@ -26,7 +32,7 @@ describe("Browser", () => {
   let browser = ref(Browser.empty());
   beforeAllPromise(() =>
     Js.Promise.(
-      Puppeteer.launch()
+      Puppeteer.launch(~options=noSandbox, ())
       |> then_(res => {
            browser := res;
            resolve();
@@ -65,7 +71,7 @@ describe("Page", () => {
   let page = ref(Page.empty());
   beforeAllPromise(() =>
     Js.Promise.(
-      Puppeteer.launch()
+      Puppeteer.launch(~options=noSandbox, ())
       |> then_(res => {
            browser := res;
            Browser.newPage(browser^);
