@@ -26,7 +26,14 @@ describe("Browser", () => {
   let browser = ref(Browser.empty());
   beforeAllPromise(() =>
     Js.Promise.(
-      Puppeteer.launch()
+      Puppeteer.launch(
+        ~options=
+          Launcher.makeLaunchOptions(
+            ~args=["--no-sandbox", "--disable-setuid-sandbox"],
+            ()
+          ),
+        ()
+      )
       |> then_(res => {
            browser := res;
            resolve();
