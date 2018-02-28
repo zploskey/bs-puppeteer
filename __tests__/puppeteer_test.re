@@ -272,6 +272,15 @@ describe("Page", () => {
          )
     )
   );
+  testPromise("authenticate()", () =>
+    Js.Promise.(
+      page^
+      |> Page.authenticate(
+           Js.Null.return({"username": "foo", "password": "bar"})
+         )
+      |> then_(() => pass |> Js.Promise.resolve)
+    )
+  );
   afterAllPromise(() =>
     Js.Promise.(Page.close(page^) |> then_(() => Browser.close(browser^)))
   );

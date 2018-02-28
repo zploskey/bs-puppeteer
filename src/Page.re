@@ -19,6 +19,9 @@ type pageEvents =
 type authOptions = {. "username": string, "password": string};
 
 [@bs.send.pipe : t]
+external authenticate : Js.Null.t(authOptions) => Js.Promise.t(unit) = "";
+
+[@bs.send.pipe : t]
 external click : (string, ~options: Click.clickOptions=?, unit) => Js.Promise.t(unit) =
   "";
 
