@@ -82,3 +82,17 @@ let addScriptTag =
       t
     ) =>
   _addScriptTag(t, makeTagOptions(~url?, ~path?, ~content?, ()));
+
+[@bs.send]
+external _addStyleTag : (t, tagOptions) => Js.Promise.t(ElementHandle.t) =
+  "addStyleTag";
+
+let addStyleTag =
+   (
+     ~url: option(string)=?,
+     ~path: option(string)=?,
+     ~content: option(string)=?,
+     t
+   ) =>
+  _addStyleTag(t, makeTagOptions(~url?, ~path?, ~content?, ()));
+

@@ -26,6 +26,8 @@ let testPagePath = Node.Path.resolve(fixturesPath, "./testPage.html");
 
 let testPageJsPath = Node.Path.resolve(fixturesPath, "./testPage.js");
 
+let testPageCssPath = Node.Path.resolve(fixturesPath, "./testPage.css");
+
 let testPageContent = Node.Fs.readFileAsUtf8Sync(testPagePath);
 
 let noSandbox =
@@ -245,6 +247,25 @@ describe("Page", () => {
                      content
                      |> expect
                      |> toContainString("// This is \"testPage.js\"")
+                     |> resolve
+                   )
+              )
+         )
+    )
+  );
+  testPromise("addStyleTag()", () =>
+    Js.Promise.(
+      Browser.newPage(browser^)
+      |> then_(page =>
+           page
+           |> Page.addStyleTag(~path=testPageCssPath)
+           |> then_(_elementHandle => Page.content(page))
+           |> then_(content =>
+                Page.close(page)
+                |> then_(() =>
+                     content
+                     |> expect
+                     |> toContainString("/* This is \"testPage.css\" */")
                      |> resolve
                    )
               )
