@@ -7,7 +7,8 @@
     "build": "bsb -make-world",
     "clean": "bsb -clean-world",
     "start": "bsb -make-world -w",
-    "test": "jest --bail --ci",
+    "test": "jest",
+    "test:ci": "jest --bail --ci",
     "test:watch": "jest --watch"
   },
   "repository": {
