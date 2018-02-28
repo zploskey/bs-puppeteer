@@ -363,6 +363,11 @@ describe("Page", () => {
          )
     )
   );
+  testPromise("emulateMedia()", () =>
+    Js.Promise.(
+      page^ |> Page.emulateMedia(Some(Print)) |> then_(() => pass |> resolve)
+    )
+  );
   afterAllPromise(() =>
     Js.Promise.(Page.close(page^) |> then_(() => Browser.close(browser^)))
   );
