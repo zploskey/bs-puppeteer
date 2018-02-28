@@ -8,6 +8,10 @@ let getElementValueJs = [%raw
   {| function (element) { return element.value; } |}
 ];
 
+let getLengthOfElementsJs = [%raw
+  {| function (elements) { return elements.length; } |}
+];
+
 let testPagePath =
   Node.Path.resolve(
     [%bs.node __dirname] |> Js.Option.getWithDefault(""),
@@ -116,6 +120,15 @@ describe("Page", () => {
       Page.selectXPath(page^, ~xpath="/html/body")
       |> then_(elementHandles =>
            expect(elementHandles) |> ExpectJs.toHaveLength(1) |> resolve
+         )
+    )
+  );
+  testPromise("$$eval()", () =>
+    Js.Promise.(
+      page^
+      |> Page.selectAllEval("html,body", getLengthOfElementsJs)
+      |> then_(serializable =>
+           serializable |> expect |> toBe(2) |> Js.Promise.resolve
          )
     )
   );
