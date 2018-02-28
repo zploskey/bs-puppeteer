@@ -29,7 +29,7 @@ describe("Browser", () => {
       Puppeteer.launch(
         ~options=
           Launcher.makeLaunchOptions(
-            ~args=["--no-sandbox", "--disable-setuid-sandbox"],
+            ~args=[|"--no-sandbox", "--disable-setuid-sandbox"|],
             ()
           ),
         ()
