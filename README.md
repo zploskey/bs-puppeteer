@@ -7,6 +7,8 @@ written in [Reason](https://reasonml.github.io).
 This allows programmatic control of an instance of the Chrome or Chromium browser
 from BuckleScript or Reason.
 
+[![Build Status](https://travis-ci.org/bs-puppeteer/bs-puppeteer.svg?branch=master)](https://travis-ci.org/bs-puppeteer/bs-puppeteer)
+
 ## Status
 
 These bindings are a work in progress.
