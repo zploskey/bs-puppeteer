@@ -79,3 +79,8 @@ external addScriptTag : tagOptions => Js.Promise.t(ElementHandle.t) =
 external addStyleTag : tagOptions => Js.Promise.t(ElementHandle.t) =
   "";
 
+[@bs.send.pipe : t]
+external evaluate :
+  (unit => Js.Promise.t(Js.Json.t), [@bs.splice] array({..})) =>
+  Js.Promise.t(Js.Json.t) =
+  "";

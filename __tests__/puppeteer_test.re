@@ -368,6 +368,22 @@ describe("Page", () => {
       page^ |> Page.emulateMedia(Some(Print)) |> then_(() => pass |> resolve)
     )
   );
+  testPromise("evaluate()", () =>
+    Js.Promise.(
+      {
+        let eval = [%raw {| function () { return Promise.resolve("ok"); } |}];
+        page^ |> Page.evaluate(eval, [||]);
+      }
+      |> then_(serializable =>
+           serializable
+           |> Js.Json.decodeString
+           |> Js.Option.getWithDefault("")
+           |> expect
+           |> toBe("ok")
+           |> resolve
+         )
+    )
+  );
   afterAllPromise(() =>
     Js.Promise.(Page.close(page^) |> then_(() => Browser.close(browser^)))
   );
