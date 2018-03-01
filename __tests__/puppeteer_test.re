@@ -91,7 +91,7 @@ describe("Page", () => {
       Puppeteer.launch(~options=noSandbox, ())
       |> then_(res => {
            browser := res;
-           Browser.newPage(browser^);
+           browser^ |> Browser.newPage;
          })
       |> then_(res => {
            page := res;
@@ -158,7 +158,8 @@ describe("Page", () => {
   );
   testPromise("goto()", () =>
     Js.Promise.(
-      Browser.newPage(browser^)
+      browser^
+      |> Browser.newPage
       |> then_(page => {
            let options = Navigation.makeOptions(~timeout=25000., ());
            page |> Page.goto("https://google.com", ~options, ());
@@ -216,7 +217,8 @@ describe("Page", () => {
   );
   testPromise("type()", () =>
     Js.Promise.(
-      Browser.newPage(browser^)
+      browser^
+      |> Browser.newPage
       |> then_(page =>
            all2((resolve(page), page |> Page.setContent(testPageContent)))
          )
@@ -234,7 +236,8 @@ describe("Page", () => {
   );
   testPromise("addScriptTag()", () =>
     Js.Promise.(
-      Browser.newPage(browser^)
+      browser^
+      |> Browser.newPage
       |> then_(page =>
            page
            |> Page.addScriptTag(Page.makeTagOptions(~path=testPageJsPath, ()))
@@ -253,7 +256,8 @@ describe("Page", () => {
   );
   testPromise("addStyleTag()", () =>
     Js.Promise.(
-      Browser.newPage(browser^)
+      browser^
+      |> Browser.newPage
       |> then_(page =>
            page
            |> Page.addStyleTag(Page.makeTagOptions(~path=testPageCssPath, ()))
