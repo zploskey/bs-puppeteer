@@ -237,7 +237,7 @@ describe("Page", () => {
       Browser.newPage(browser^)
       |> then_(page =>
            page
-           |> Page.addScriptTag(~path=testPageJsPath)
+           |> Page.addScriptTag(Page.makeTagOptions(~path=testPageJsPath, ()))
            |> then_(_elementHandle => Page.content(page))
            |> then_(content =>
                 Page.close(page)
@@ -256,7 +256,7 @@ describe("Page", () => {
       Browser.newPage(browser^)
       |> then_(page =>
            page
-           |> Page.addStyleTag(~path=testPageCssPath)
+           |> Page.addStyleTag(Page.makeTagOptions(~path=testPageCssPath, ()))
            |> then_(_elementHandle => Page.content(page))
            |> then_(content =>
                 Page.close(page)

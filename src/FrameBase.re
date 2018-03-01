@@ -70,29 +70,12 @@ external selectOneEval : (string, unit => unit) => Js.Promise.t('a) =
 external selectAllEval : (string, unit => unit) => Js.Promise.t('a) =
   "$$eval";
 
-[@bs.send]
-external _addScriptTag : (t, tagOptions) => Js.Promise.t(ElementHandle.t) =
-  "addScriptTag";
+[@bs.send.pipe : t]
+external addScriptTag : tagOptions => Js.Promise.t(ElementHandle.t) =
+  "";
 
-let addScriptTag =
-    (
-      ~url: option(string)=?,
-      ~path: option(string)=?,
-      ~content: option(string)=?,
-      t
-    ) =>
-  _addScriptTag(t, makeTagOptions(~url?, ~path?, ~content?, ()));
 
-[@bs.send]
-external _addStyleTag : (t, tagOptions) => Js.Promise.t(ElementHandle.t) =
-  "addStyleTag";
-
-let addStyleTag =
-   (
-     ~url: option(string)=?,
-     ~path: option(string)=?,
-     ~content: option(string)=?,
-     t
-   ) =>
-  _addStyleTag(t, makeTagOptions(~url?, ~path?, ~content?, ()));
+[@bs.send.pipe : t]
+external addStyleTag : tagOptions => Js.Promise.t(ElementHandle.t) =
+  "";
 
