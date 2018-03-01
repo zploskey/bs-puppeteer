@@ -1,7 +1,6 @@
 include JSHandle;
 
 /* TODO: $, $$, $x */
-
 [@bs.send.pipe : t]
 external boundingBox : Js.Promise.t(Js.null(BoundingBox.t)) = "";
 
