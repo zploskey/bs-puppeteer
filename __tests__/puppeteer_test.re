@@ -384,6 +384,19 @@ describe("Page", () => {
          )
     )
   );
+  testPromise("evaluateHandle()", () =>
+    Js.Promise.(
+      {
+        let eval = [%raw
+          {| function () { return Promise.resolve(document); } |}
+        ];
+        page^ |> Page.evaluateHandle(eval, [||]);
+      }
+      |> then_(jsHandler =>
+           jsHandler |> expect |> ExpectJs.toBeTruthy |> Js.Promise.resolve
+         )
+    )
+  );
   afterAllPromise(() =>
     Js.Promise.(Page.close(page^) |> then_(() => Browser.close(browser^)))
   );

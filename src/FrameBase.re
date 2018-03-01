@@ -84,3 +84,9 @@ external evaluate :
   (unit => Js.Promise.t(Js.Json.t), [@bs.splice] array({..})) =>
   Js.Promise.t(Js.Json.t) =
   "";
+
+[@bs.send.pipe :t]
+external evaluateHandle :
+  (unit => Js.Promise.t(JSHandle.t), [@bs.splice] array({..})) =>
+  Js.Promise.t(JSHandle.t) =
+  "";
