@@ -34,7 +34,7 @@ for more information about starting a project.
 Add bs-puppeteer as a dependency.
 This will install the currently supported version of Puppeteer.
 ```
-npm add --save https://github.com/bs-puppeteer/bs-puppeteer.git
+npm add --save bs-puppeteer
 ```
 
 Edit your `bsconfig.json` file to add `bs-puppeteer` to `bs-dependencies`:
