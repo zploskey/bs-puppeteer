@@ -2,6 +2,18 @@ type t;
 
 type serializable = Js.Json.t;
 
+type tagOptions = {
+  .
+  "content": Js.undefined(string),
+  "path": Js.undefined(string),
+  "url": Js.undefined(string)
+};
+
+[@bs.obj]
+external makeTagOptions :
+  (~url: string=?, ~path: string=?, ~content: string=?, unit) => _ =
+  "";
+
 [@bs.send.pipe : t]
 external selectOne :
   (~selector: string) => Js.Promise.t(Js.null(ElementHandle.t)) =
@@ -48,6 +60,37 @@ external waitForXPath :
   Js.Promise.t(ElementHandle.t) =
   "";
 
+/* TODO: Add support [, ...args] */
 [@bs.send.pipe : t]
 external selectOneEval : (string, unit => unit) => Js.Promise.t('a) =
   "$eval";
+
+/* TODO: Add support [, ...args] */
+[@bs.send.pipe : t]
+external selectAllEval : (string, unit => unit) => Js.Promise.t('a) =
+  "$$eval";
+
+[@bs.send.pipe : t]
+external addScriptTag : tagOptions => Js.Promise.t(ElementHandle.t) =
+  "";
+
+
+[@bs.send.pipe : t]
+external addStyleTag : tagOptions => Js.Promise.t(ElementHandle.t) =
+  "";
+
+/* TODO: Currently only ever work for functions taking no arguments,
+   and the second parameter array can only ever be empty */
+[@bs.send.pipe : t]
+external evaluate :
+  (unit => Js.Promise.t(Js.Json.t), [@bs.splice] array({..})) =>
+  Js.Promise.t(Js.Json.t) =
+  "";
+
+/* TODO: Currently only ever work for functions taking no arguments,
+   and the second parameter array can only ever be empty */
+[@bs.send.pipe :t]
+external evaluateHandle :
+  (unit => Js.Promise.t(JSHandle.t), [@bs.splice] array({..})) =>
+  Js.Promise.t(JSHandle.t) =
+  "";
