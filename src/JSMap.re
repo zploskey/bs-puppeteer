@@ -14,7 +14,7 @@ external length : t('key, 'value) => option(int) = "";
 [@bs.send] external delete : (t('key, 'value), 'key) => bool = "";
 
 [@bs.send] [@bs.return nullable]
-external get : (t('key, 'value), 'a) => option('b) = "";
+external get : (t('key, 'value), 'key) => option('value) = "";
 
 [@bs.send] external has : (t('key, 'value), 'key) => bool = "";
 
