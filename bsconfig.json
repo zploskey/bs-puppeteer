@@ -1,6 +1,7 @@
 {
   "name": "bs-puppeteer",
   "namespace": true,
+  "bsc-flags": ["-bs-super-errors"],
   "sources": [
     "src",
     {
