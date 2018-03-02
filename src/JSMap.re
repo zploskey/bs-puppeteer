@@ -6,6 +6,9 @@ type t('key, 'value) =
 /* TODO: can optionally take an iterable of key value pairs */
 [@bs.new] external make : unit => t('key, 'value) = "Map";
 
+[@bs.get] [@bs.return nullable]
+external length : t('key, 'value) => option(int) = "";
+
 [@bs.send] external clear : t('key, 'value) => unit = "";
 
 [@bs.send] external delete : (t('key, 'value), 'key) => bool = "";
