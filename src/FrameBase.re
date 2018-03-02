@@ -60,12 +60,12 @@ external waitForXPath :
   Js.Promise.t(ElementHandle.t) =
   "";
 
-/* TODP: Add support [, ...args] */
+/* TODO: Add support [, ...args] */
 [@bs.send.pipe : t]
 external selectOneEval : (string, unit => unit) => Js.Promise.t('a) =
   "$eval";
 
-/* TODP: Add support [, ...args] */
+/* TODO: Add support [, ...args] */
 [@bs.send.pipe : t]
 external selectAllEval : (string, unit => unit) => Js.Promise.t('a) =
   "$$eval";
@@ -79,12 +79,16 @@ external addScriptTag : tagOptions => Js.Promise.t(ElementHandle.t) =
 external addStyleTag : tagOptions => Js.Promise.t(ElementHandle.t) =
   "";
 
+/* TODO: Currently only ever work for functions taking no arguments,
+   and the second parameter array can only ever be empty */
 [@bs.send.pipe : t]
 external evaluate :
   (unit => Js.Promise.t(Js.Json.t), [@bs.splice] array({..})) =>
   Js.Promise.t(Js.Json.t) =
   "";
 
+/* TODO: Currently only ever work for functions taking no arguments,
+   and the second parameter array can only ever be empty */
 [@bs.send.pipe :t]
 external evaluateHandle :
   (unit => Js.Promise.t(JSHandle.t), [@bs.splice] array({..})) =>
