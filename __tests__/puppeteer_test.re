@@ -369,7 +369,12 @@ describe("Page", () => {
   );
   testPromise("emulateMedia()", () =>
     Js.Promise.(
-      page^ |> Page.emulateMedia(Some(Print)) |> then_(() => pass |> resolve)
+      page^ |> Page.emulateMedia(`print) |> then_(() => pass |> resolve)
+    )
+  );
+  testPromise("emulateMediaDisable()", () =>
+    Js.Promise.(
+      page^ |> Page.emulateMediaDisable |> then_(() => pass |> resolve)
     )
   );
   testPromise("evaluate()", () =>

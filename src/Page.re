@@ -111,20 +111,12 @@ external emulate : emulateOption => Js.Promise.t(unit) = "";
 
 [@bs.send.pipe : t] external viewport : unit => viewport = "";
 
-[@bs.send]
-external _emulateMedia : (t, Js.Nullable.t(string)) => Js.Promise.t(unit) =
+[@bs.send.pipe : t]
+external emulateMedia :
+  ([@bs.string] [ | `screen | `print]) => Js.Promise.t(unit) =
+  "";
+
+[@bs.send.pipe : t]
+external emulateMediaDisable :
+  ([@bs.as {json|null|json}] _) => Js.Promise.t(unit) =
   "emulateMedia";
-
-type mediaType =
-  | Screen
-  | Print;
-
-let emulateMedia = (mediaType: option(mediaType), t) =>
-  switch mediaType {
-  | Some(v) =>
-    switch v {
-    | Screen => _emulateMedia(t, Js.Nullable.return("screen"))
-    | Print => _emulateMedia(t, Js.Nullable.return("print"))
-    }
-  | None => _emulateMedia(t, Js.Nullable.null)
-  };
