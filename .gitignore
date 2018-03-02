@@ -1,10 +1,10 @@
 .DS_Store
 .merlin
 .bsb.lock
-npm-debug.log
 /lib/
-/node_modules/
+/node_modules*
 /.vscode/
+*.log
 
 # package manager lock files
 yarn.lock
