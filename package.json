@@ -7,9 +7,10 @@
     "build": "bsb -make-world",
     "clean": "bsb -clean-world",
     "format": "refmt",
-    "precommit": "lint-staged",
+    "lint-staged": "lint-staged",
+    "precommit": "lint-staged && npm test",
     "start": "bsb -make-world -w",
-    "test": "jest",
+    "test": "npm run build && jest",
     "test:ci": "jest --bail --ci",
     "test:watch": "jest --watch"
   },
