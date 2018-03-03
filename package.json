@@ -4,10 +4,10 @@
   "description": "Bucklescript bindings for Puppeteer (headless chrome browser) written in Reason",
   "main": "src/Puppeteer.re",
   "scripts": {
-    "precommit": "lint-staged",
     "build": "bsb -make-world",
     "clean": "bsb -clean-world",
     "format": "refmt",
+    "precommit": "lint-staged",
     "start": "bsb -make-world -w",
     "test": "jest",
     "test:ci": "jest --bail --ci",
@@ -34,7 +34,7 @@
   "devDependencies": {
     "@glennsl/bs-jest": "^0.4.2",
     "bs-platform": "^2.2.0",
-    "husky": "^0.14.3",
+    "husky": "^0.15.0-rc.8",
     "lint-staged": "^7.0.0"
   }
 }
