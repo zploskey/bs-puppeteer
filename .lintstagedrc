@@ -1,5 +1,5 @@
 ---
 "{src,examples,__tests__}/**/*.{re,rei}":
-  - "npm test -- *.js"
   - "npm run format -- --in-place"
+  - "npm test -- *.js"
   - "git add"
