@@ -16,7 +16,11 @@ type pageEvents =
   | RequestFinished
   | Response;
 
-type authOptions = {. "username": string, "password": string};
+type authOptions = {
+  .
+  "username": string,
+  "password": string
+};
 
 type cookie = {
   .
@@ -65,11 +69,13 @@ external makeCookie :
   ) =>
   _ =
   "";
+
 [@bs.send.pipe : t]
 external authenticate : Js.Null.t(authOptions) => Js.Promise.t(unit) = "";
 
 [@bs.send.pipe : t]
-external click : (string, ~options: Click.clickOptions=?, unit) => Js.Promise.t(unit) =
+external click :
+  (string, ~options: Click.clickOptions=?, unit) => Js.Promise.t(unit) =
   "";
 
 [@bs.send.pipe : t] external close : Js.Promise.t(unit) = "";
@@ -79,22 +85,26 @@ external click : (string, ~options: Click.clickOptions=?, unit) => Js.Promise.t(
 [@bs.send.pipe : t] external setContent : string => Js.Promise.t(unit) = "";
 
 [@bs.send.pipe : t]
-external goto : (string, ~options: Navigation.options=?, unit) => Js.Promise.t(Response.t) =
+external goto :
+  (string, ~options: Navigation.options=?, unit) => Js.Promise.t(Response.t) =
   "";
 
 [@bs.send.pipe : t]
 external screenshot :
-  (~options: Screenshot.options=?, unit) => Js.Promise.t(Js.Typed_array.ArrayBuffer.t) =
+  (~options: Screenshot.options=?, unit) =>
+  Js.Promise.t(Js.Typed_array.ArrayBuffer.t) =
   "";
 
 [@bs.send.pipe : t]
-external setExtraHTTPHeaders : (~headers: Js.Dict.t(string), unit) => Js.Promise.t(unit) =
+external setExtraHTTPHeaders :
+  (~headers: Js.Dict.t(string), unit) => Js.Promise.t(unit) =
   "";
 
 type typeOptions = {. "delay": float};
 
 [@bs.send.pipe : t]
-external type_ : (string, string, ~options: typeOptions=?, unit) => Js.Promise.t(unit) =
+external type_ :
+  (string, string, ~options: typeOptions=?, unit) => Js.Promise.t(unit) =
   "type";
 
 [@bs.send.pipe : t] [@bs.splice]

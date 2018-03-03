@@ -8,9 +8,11 @@ include FrameBase;
 
 [@bs.get] external parentFrame : t => t = ""; /* TODO: can be undefined as well */
 
-[@bs.send.pipe : t] external addScriptTag : (~url: string) => Js.Promise.t(unit) = "";
+[@bs.send.pipe : t]
+external addScriptTag : (~url: string) => Js.Promise.t(unit) = "";
 
-[@bs.send.pipe : t] external injectFile : (~filePath: string) => Js.Promise.t(unit) = "";
+[@bs.send.pipe : t]
+external injectFile : (~filePath: string) => Js.Promise.t(unit) = "";
 /*
     evaluate<T = string>(
       fn: T | EvaluateFn<T>,
