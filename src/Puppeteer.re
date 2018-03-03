@@ -1,16 +1,22 @@
 type connectOptions = {
   .
-  "browserWSEndpoint": Js.Nullable.t(string), "ignoreHTTPSErrors": Js.Nullable.t(bool)
+  "browserWSEndpoint": Js.Nullable.t(string),
+  "ignoreHTTPSErrors": Js.Nullable.t(bool)
 };
 
 /* Attaches Puppeteer to an existing Chromium instance */
-[@bs.val] external connect : (~options: connectOptions=?, unit) => Js.Promise.t(Browser.t) = "";
+[@bs.val]
+external connect :
+  (~options: connectOptions=?, unit) => Js.Promise.t(Browser.t) =
+  "";
 
 /* Path where Puppeteer expects to find bundled Chromium */
-[@bs.val] [@bs.module "puppeteer"] external executablePath : unit => string = "";
+[@bs.val] [@bs.module "puppeteer"]
+external executablePath : unit => string = "";
 
 [@bs.val] [@bs.module "puppeteer"]
-external launch : (~options: Launcher.launchOptions=?, unit) => Js.Promise.t(Browser.t) =
+external launch :
+  (~options: Launcher.launchOptions=?, unit) => Js.Promise.t(Browser.t) =
   "";
 
 [@bs.val] [@bs.module "puppeteer"]

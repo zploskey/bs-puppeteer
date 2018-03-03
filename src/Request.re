@@ -37,7 +37,8 @@ type overrides = {
 
 [@bs.send.pipe : t] external abort : Js.Promise.t(unit) = "";
 
-[@bs.send.pipe : t] external continue : (~overrides: overrides=?, unit) => Js.Promise.t(unit) = "";
+[@bs.send.pipe : t]
+external continue : (~overrides: overrides=?, unit) => Js.Promise.t(unit) = "";
 
 [@bs.val] external headers : headers = "";
 
