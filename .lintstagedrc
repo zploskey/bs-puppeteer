@@ -1,3 +1,5 @@
 ---
 "{src,examples,__tests__}/**/*.{re,rei}":
   - "npm run format -- --in-place"
+"{src,__tests__}/**/*.{re,rei}":
+  - "npm test"
