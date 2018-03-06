@@ -1,4 +1,4 @@
 ---
 "{src,examples,__tests__}/**/*.{re,rei}":
-  - "npm run format --in-place"
+  - "refmt --in-place"
   - "git add"
