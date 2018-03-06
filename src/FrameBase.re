@@ -78,14 +78,12 @@ external addStyleTag : tagOptions => Js.Promise.t(ElementHandle.t) = "";
    and the second parameter array can only ever be empty */
 [@bs.send.pipe : t] [@bs.splice]
 external evaluate :
-  (unit => Js.Promise.t(Js.Json.t), array({..})) =>
-  Js.Promise.t(Js.Json.t) =
+  (unit => Js.Promise.t(Js.Json.t), array({..})) => Js.Promise.t(Js.Json.t) =
   "";
 
 /* TODO: Currently only ever work for functions taking no arguments,
    and the second parameter array can only ever be empty */
 [@bs.send.pipe : t] [@bs.splice]
 external evaluateHandle :
-  (unit => Js.Promise.t(JSHandle.t), array({..})) =>
-  Js.Promise.t(JSHandle.t) =
+  (unit => Js.Promise.t(JSHandle.t), array({..})) => Js.Promise.t(JSHandle.t) =
   "";
