@@ -23,7 +23,8 @@ let search = () =>
                       "h3 a",
                       [%raw
                         {| function (element) { return element.textContent; } |}
-                      ]
+                      ],
+                      [||]
                     )
                )
             |> then_(text => Js.log2("Got:", text) |> resolve)

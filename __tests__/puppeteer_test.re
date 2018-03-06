@@ -137,16 +137,50 @@ describe("Page", () => {
     Js.Promise.(
       page^
       |> Page.selectAllEval("html,body", getLengthOfElementsJs)
-      |> then_(serializable => serializable |> expect |> toBe(2) |> resolve)
+      |> then_(serializable =>
+           serializable
+           |> Js.Json.decodeNumber
+           |> Js.Option.getWithDefault(0.0)
+           |> expect
+           |> toBe(2.0)
+           |> resolve
+         )
     )
   );
-  testPromise("$eval()", () =>
+  testPromise("$eval() with 0 args", () =>
     Js.Promise.(
       page^
-      |> Page.selectOneEval("html", getElementOuterHTMLJs)
+      |> Page.selectOneEval("html", getElementOuterHTMLJs, [||])
       |> then_(serializable =>
-           expect(serializable)
+           serializable
+           |> Js.Json.decodeString
+           |> Js.Option.getWithDefault("")
+           |> expect
            |> toBe("<html><head></head><body></body></html>")
+           |> resolve
+         )
+    )
+  );
+  testPromise("$eval() with 1 arg", () =>
+    Js.Promise.(
+      page^
+      |> Page.setContent(testPageContent)
+      |> then_(() =>
+           page^
+           |> Page.selectOneEval(
+                "input",
+                [%raw
+                  {| function (el, prop) { return el.getAttribute(prop); } |}
+                ],
+                [|JSON(Js.Json.string("id"))|]
+              )
+         )
+      |> then_(res =>
+           res
+           |> Js.Json.decodeString
+           |> Js.Option.getWithDefault("")
+           |> expect
+           |> toBe("input")
            |> resolve
          )
     )
@@ -220,18 +254,21 @@ describe("Page", () => {
       browser^
       |> Browser.newPage
       |> then_(page =>
-           all2((resolve(page), page |> Page.setContent(testPageContent)))
+           page
+           |> Page.setContent(testPageContent)
+           |> then_(() => page |> Page.type_("#input", "hello world", ()))
+           |> then_(() =>
+                page |> Page.selectOneEval("#input", getElementValueJs, [||])
+              )
          )
-      |> then_(((page, _)) =>
-           all2((
-             resolve(page),
-             page |> Page.type_("#input", "hello world", ())
-           ))
+      |> then_(value =>
+           value
+           |> Js.Json.decodeString
+           |> Js.Option.getWithDefault("")
+           |> expect
+           |> toBe("hello world")
+           |> resolve
          )
-      |> then_(((page, _)) =>
-           page |> Page.selectOneEval("#input", getElementValueJs)
-         )
-      |> then_(value => value |> expect |> toBe("hello world") |> resolve)
     )
   );
   testPromise("addScriptTag()", () =>
@@ -380,8 +417,8 @@ describe("Page", () => {
   testPromise("evaluate()", () =>
     Js.Promise.(
       {
-        let eval = [%raw {| function () { return Promise.resolve("ok"); } |}];
-        page^ |> Page.evaluate(eval, [||]);
+        let eval = () => resolve("ok");
+        page^ |> Page.evaluate(Eval.Fn.fn0(eval), [||]);
       }
       |> then_(serializable =>
            serializable
@@ -393,6 +430,39 @@ describe("Page", () => {
          )
     )
   );
+  testPromise("evaluate() with 1 arg", () =>
+    Js.Promise.(
+      {
+        let eval = arg => resolve(arg ++ "iedoke");
+        page^ |> Page.evaluate(Eval.Fn.fn1(eval), Eval.Arg.([|string("ok")|]));
+      }
+      |> then_(serializable =>
+           serializable
+           |> Js.Json.decodeString
+           |> Js.Option.getWithDefault("")
+           |> expect
+           |> toBe("okiedoke")
+           |> resolve
+         )
+    )
+  );
+  testPromise("evaluateString()", () => {
+    let getTitleStr = {| document.getElementsByTagName("title")[0].innerHTML; |};
+    page^
+    |> Page.setContent(testPageContent)
+    |> Js.Promise.then_(() =>
+         page^
+         |> Page.evaluateString(getTitleStr)
+         |> Js.Promise.then_(title =>
+              title
+              |> Js.Json.decodeString
+              |> Js.Option.getWithDefault("")
+              |> expect
+              |> toBe("Test Page")
+              |> Js.Promise.resolve
+            )
+       );
+  });
   testPromise("evaluateHandle()", () =>
     Js.Promise.(
       {
