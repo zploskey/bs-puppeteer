@@ -425,13 +425,31 @@ describe("Page", () => {
       |> then_(res => res |> expect |> toBe("okiedoke") |> resolve)
     )
   );
-  testPromise("evaluate() with 1 arg and a curried function", () =>
+  testPromise("evaluate1() and a curried function", () =>
     Js.Promise.(
       {
         let eval = (arg1, arg2) => arg1 ++ " " ++ arg2;
         page^ |> Page.evaluate1(eval("hello"), "world");
       }
       |> then_(res => res |> expect |> toBe("hello world") |> resolve)
+    )
+  );
+  testPromise("evaluatePromise1() with a curried function", () =>
+    Js.Promise.(
+      {
+        let eval = (arg1, arg2) => resolve(arg1 ++ " " ++ arg2);
+        page^ |> Page.evaluatePromise1(eval("hello"), "world");
+      }
+      |> then_(res => res |> expect |> toBe("hello world") |> resolve)
+    )
+  );
+  testPromise("evaluatePromise2() with a curried function", () =>
+    Js.Promise.(
+      {
+        let eval = (arg1, arg2, arg3) => resolve(arg1 ++ " " ++ arg2 ++ arg3);
+        page^ |> Page.evaluatePromise2(eval("hello"), "world", "!");
+      }
+      |> then_(res => res |> expect |> toBe("hello world!") |> resolve)
     )
   );
   testPromise("evaluate() with 2 args", () =>
