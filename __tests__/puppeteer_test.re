@@ -4,7 +4,7 @@ open BsPuppeteer;
 
 open Expect;
 
-let getElementValueJs = [%raw
+let getElementValueJs: Dom.element => string = [%raw
   {| function (element) { return element.value; } |}
 ];
 
@@ -12,8 +12,12 @@ let getLengthOfElementsJs = [%raw
   {| function (elements) { return elements.length; } |}
 ];
 
-let getElementOuterHTMLJs = [%raw
+let getElementOuterHTMLJs: Dom.element => string = [%raw
   {| function (element) { return element.outerHTML; } |}
+];
+
+let getElementOuterHTMLJsPromise: Dom.element => Js.Promise.t(string) = [%raw
+  {| function (element) { return Promise.resolve(element.outerHTML); } |}
 ];
 
 let fixturesPath =
@@ -137,24 +141,27 @@ describe("Page", () => {
     Js.Promise.(
       page^
       |> Page.selectAllEval("html,body", getLengthOfElementsJs)
-      |> then_(serializable =>
-           serializable
-           |> Js.Json.decodeNumber
-           |> Js.Option.getWithDefault(0.0)
-           |> expect
-           |> toBe(2.0)
-           |> resolve
-         )
+      |> then_(length => length |> expect |> toBe(2.0) |> resolve)
     )
   );
   testPromise("$eval() with 0 args", () =>
     Js.Promise.(
       page^
-      |> Page.selectOneEval("html", getElementOuterHTMLJs, [||])
-      |> then_(serializable =>
-           serializable
-           |> Js.Json.decodeString
-           |> Js.Option.getWithDefault("")
+      |> Page.selectOneEval("html", getElementOuterHTMLJs)
+      |> then_(html =>
+           html
+           |> expect
+           |> toBe("<html><head></head><body></body></html>")
+           |> resolve
+         )
+    )
+  );
+  testPromise("$eval() with 0 args returning a promise", () =>
+    Js.Promise.(
+      page^
+      |> Page.selectOneEvalPromise("html", getElementOuterHTMLJsPromise)
+      |> then_(h =>
+           h
            |> expect
            |> toBe("<html><head></head><body></body></html>")
            |> resolve
@@ -167,22 +174,15 @@ describe("Page", () => {
       |> Page.setContent(testPageContent)
       |> then_(() =>
            page^
-           |> Page.selectOneEval(
+           |> Page.selectOneEval1(
                 "input",
                 [%raw
                   {| function (el, prop) { return el.getAttribute(prop); } |}
                 ],
-                [|JSON(Js.Json.string("id"))|]
+                "id"
               )
          )
-      |> then_(res =>
-           res
-           |> Js.Json.decodeString
-           |> Js.Option.getWithDefault("")
-           |> expect
-           |> toBe("input")
-           |> resolve
-         )
+      |> then_(id => id |> expect |> toBe("input") |> resolve)
     )
   );
   testPromise("click()", () =>
@@ -258,17 +258,10 @@ describe("Page", () => {
            |> Page.setContent(testPageContent)
            |> then_(() => page |> Page.type_("#input", "hello world", ()))
            |> then_(() =>
-                page |> Page.selectOneEval("#input", getElementValueJs, [||])
+                page |> Page.selectOneEval("#input", getElementValueJs)
               )
          )
-      |> then_(value =>
-           value
-           |> Js.Json.decodeString
-           |> Js.Option.getWithDefault("")
-           |> expect
-           |> toBe("hello world")
-           |> resolve
-         )
+      |> then_(value => value |> expect |> toBe("hello world") |> resolve)
     )
   );
   testPromise("addScriptTag()", () =>
@@ -417,33 +410,19 @@ describe("Page", () => {
   testPromise("evaluate()", () =>
     Js.Promise.(
       {
-        let eval = () => resolve("ok");
-        page^ |> Page.evaluate(Eval.Fn.fn0(eval), [||]);
+        let eval = () => "ok";
+        page^ |> Page.evaluate(eval);
       }
-      |> then_(serializable =>
-           serializable
-           |> Js.Json.decodeString
-           |> Js.Option.getWithDefault("")
-           |> expect
-           |> toBe("ok")
-           |> resolve
-         )
+      |> then_(res => res |> expect |> toBe("ok") |> resolve)
     )
   );
   testPromise("evaluate() with 1 arg", () =>
     Js.Promise.(
       {
-        let eval = arg => resolve(arg ++ "iedoke");
-        page^ |> Page.evaluate(Eval.Fn.fn1(eval), Eval.Arg.([|string("ok")|]));
+        let eval = arg => arg ++ "iedoke";
+        page^ |> Page.evaluate1(eval, "ok");
       }
-      |> then_(serializable =>
-           serializable
-           |> Js.Json.decodeString
-           |> Js.Option.getWithDefault("")
-           |> expect
-           |> toBe("okiedoke")
-           |> resolve
-         )
+      |> then_(res => res |> expect |> toBe("okiedoke") |> resolve)
     )
   );
   testPromise("evaluateString()", () => {
@@ -454,12 +433,7 @@ describe("Page", () => {
          page^
          |> Page.evaluateString(getTitleStr)
          |> Js.Promise.then_(title =>
-              title
-              |> Js.Json.decodeString
-              |> Js.Option.getWithDefault("")
-              |> expect
-              |> toBe("Test Page")
-              |> Js.Promise.resolve
+              title |> expect |> toBe("Test Page") |> Js.Promise.resolve
             )
        );
   });
@@ -469,7 +443,7 @@ describe("Page", () => {
         let eval = [%raw
           {| function () { return Promise.resolve(document); } |}
         ];
-        page^ |> Page.evaluateHandle(eval, [||]);
+        page^ |> Page.evaluateHandle(eval);
       }
       |> then_(jsHandler =>
            jsHandler |> expect |> ExpectJs.toBeTruthy |> Js.Promise.resolve
