@@ -1,7 +1,5 @@
 type t;
 
-type serializable = Js.Json.t;
-
 type tagOptions = {
   .
   "content": Js.undefined(string),
@@ -60,13 +58,164 @@ external waitForXPath :
   Js.Promise.t(ElementHandle.t) =
   "";
 
-/* TODO: Add support [, ...args] */
+/**
+ * selectOneEval(selector, fn, page)
+ * Runs document.querySelector in the page and passes it as the first
+ * argument to `fn`. If there's no element matching selector, the function
+ * throws an error.
+ */
 [@bs.send.pipe : t]
-external selectOneEval : (string, unit => unit) => Js.Promise.t('a) = "$eval";
+external selectOneEval : (string, Dom.element => 'r) => Js.Promise.t('r) =
+  "$eval";
 
-/* TODO: Add support [, ...args] */
+/**
+ * selectOneEvalPromise(selector, fn, page)
+ * Runs document.querySelector in the page and passes it as the first
+ * argument to `fn`. If there's no element matching selector, the function
+ * throws an error. `fn` must return a promise.
+ */
 [@bs.send.pipe : t]
-external selectAllEval : (string, unit => unit) => Js.Promise.t('a) = "$$eval";
+external selectOneEvalPromise :
+  (string, Dom.element => Js.Promise.t('r)) => Js.Promise.t('r) =
+  "$eval";
+
+/**
+ * selectOneEval(selector, fn, arg1, page)
+ * Runs document.querySelector in the page and passes it as the first
+ * argument to `fn`. Additional argument `arg1` is passed to `fn`.
+ * If there's no element matching selector, the method throws an
+ * error.
+ */
+[@bs.send.pipe : t]
+external selectOneEval1 :
+  (string, (Dom.element, 'a) => 'r, 'a) => Js.Promise.t('r) =
+  "$eval";
+
+/**
+ * selectOneEvalPromise(selector, fn, arg1, page)
+ * Runs document.querySelector in the page and passes it as the first
+ * argument to `fn`. Additional argument `arg1` is passed to `fn`.
+ * If there's no element matching selector, the method throws an
+ * error. `fn` must return a promise.
+ */
+[@bs.send.pipe : t]
+external selectOneEvalPromise1 :
+  (string, (Dom.element, 'a) => Js.Promise.t('r), 'a) => Js.Promise.t('r) =
+  "$eval";
+
+[@bs.send.pipe : t]
+external selectOneEval2 :
+  (string, (Dom.element, 'a, 'b) => 'r, 'a, 'b) => Js.Promise.t('r) =
+  "$eval";
+
+[@bs.send.pipe : t]
+external selectOneEvalPromise2 :
+  (string, (Dom.element, 'a, 'b) => Js.Promise.t('r), 'a, 'b) =>
+  Js.Promise.t('r) =
+  "$eval";
+
+[@bs.send.pipe : t]
+external selectOneEval3 :
+  (string, (Dom.element, 'a, 'b, 'c) => 'r, 'a, 'b, 'c) => Js.Promise.t('r) =
+  "$eval";
+
+[@bs.send.pipe : t]
+external selectOneEvalPromise3 :
+  (string, (Dom.element, 'a, 'b, 'c) => Js.Promise.t('r), 'a, 'b, 'c) =>
+  Js.Promise.t('r) =
+  "$eval";
+
+[@bs.send.pipe : t]
+external selectOneEval4 :
+  (string, (Dom.element, 'a, 'b, 'c, 'd) => 'r, 'a, 'b, 'c, 'd) =>
+  Js.Promise.t('r) =
+  "$eval";
+
+[@bs.send.pipe : t]
+external selectOneEvalPromise4 :
+  (
+    string,
+    (Dom.element, 'a, 'b, 'c, 'd) => Js.Promise.t('r),
+    'a,
+    'b,
+    'c,
+    'd
+  ) =>
+  Js.Promise.t('r) =
+  "$eval";
+
+/**
+ * selectAllEval(selector, fn)
+ * Runs document.querySelectorAll in the page and passes it as an argument to
+ * `fn`.
+ */
+[@bs.send.pipe : t]
+external selectAllEval : (string, Dom.nodeList => 'r) => Js.Promise.t('r) =
+  "$$eval";
+
+/** Runs document.querySelectorAll in the page and passes it as an argument to
+ * `fn`. `fn` must return a promise.
+ * */
+[@bs.send.pipe : t]
+external selectAllEvalPromise :
+  (string, Dom.nodeList => Js.Promise.t('r)) => Js.Promise.t('r) =
+  "$$eval";
+
+/**
+ * selectAllEval1(selector, fn, arg1)
+ * Runs document.querySelectorAll in the page and passes the result as the
+ * first argument to `fn`. It passes `arg1` as the second argument to `fn`.
+ */
+[@bs.send.pipe : t]
+external selectAllEval1 :
+  (string, (Dom.nodeList, 'a) => 'r, 'a) => Js.Promise.t('r) =
+  "$$eval";
+
+[@bs.send.pipe : t]
+external selectAllEvalPromise1 :
+  (string, (Dom.nodeList, 'a) => 'r, Js.Promise.t('a)) => Js.Promise.t('r) =
+  "$$eval";
+
+[@bs.send.pipe : t]
+external selectAllEval2 :
+  (string, (Dom.nodeList, 'a, 'b) => 'r, 'a, 'b) => Js.Promise.t('r) =
+  "$$eval";
+
+[@bs.send.pipe : t]
+external selectAllEvalPromise2 :
+  (string, (Dom.nodeList, 'a, 'b) => Js.Promise.t('r), 'a, 'b) =>
+  Js.Promise.t('r) =
+  "$$eval";
+
+[@bs.send.pipe : t]
+external selectAllEval3 :
+  (string, (Dom.nodeList, 'a, 'b, 'c) => 'r, 'a, 'b, 'c) => Js.Promise.t('r) =
+  "$$eval";
+
+[@bs.send.pipe : t]
+external selectAllEvalPromise3 :
+  (string, (Dom.nodeList, 'a, 'b, 'c) => Js.Promise.t('r), 'a, 'b, 'c) =>
+  Js.Promise.t('r) =
+  "$$eval";
+
+[@bs.send.pipe : t]
+external selectAllEval4 :
+  (string, (Dom.nodeList, 'a, 'b, 'c, 'd) => 'r, 'a, 'b, 'c, 'd) =>
+  Js.Promise.t('r) =
+  "$$eval";
+
+[@bs.send.pipe : t]
+external selectAllEvalPromise4 :
+  (
+    string,
+    (Dom.nodeList, 'a, 'b, 'c, 'd) => Js.Promise.t('r),
+    'a,
+    'b,
+    'c,
+    'd
+  ) =>
+  Js.Promise.t('r) =
+  "$$eval";
 
 [@bs.send.pipe : t]
 external addScriptTag : tagOptions => Js.Promise.t(ElementHandle.t) = "";
@@ -74,16 +223,104 @@ external addScriptTag : tagOptions => Js.Promise.t(ElementHandle.t) = "";
 [@bs.send.pipe : t]
 external addStyleTag : tagOptions => Js.Promise.t(ElementHandle.t) = "";
 
-/* TODO: Currently only ever work for functions taking no arguments,
-   and the second parameter array can only ever be empty */
-[@bs.send.pipe : t] [@bs.splice]
-external evaluate :
-  (unit => Js.Promise.t(Js.Json.t), array({..})) => Js.Promise.t(Js.Json.t) =
+[@bs.send.pipe : t] external evaluate : (unit => 'r) => Js.Promise.t('r) = "";
+
+[@bs.send.pipe : t]
+external evaluatePromise : (unit => Js.Promise.t('r)) => Js.Promise.t('r) = "";
+
+[@bs.send.pipe : t]
+external evaluate1 : ('a => 'r, 'a) => Js.Promise.t('r) = "evaluate";
+
+[@bs.send.pipe : t]
+external evaluatePromise1 : ('a => Js.Promise.t('r), 'a) => Js.Promise.t('r) =
+  "evaluate";
+
+[@bs.send.pipe : t]
+external evaluate2 : (('a, 'b) => 'r, 'a, 'b) => Js.Promise.t('r) = "evaluate";
+
+[@bs.send.pipe : t]
+external evaluatePromise2 :
+  (('a, 'b) => Js.Promise.t('r), 'a, 'b) => Js.Promise.t('r) =
+  "evaluate";
+
+[@bs.send.pipe : t]
+external evaluate3 : (('a, 'b, 'c) => 'r, 'a, 'b, 'c) => Js.Promise.t('r) =
+  "evaluate";
+
+[@bs.send.pipe : t]
+external evaluatePromise3 :
+  (('a, 'b, 'c) => Js.Promise.t('r), 'a, 'b, 'c) => Js.Promise.t('r) =
+  "evaluate";
+
+[@bs.send.pipe : t]
+external evaluate4 :
+  (('a, 'b, 'c, 'd) => 'r, 'a, 'b, 'c, 'd) => Js.Promise.t('r) =
+  "evaluate";
+
+[@bs.send.pipe : t]
+external evaluatePromise4 :
+  (('a, 'b, 'c, 'd) => Js.Promise.t('r), 'a, 'b, 'c, 'd) => Js.Promise.t('r) =
+  "evaluate";
+
+/**
+ * Evaluates a JavaScript expression in page and returns result in a promise.
+ */
+[@bs.send.pipe : t]
+external evaluateString : string => Js.Promise.t('r) = "evaluate";
+
+[@bs.send.pipe : t]
+external evaluateHandle : (unit => JSHandle.t) => Js.Promise.t(JSHandle.t) =
   "";
 
-/* TODO: Currently only ever work for functions taking no arguments,
-   and the second parameter array can only ever be empty */
-[@bs.send.pipe : t] [@bs.splice]
-external evaluateHandle :
-  (unit => Js.Promise.t(JSHandle.t), array({..})) => Js.Promise.t(JSHandle.t) =
+[@bs.send.pipe : t]
+external evaluateHandlePromise :
+  (unit => Js.Promise.t(JSHandle.t)) => Js.Promise.t(JSHandle.t) =
   "";
+
+[@bs.send.pipe : t]
+external evaluateHandle1 : ('a => JSHandle.t, 'a) => Js.Promise.t(JSHandle.t) =
+  "evaluateHandle";
+
+[@bs.send.pipe : t]
+external evaluateHandlePromise1 :
+  ('a => Js.Promise.t(JSHandle.t), 'a) => Js.Promise.t(JSHandle.t) =
+  "evaluateHandle";
+
+[@bs.send.pipe : t]
+external evaluateHandle2 :
+  (('a, 'b) => JSHandle.t, 'a, 'b) => Js.Promise.t(JSHandle.t) =
+  "evaluateHandle";
+
+[@bs.send.pipe : t]
+external evaluateHandlePromise2 :
+  (('a, 'b) => Js.Promise.t(JSHandle.t), 'a, 'b) => Js.Promise.t(JSHandle.t) =
+  "evaluateHandle";
+
+[@bs.send.pipe : t]
+external evaluateHandle3 :
+  (('a, 'b, 'c) => JSHandle.t, 'a, 'b, 'c) => Js.Promise.t('r) =
+  "evaluateHandle";
+
+[@bs.send.pipe : t]
+external evaluateHandlePromise3 :
+  (('a, 'b, 'c) => Js.Promise.t(JSHandle.t), 'a, 'b, 'c) => Js.Promise.t('r) =
+  "evaluateHandle";
+
+[@bs.send.pipe : t]
+external evaluateHandle4 :
+  (('a, 'b, 'c, 'd) => JSHandle.t, 'a, 'b, 'c, 'd) => Js.Promise.t('r) =
+  "evaluateHandle";
+
+[@bs.send.pipe : t]
+external evaluateHandlePromise4 :
+  (('a, 'b, 'c, 'd) => Js.Promise.t(JSHandle.t), 'a, 'b, 'c, 'd) =>
+  Js.Promise.t('r) =
+  "evaluateHandle";
+
+/**
+ * Evaluates a string of a JavaScript expression in page context.
+ * Returns a promise containing a JSHandle.
+ */
+[@bs.send.pipe : t]
+external evaluateStringHandle : string => Js.Promise.t(JSHandle.t) =
+  "evaluateHandle";
