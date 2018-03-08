@@ -425,6 +425,15 @@ describe("Page", () => {
       |> then_(res => res |> expect |> toBe("okiedoke") |> resolve)
     )
   );
+  testPromise("evaluate() with 2 args", () =>
+    Js.Promise.(
+      {
+        let eval = (arg1, arg2) => arg1 ++ " " ++ arg2;
+        page^ |> Page.evaluate2(eval, "hello", "world");
+      }
+      |> then_(res => res |> expect |> toBe("hello world") |> resolve)
+    )
+  );
   testPromise("evaluateString()", () => {
     let getTitleStr = {| document.getElementsByTagName("title")[0].innerHTML; |};
     page^
