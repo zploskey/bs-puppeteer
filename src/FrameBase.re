@@ -229,44 +229,37 @@ external addStyleTag : tagOptions => Js.Promise.t(ElementHandle.t) = "";
 external evaluatePromise : (unit => Js.Promise.t('r)) => Js.Promise.t('r) = "";
 
 [@bs.send.pipe : t]
-external evaluate1 : ([@bs.uncurry] ('a => 'r), 'a) => Js.Promise.t('r) =
+external evaluate1 : ('a => 'r, 'a) => Js.Promise.t('r) = "evaluate";
+
+[@bs.send.pipe : t]
+external evaluatePromise1 : ('a => Js.Promise.t('r), 'a) => Js.Promise.t('r) =
   "evaluate";
 
 [@bs.send.pipe : t]
-external evaluatePromise1 :
-  ([@bs.uncurry] ('a => Js.Promise.t('r)), 'a) => Js.Promise.t('r) =
-  "evaluate";
-
-[@bs.send.pipe : t]
-external evaluate2 :
-  ([@bs.uncurry] (('a, 'b) => 'r), 'a, 'b) => Js.Promise.t('r) =
-  "evaluate";
+external evaluate2 : (('a, 'b) => 'r, 'a, 'b) => Js.Promise.t('r) = "evaluate";
 
 [@bs.send.pipe : t]
 external evaluatePromise2 :
-  ([@bs.uncurry] (('a, 'b) => Js.Promise.t('r)), 'a, 'b) => Js.Promise.t('r) =
+  (('a, 'b) => Js.Promise.t('r), 'a, 'b) => Js.Promise.t('r) =
   "evaluate";
 
 [@bs.send.pipe : t]
-external evaluate3 :
-  ([@bs.uncurry] (('a, 'b, 'c) => 'r), 'a, 'b, 'c) => Js.Promise.t('r) =
+external evaluate3 : (('a, 'b, 'c) => 'r, 'a, 'b, 'c) => Js.Promise.t('r) =
   "evaluate";
 
 [@bs.send.pipe : t]
 external evaluatePromise3 :
-  ([@bs.uncurry] (('a, 'b, 'c) => Js.Promise.t('r)), 'a, 'b, 'c) =>
-  Js.Promise.t('r) =
+  (('a, 'b, 'c) => Js.Promise.t('r), 'a, 'b, 'c) => Js.Promise.t('r) =
   "evaluate";
 
 [@bs.send.pipe : t]
 external evaluate4 :
-  ([@bs.uncurry] (('a, 'b, 'c, 'd) => 'r), 'a, 'b, 'c, 'd) => Js.Promise.t('r) =
+  (('a, 'b, 'c, 'd) => 'r, 'a, 'b, 'c, 'd) => Js.Promise.t('r) =
   "evaluate";
 
 [@bs.send.pipe : t]
 external evaluatePromise4 :
-  ([@bs.uncurry] (('a, 'b, 'c, 'd) => Js.Promise.t('r)), 'a, 'b, 'c, 'd) =>
-  Js.Promise.t('r) =
+  (('a, 'b, 'c, 'd) => Js.Promise.t('r), 'a, 'b, 'c, 'd) => Js.Promise.t('r) =
   "evaluate";
 
 /**
@@ -285,53 +278,42 @@ external evaluateHandlePromise :
   "";
 
 [@bs.send.pipe : t]
-external evaluateHandle1 :
-  ([@bs.uncurry] ('a => JSHandle.t), 'a) => Js.Promise.t(JSHandle.t) =
+external evaluateHandle1 : ('a => JSHandle.t, 'a) => Js.Promise.t(JSHandle.t) =
   "evaluateHandle";
 
 [@bs.send.pipe : t]
 external evaluateHandlePromise1 :
-  ([@bs.uncurry] ('a => Js.Promise.t(JSHandle.t)), 'a) =>
-  Js.Promise.t(JSHandle.t) =
+  ('a => Js.Promise.t(JSHandle.t), 'a) => Js.Promise.t(JSHandle.t) =
   "evaluateHandle";
 
 [@bs.send.pipe : t]
 external evaluateHandle2 :
-  ([@bs.uncurry] (('a, 'b) => JSHandle.t), 'a, 'b) => Js.Promise.t(JSHandle.t) =
+  (('a, 'b) => JSHandle.t, 'a, 'b) => Js.Promise.t(JSHandle.t) =
   "evaluateHandle";
 
 [@bs.send.pipe : t]
 external evaluateHandlePromise2 :
-  ([@bs.uncurry] (('a, 'b) => Js.Promise.t(JSHandle.t)), 'a, 'b) =>
-  Js.Promise.t(JSHandle.t) =
+  (('a, 'b) => Js.Promise.t(JSHandle.t), 'a, 'b) => Js.Promise.t(JSHandle.t) =
   "evaluateHandle";
 
 [@bs.send.pipe : t]
 external evaluateHandle3 :
-  ([@bs.uncurry] (('a, 'b, 'c) => JSHandle.t), 'a, 'b, 'c) => Js.Promise.t('r) =
+  (('a, 'b, 'c) => JSHandle.t, 'a, 'b, 'c) => Js.Promise.t('r) =
   "evaluateHandle";
 
 [@bs.send.pipe : t]
 external evaluateHandlePromise3 :
-  ([@bs.uncurry] (('a, 'b, 'c) => Js.Promise.t(JSHandle.t)), 'a, 'b, 'c) =>
-  Js.Promise.t('r) =
+  (('a, 'b, 'c) => Js.Promise.t(JSHandle.t), 'a, 'b, 'c) => Js.Promise.t('r) =
   "evaluateHandle";
 
 [@bs.send.pipe : t]
 external evaluateHandle4 :
-  ([@bs.uncurry] (('a, 'b, 'c, 'd) => JSHandle.t), 'a, 'b, 'c, 'd) =>
-  Js.Promise.t('r) =
+  (('a, 'b, 'c, 'd) => JSHandle.t, 'a, 'b, 'c, 'd) => Js.Promise.t('r) =
   "evaluateHandle";
 
 [@bs.send.pipe : t]
 external evaluateHandlePromise4 :
-  (
-    [@bs.uncurry] (('a, 'b, 'c, 'd) => Js.Promise.t(JSHandle.t)),
-    'a,
-    'b,
-    'c,
-    'd
-  ) =>
+  (('a, 'b, 'c, 'd) => Js.Promise.t(JSHandle.t), 'a, 'b, 'c, 'd) =>
   Js.Promise.t('r) =
   "evaluateHandle";
 
