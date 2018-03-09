@@ -1,6 +1,4 @@
-type t = RequestResponse.response;
-
-type request = RequestResponse.request;
+type t = Types.response;
 
 /** Promise which resolves to a buffer with response body.                    */
 [@bs.send]
@@ -31,7 +29,7 @@ external ok : t => bool = "";
 
 /** A matching Request object.                                                */
 [@bs.send]
-external request : t => request = "";
+external request : t => Types.request = "";
 
 /** Security details if the response was received over the secure connection. */
 [@bs.send]

@@ -1,6 +1,4 @@
-type t = RequestResponse.request;
-
-type response = RequestResponse.response;
+type t = Types.request;
 
 type headers = Js.Dict.t(string);
 
@@ -137,6 +135,6 @@ external makeRespondOptions :
 external respond : respondOptions => Js.Promise.t(unit) = "";
 
 [@bs.send] [@bs.return nullable]
-external response : t => option(response) = "";
+external response : t => option(Types.response) = "";
 
 [@bs.send] external url : t => string = "";

@@ -1,4 +1,4 @@
-type t;
+type t = Types.jsHandle;
 
 /* Should be Js.null(ElementHandle.t) but these aren't currently distinct types.
  * I think this is ok? */
@@ -6,7 +6,7 @@ type t;
 
 [@bs.send] external dispose : t => Js.Promise.t(unit) = "";
 
-[@bs.send] external executionContext : t => ExecutionContext.t = "";
+[@bs.send] external executionContext : t => Types.executionContext = "";
 
 [@bs.send]
 external getProperties : t => Js.Promise.t(JSMap.t(string, t)) = "";
