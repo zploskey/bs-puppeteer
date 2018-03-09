@@ -85,6 +85,16 @@ external click :
 [@bs.send.pipe: t] external setContent : string => Js.Promise.t(unit) = "";
 
 [@bs.send.pipe: t]
+external goBack :
+  (~options: Navigation.options=?, unit) => Js.Promise.t(Js.null(Response.t)) =
+  "";
+
+[@bs.send.pipe: t]
+external goForward :
+  (~options: Navigation.options=?, unit) => Js.Promise.t(Js.null(Response.t)) =
+  "";
+
+[@bs.send.pipe: t]
 external goto :
   (string, ~options: Navigation.options=?, unit) => Js.Promise.t(Response.t) =
   "";
