@@ -461,10 +461,11 @@ describe("Page", () => {
   testPromise("evaluate() with 2 args", () =>
     Js.Promise.(
       {
-        let eval = (arg1, arg2) => arg1 ++ " " ++ arg2;
+        let eval = (arg1, arg2) =>
+          (arg1 |> String.length |> Js.Int.toString) ++ arg1 ++ " " ++ arg2;
         page^ |> Page.evaluate2(eval, "hello", "world");
       }
-      |> then_(res => res |> expect |> toBe("hello world") |> resolve)
+      |> then_(res => res |> expect |> toBe("5hello world") |> resolve)
     )
   );
   testPromise("evaluateString()", () => {
@@ -482,9 +483,7 @@ describe("Page", () => {
   testPromise("evaluateHandle()", () =>
     Js.Promise.(
       {
-        let eval = [%raw
-          {| function () { return Promise.resolve(document); } |}
-        ];
+        let eval = () => [%raw {| document |}];
         page^ |> Page.evaluateHandle(eval);
       }
       |> then_(jsHandler =>
