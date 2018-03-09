@@ -1,7 +1,8 @@
 type t = Types.jsHandle;
 
-/* Should be Js.null(ElementHandle.t) but these aren't currently distinct types.
- * I think this is ok? */
+/* TODO:
+ * Should be Js.null(ElementHandle.t) but these aren't currently distinct types.
+ * This will more than likely cause problems. */
 [@bs.send] external asElement : t => Js.null(t) = "";
 
 [@bs.send] external dispose : t => Js.Promise.t(unit) = "";
