@@ -96,7 +96,8 @@ external goForward :
 
 [@bs.send.pipe: t]
 external goto :
-  (string, ~options: Navigation.options=?, unit) => Js.Promise.t(Response.t) =
+  (string, ~options: Navigation.options=?, unit) =>
+  Js.Promise.t(Js.null(Response.t)) =
   "";
 
 [@bs.send.pipe: t]
