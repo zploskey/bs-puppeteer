@@ -22,33 +22,39 @@ If you would like to add or fix some bindings, see [contributing](#contributing)
 ## Creating a project using bs-puppeteer
 
 Create a new BuckleScript project if you have not already:
-```
+
+```sh
 npm install -g bs-platform
 bsb -init my-project -theme basic-reason
 cd my-project
 ```
+
 See the
 [BuckleScript documentation](https://bucklescript.github.io/docs/en/installation.html)
 for more information about starting a project.
 
 Add bs-puppeteer as a dependency.
 This will install the currently supported version of Puppeteer.
-```
+
+```sh
 npm add --save bs-puppeteer
 ```
 
 Edit your `bsconfig.json` file to add `bs-puppeteer` to `bs-dependencies`:
-```
+
+```sh
   "bs-dependencies" : [
     "bs-puppeteer",
   ],
 ```
 
 Now run:
-```
+
+```sh
 npm install
 npm start
 ```
+
 The `Puppeteer` module should now be available in your Reason source files.
 While `npm start` is running, it will attempt to recompile your code each time you save it.
 One-off builds can be done with `npm run build`.
