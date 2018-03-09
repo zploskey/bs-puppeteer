@@ -12,7 +12,7 @@ type request = RequestResponse.request;
 
 [@bs.get] external status : t => int = "";
 
-[@bs.send.pipe : t] external text : Js.Promise.t(string) = "";
+[@bs.send.pipe: t] external text : Js.Promise.t(string) = "";
 
 [@bs.get] external url : t => string = "";
 

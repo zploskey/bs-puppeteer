@@ -3,5 +3,5 @@ type clickOptions = {
   .
   "button": Js.Nullable.t(string),
   "clickCount": Js.Nullable.t(int),
-  "delay": Js.Nullable.t(float)
+  "delay": Js.Nullable.t(float),
 };

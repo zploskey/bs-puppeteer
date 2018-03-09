@@ -19,7 +19,7 @@ type pageEvents =
 type authOptions = {
   .
   "username": string,
-  "password": string
+  "password": string,
 };
 
 type cookie = {
@@ -33,7 +33,7 @@ type cookie = {
   "httpOnly": Js.undefined(Js.boolean),
   "secure": Js.undefined(Js.boolean),
   "session": Js.undefined(Js.boolean),
-  "sameSite": Js.undefined(string)
+  "sameSite": Js.undefined(string),
 };
 
 type viewport = {
@@ -43,13 +43,13 @@ type viewport = {
   "deviceScaleFactor": int,
   "isMobile": Js.boolean,
   "hasTouch": Js.boolean,
-  "isLandscape": Js.boolean
+  "isLandscape": Js.boolean,
 };
 
 type emulateOption = {
   .
   "viewport": viewport,
-  "userAgent": string
+  "userAgent": string,
 };
 
 [@bs.obj]
@@ -70,63 +70,63 @@ external makeCookie :
   _ =
   "";
 
-[@bs.send.pipe : t]
+[@bs.send.pipe: t]
 external authenticate : Js.Null.t(authOptions) => Js.Promise.t(unit) = "";
 
-[@bs.send.pipe : t]
+[@bs.send.pipe: t]
 external click :
   (string, ~options: Click.clickOptions=?, unit) => Js.Promise.t(unit) =
   "";
 
-[@bs.send.pipe : t] external close : Js.Promise.t(unit) = "";
+[@bs.send.pipe: t] external close : Js.Promise.t(unit) = "";
 
 [@bs.send] external content : t => Js.Promise.t(string) = "";
 
-[@bs.send.pipe : t] external setContent : string => Js.Promise.t(unit) = "";
+[@bs.send.pipe: t] external setContent : string => Js.Promise.t(unit) = "";
 
-[@bs.send.pipe : t]
+[@bs.send.pipe: t]
 external goto :
   (string, ~options: Navigation.options=?, unit) => Js.Promise.t(Response.t) =
   "";
 
-[@bs.send.pipe : t]
+[@bs.send.pipe: t]
 external screenshot :
   (~options: Screenshot.options=?, unit) =>
   Js.Promise.t(Js.Typed_array.ArrayBuffer.t) =
   "";
 
-[@bs.send.pipe : t]
+[@bs.send.pipe: t]
 external setExtraHTTPHeaders :
   (~headers: Js.Dict.t(string), unit) => Js.Promise.t(unit) =
   "";
 
 type typeOptions = {. "delay": float};
 
-[@bs.send.pipe : t]
+[@bs.send.pipe: t]
 external type_ :
   (string, string, ~options: typeOptions=?, unit) => Js.Promise.t(unit) =
   "type";
 
-[@bs.send.pipe : t] [@bs.splice]
+[@bs.send.pipe: t] [@bs.splice]
 external deleteCookie : array(cookie) => Js.Promise.t(unit) = "";
 
-[@bs.send.pipe : t] [@bs.splice]
+[@bs.send.pipe: t] [@bs.splice]
 external cookies : array(string) => Js.Promise.t(array(cookie)) = "";
 
-[@bs.send.pipe : t] [@bs.splice]
+[@bs.send.pipe: t] [@bs.splice]
 external setCookie : array(cookie) => Js.Promise.t(unit) = "";
 
-[@bs.send.pipe : t]
+[@bs.send.pipe: t]
 external emulate : emulateOption => Js.Promise.t(unit) = "";
 
-[@bs.send.pipe : t] external viewport : unit => viewport = "";
+[@bs.send.pipe: t] external viewport : unit => viewport = "";
 
-[@bs.send.pipe : t]
+[@bs.send.pipe: t]
 external emulateMedia :
   ([@bs.string] [ | `screen | `print]) => Js.Promise.t(unit) =
   "";
 
-[@bs.send.pipe : t]
+[@bs.send.pipe: t]
 external emulateMediaDisable :
   ([@bs.as {json|null|json}] _) => Js.Promise.t(unit) =
   "emulateMedia";

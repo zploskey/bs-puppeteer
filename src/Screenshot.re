@@ -5,7 +5,7 @@ type options = {
   "quality": Js.Nullable.t(float),
   "fullPage": Js.Nullable.t(bool),
   "clip": Js.Nullable.t(BoundingBox.t),
-  "omitBackground": Js.Nullable.t(bool)
+  "omitBackground": Js.Nullable.t(bool),
   /* TODO: Should handle the two options. */
 };
 
@@ -31,7 +31,7 @@ let makeOptions =
       ~fullPage: option(bool)=?,
       ~clip: option(BoundingBox.t)=?,
       ~omitBackground: option(bool)=?,
-      ()
+      (),
     ) =>
   makeOptions(
     ~path?,
@@ -40,5 +40,5 @@ let makeOptions =
     ~fullPage=?Util.optBoolToJs(fullPage),
     ~clip?,
     ~omitBackground=?Util.optBoolToJs(omitBackground),
-    ()
+    (),
   );

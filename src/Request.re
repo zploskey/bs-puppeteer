@@ -24,15 +24,21 @@ type overrides = {
   url: Js.Nullable.t(string),
   method_: Js.Nullable.t(string),
   postData: Js.Nullable.t(string),
-  headers: Js.Nullable.t(headers)
+  headers: Js.Nullable.t(headers),
 };
 
 [@bs.obj]
 external makeOverrides :
   (
     ~url: string=?,
-    ~method_: [@bs.string]
-              [ | `GET | `POST | `PATCH | `PUT | `DELETE | `OPTIONS]
+    ~method_: [@bs.string] [
+                | `GET
+                | `POST
+                | `PATCH
+                | `PUT
+                | `DELETE
+                | `OPTIONS
+              ]
                 =?,
     ~postData: string=?,
     ~headers: headers=?,
@@ -41,11 +47,10 @@ external makeOverrides :
   overrides =
   "";
 
-[@bs.send.pipe : t]
+[@bs.send.pipe: t]
 external abort :
   (
-    ~errorCode: [@bs.string]
-                [
+    ~errorCode: [@bs.string] [
                   | `aborted
                   | `accessdenied
                   | `addressunreachable
@@ -65,8 +70,9 @@ external abort :
   Js.Promise.t(unit) =
   "";
 
-[@bs.send.pipe : t]
-external continue : (~overrides: overrides=?, unit) => Js.Promise.t(unit) = "";
+[@bs.send.pipe: t]
+external continue : (~overrides: overrides=?, unit) => Js.Promise.t(unit) =
+  "";
 
 [@bs.send] [@bs.return nullable]
 external failure : t => option({. "errorText": string}) = "";
@@ -112,7 +118,7 @@ type respondOptions = {
   "status": Js.undefined(float),
   "headers": Js.undefined(headers),
   "contentType": Js.undefined(string),
-  "body": Js.undefined(Js_typed_array.ArrayBuffer.t)
+  "body": Js.undefined(Js_typed_array.ArrayBuffer.t),
 };
 
 [@bs.obj]
@@ -127,7 +133,7 @@ external makeRespondOptions :
   respondOptions =
   "";
 
-[@bs.send.pipe : t]
+[@bs.send.pipe: t]
 external respond : respondOptions => Js.Promise.t(unit) = "";
 
 [@bs.send] [@bs.return nullable]

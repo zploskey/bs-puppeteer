@@ -33,7 +33,7 @@ type launchOptions = {
    */
   "dumpio": Js.Nullable.t(Js.boolean),
   /* Path to a User Data Directory. */
-  "userDataDir": Js.Nullable.t(string)
+  "userDataDir": Js.Nullable.t(string),
 };
 
 [@bs.obj]
@@ -74,7 +74,7 @@ let makeLaunchOptions =
       ~userDataDir: option(string)=?,
       ~env: option(Js.t('a))=?,
       ~devtools: option(bool)=?,
-      ()
+      (),
     )
     : launchOptions =>
   makeLaunchOptions(
@@ -92,5 +92,5 @@ let makeLaunchOptions =
     ~userDataDir?,
     ~env?,
     ~devtools=?Util.optBoolToJs(devtools),
-    ()
+    (),
   );

@@ -14,15 +14,19 @@ type loadEvents =
 type options = {
   .
   "timeout": Js.Nullable.t(float),
-  "waitUntil": Js.Nullable.t(string)
+  "waitUntil": Js.Nullable.t(string),
 };
 
 [@bs.obj]
 external makeOptions :
   (
     ~timeout: float=?,
-    ~waitUntil: [@bs.string]
-                [ | `load | `domcontentloaded | `networkidle0 | `networkidle2]
+    ~waitUntil: [@bs.string] [
+                  | `load
+                  | `domcontentloaded
+                  | `networkidle0
+                  | `networkidle2
+                ]
                   =?,
     unit
   ) =>

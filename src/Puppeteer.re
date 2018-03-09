@@ -1,7 +1,7 @@
 type connectOptions = {
   .
   "browserWSEndpoint": Js.Nullable.t(string),
-  "ignoreHTTPSErrors": Js.Nullable.t(bool)
+  "ignoreHTTPSErrors": Js.Nullable.t(bool),
 };
 
 /* Attaches Puppeteer to an existing Chromium instance */

@@ -23,7 +23,7 @@ let getElementOuterHTMLJsPromise: Dom.element => Js.Promise.t(string) = [%raw
 let fixturesPath =
   Node.Path.resolve(
     [%bs.node __dirname] |> Js.Option.getWithDefault(""),
-    "../../../__tests__/fixtures/"
+    "../../../__tests__/fixtures/",
   );
 
 let testPagePath = Node.Path.resolve(fixturesPath, "./testPage.html");
@@ -37,7 +37,7 @@ let testPageContent = Node.Fs.readFileAsUtf8Sync(testPagePath);
 let noSandbox =
   Launcher.makeLaunchOptions(
     ~args=[|"--no-sandbox", "--disable-setuid-sandbox"|],
-    ()
+    (),
   );
 
 describe("Puppeteer", () => {
@@ -179,7 +179,7 @@ describe("Page", () => {
                 [%raw
                   {| function (el, prop) { return el.getAttribute(prop); } |}
                 ],
-                "id"
+                "id",
               )
          )
       |> then_(id => id |> expect |> toBe("input") |> resolve)
@@ -222,7 +222,9 @@ describe("Page", () => {
   );
   testPromise("waitForSelector()", () =>
     Js.Promise.(
-      page^ |> Page.waitForSelector("body", ()) |> then_(() => pass |> resolve)
+      page^
+      |> Page.waitForSelector("body", ())
+      |> then_(() => pass |> resolve)
     )
   );
   testPromise("waitForXPath()", () =>
@@ -231,7 +233,7 @@ describe("Page", () => {
       |> Page.waitForXPath(
            ~xpath="/html/body",
            ~options=Page.makeSelectorOptions(~timeout=100., ()),
-           ()
+           (),
          )
       |> then_(elementHandle =>
            elementHandle |> expect |> ExpectJs.toBeTruthy |> resolve
@@ -243,7 +245,7 @@ describe("Page", () => {
       page^
       |> Page.setExtraHTTPHeaders(
            ~headers=Js.Dict.fromList([("extra-http-header", "header01")]),
-           ()
+           (),
          )
       /* TODO: Better way to verify extra HTTP headers */
       |> then_(() => pass |> resolve)
@@ -270,7 +272,9 @@ describe("Page", () => {
       |> Browser.newPage
       |> then_(page =>
            page
-           |> Page.addScriptTag(Page.makeTagOptions(~path=testPageJsPath, ()))
+           |> Page.addScriptTag(
+                Page.makeTagOptions(~path=testPageJsPath, ()),
+              )
            |> then_(_elementHandle => Page.content(page))
            |> then_(content =>
                 Page.close(page)
@@ -290,7 +294,9 @@ describe("Page", () => {
       |> Browser.newPage
       |> then_(page =>
            page
-           |> Page.addStyleTag(Page.makeTagOptions(~path=testPageCssPath, ()))
+           |> Page.addStyleTag(
+                Page.makeTagOptions(~path=testPageCssPath, ()),
+              )
            |> then_(_elementHandle => Page.content(page))
            |> then_(content =>
                 Page.close(page)
@@ -308,7 +314,7 @@ describe("Page", () => {
     Js.Promise.(
       page^
       |> Page.authenticate(
-           Js.Null.return({"username": "foo", "password": "bar"})
+           Js.Null.return({"username": "foo", "password": "bar"}),
          )
       |> then_(() => pass |> resolve)
     )
@@ -321,8 +327,8 @@ describe("Page", () => {
              ~name="foo",
              ~value="bar",
              ~url="http://localhost",
-             ()
-           )
+             (),
+           ),
          |])
       |> then_(() => page^ |> Page.cookies([|"http://localhost"|]))
       |> then_(cookies => cookies |> expect |> toHaveLength(1) |> resolve)
@@ -336,14 +342,14 @@ describe("Page", () => {
              ~name="foo",
              ~value="bar",
              ~url="http://localhost",
-             ()
+             (),
            ),
            Page.makeCookie(
              ~name="foo2",
              ~value="bar2",
              ~url="http://localhost2",
-             ()
-           )
+             (),
+           ),
          |])
       |> then_(() =>
            page^ |> Page.cookies([|"http://localhost", "http://localhost2"|])
@@ -359,8 +365,8 @@ describe("Page", () => {
              ~name="foo",
              ~value="bar",
              ~url="http://localhost",
-             ()
-           )
+             (),
+           ),
          |])
       |> then_(() => page^ |> Page.deleteCookie([||]))
       |> then_(() => page^ |> Page.cookies([||]))
@@ -377,9 +383,9 @@ describe("Page", () => {
              "deviceScaleFactor": 2,
              "isMobile": Js.true_,
              "hasTouch": Js.true_,
-             "isLandscape": Js.true_
+             "isLandscape": Js.true_,
            },
-           "userAgent": ""
+           "userAgent": "",
          })
       |> then_(() =>
            page^
@@ -391,7 +397,7 @@ describe("Page", () => {
                 "deviceScaleFactor": 2,
                 "isMobile": Js.true_,
                 "hasTouch": Js.true_,
-                "isLandscape": Js.true_
+                "isLandscape": Js.true_,
               })
            |> resolve
          )
