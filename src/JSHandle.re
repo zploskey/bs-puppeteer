@@ -6,7 +6,8 @@ type t;
 
 [@bs.send] external dispose : t => Js.Promise.t(unit) = "";
 
-/* TODO: executionContext */
+[@bs.send] external executionContext : t => ExecutionContext.t = "";
+
 [@bs.send]
 external getProperties : t => Js.Promise.t(JSMap.t(string, t)) = "";
 

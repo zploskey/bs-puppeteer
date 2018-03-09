@@ -2,6 +2,8 @@ include FrameBase;
 
 [@bs.send] external childFrames : t => array(t) = "";
 
+[@bs.send] external executionContext : t => ExecutionContext.t = "";
+
 [@bs.send] external isDetached : t => bool = "";
 
 [@bs.send] external name : t => string = "";
