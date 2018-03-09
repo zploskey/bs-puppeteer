@@ -29,7 +29,6 @@ type messageType = [
   | `profileEnd
   | `count
   | `timeEnd
-  | `unknown
 ];
 
 /** The type of console message as a string.                                 */
