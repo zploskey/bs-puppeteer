@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@glennsl/bs-jest": "^0.4.2",
-    "bs-platform": "^2.2.0",
+    "bs-platform": "^2.2.2",
     "husky": "^0.15.0-rc.8",
     "lint-staged": "^7.0.0"
   }
