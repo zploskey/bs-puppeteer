@@ -66,7 +66,8 @@ external waitForXPath :
  * throws an error.
  */
 [@bs.send.pipe: t]
-external selectOneEval : (string, Dom.element => 'r) => Js.Promise.t('r) =
+external selectOneEval :
+  (string, [@bs.uncurry] (Dom.element => 'r)) => Js.Promise.t('r) =
   "$eval";
 
 /**
@@ -77,7 +78,8 @@ external selectOneEval : (string, Dom.element => 'r) => Js.Promise.t('r) =
  */
 [@bs.send.pipe: t]
 external selectOneEvalPromise :
-  (string, Dom.element => Js.Promise.t('r)) => Js.Promise.t('r) =
+  (string, [@bs.uncurry] (Dom.element => Js.Promise.t('r))) =>
+  Js.Promise.t('r) =
   "$eval";
 
 /**
@@ -89,7 +91,7 @@ external selectOneEvalPromise :
  */
 [@bs.send.pipe: t]
 external selectOneEval1 :
-  (string, (Dom.element, 'a) => 'r, 'a) => Js.Promise.t('r) =
+  (string, [@bs.uncurry] ((Dom.element, 'a) => 'r), 'a) => Js.Promise.t('r) =
   "$eval";
 
 /**
@@ -101,34 +103,55 @@ external selectOneEval1 :
  */
 [@bs.send.pipe: t]
 external selectOneEvalPromise1 :
-  (string, (Dom.element, 'a) => Js.Promise.t('r), 'a) => Js.Promise.t('r) =
+  (string, [@bs.uncurry] ((Dom.element, 'a) => Js.Promise.t('r)), 'a) =>
+  Js.Promise.t('r) =
   "$eval";
 
 [@bs.send.pipe: t]
 external selectOneEval2 :
-  (string, (Dom.element, 'a, 'b) => 'r, 'a, 'b) => Js.Promise.t('r) =
+  (string, [@bs.uncurry] ((Dom.element, 'a, 'b) => 'r), 'a, 'b) =>
+  Js.Promise.t('r) =
   "$eval";
 
 [@bs.send.pipe: t]
 external selectOneEvalPromise2 :
-  (string, (Dom.element, 'a, 'b) => Js.Promise.t('r), 'a, 'b) =>
+  (
+    string,
+    [@bs.uncurry] ((Dom.element, 'a, 'b) => Js.Promise.t('r)),
+    'a,
+    'b
+  ) =>
   Js.Promise.t('r) =
   "$eval";
 
 [@bs.send.pipe: t]
 external selectOneEval3 :
-  (string, (Dom.element, 'a, 'b, 'c) => 'r, 'a, 'b, 'c) => Js.Promise.t('r) =
+  (string, [@bs.uncurry] ((Dom.element, 'a, 'b, 'c) => 'r), 'a, 'b, 'c) =>
+  Js.Promise.t('r) =
   "$eval";
 
 [@bs.send.pipe: t]
 external selectOneEvalPromise3 :
-  (string, (Dom.element, 'a, 'b, 'c) => Js.Promise.t('r), 'a, 'b, 'c) =>
+  (
+    string,
+    [@bs.uncurry] ((Dom.element, 'a, 'b, 'c) => Js.Promise.t('r)),
+    'a,
+    'b,
+    'c
+  ) =>
   Js.Promise.t('r) =
   "$eval";
 
 [@bs.send.pipe: t]
 external selectOneEval4 :
-  (string, (Dom.element, 'a, 'b, 'c, 'd) => 'r, 'a, 'b, 'c, 'd) =>
+  (
+    string,
+    [@bs.uncurry] ((Dom.element, 'a, 'b, 'c, 'd) => 'r),
+    'a,
+    'b,
+    'c,
+    'd
+  ) =>
   Js.Promise.t('r) =
   "$eval";
 
@@ -136,7 +159,7 @@ external selectOneEval4 :
 external selectOneEvalPromise4 :
   (
     string,
-    (Dom.element, 'a, 'b, 'c, 'd) => Js.Promise.t('r),
+    [@bs.uncurry] ((Dom.element, 'a, 'b, 'c, 'd) => Js.Promise.t('r)),
     'a,
     'b,
     'c,
@@ -151,7 +174,8 @@ external selectOneEvalPromise4 :
  * `fn`.
  */
 [@bs.send.pipe: t]
-external selectAllEval : (string, Dom.nodeList => 'r) => Js.Promise.t('r) =
+external selectAllEval :
+  (string, [@bs.uncurry] (Dom.nodeList => 'r)) => Js.Promise.t('r) =
   "$$eval";
 
 /** Runs document.querySelectorAll in the page and passes it as an argument to
@@ -159,7 +183,8 @@ external selectAllEval : (string, Dom.nodeList => 'r) => Js.Promise.t('r) =
  * */
 [@bs.send.pipe: t]
 external selectAllEvalPromise :
-  (string, Dom.nodeList => Js.Promise.t('r)) => Js.Promise.t('r) =
+  (string, [@bs.uncurry] (Dom.nodeList => Js.Promise.t('r))) =>
+  Js.Promise.t('r) =
   "$$eval";
 
 /**
@@ -169,39 +194,60 @@ external selectAllEvalPromise :
  */
 [@bs.send.pipe: t]
 external selectAllEval1 :
-  (string, (Dom.nodeList, 'a) => 'r, 'a) => Js.Promise.t('r) =
+  (string, [@bs.uncurry] ((Dom.nodeList, 'a) => 'r), 'a) => Js.Promise.t('r) =
   "$$eval";
 
 [@bs.send.pipe: t]
 external selectAllEvalPromise1 :
-  (string, (Dom.nodeList, 'a) => 'r, Js.Promise.t('a)) => Js.Promise.t('r) =
+  (string, [@bs.uncurry] ((Dom.nodeList, 'a) => 'r), Js.Promise.t('a)) =>
+  Js.Promise.t('r) =
   "$$eval";
 
 [@bs.send.pipe: t]
 external selectAllEval2 :
-  (string, (Dom.nodeList, 'a, 'b) => 'r, 'a, 'b) => Js.Promise.t('r) =
+  (string, [@bs.uncurry] ((Dom.nodeList, 'a, 'b) => 'r), 'a, 'b) =>
+  Js.Promise.t('r) =
   "$$eval";
 
 [@bs.send.pipe: t]
 external selectAllEvalPromise2 :
-  (string, (Dom.nodeList, 'a, 'b) => Js.Promise.t('r), 'a, 'b) =>
+  (
+    string,
+    [@bs.uncurry] ((Dom.nodeList, 'a, 'b) => Js.Promise.t('r)),
+    'a,
+    'b
+  ) =>
   Js.Promise.t('r) =
   "$$eval";
 
 [@bs.send.pipe: t]
 external selectAllEval3 :
-  (string, (Dom.nodeList, 'a, 'b, 'c) => 'r, 'a, 'b, 'c) => Js.Promise.t('r) =
+  (string, [@bs.uncurry] ((Dom.nodeList, 'a, 'b, 'c) => 'r), 'a, 'b, 'c) =>
+  Js.Promise.t('r) =
   "$$eval";
 
 [@bs.send.pipe: t]
 external selectAllEvalPromise3 :
-  (string, (Dom.nodeList, 'a, 'b, 'c) => Js.Promise.t('r), 'a, 'b, 'c) =>
+  (
+    string,
+    [@bs.uncurry] ((Dom.nodeList, 'a, 'b, 'c) => Js.Promise.t('r)),
+    'a,
+    'b,
+    'c
+  ) =>
   Js.Promise.t('r) =
   "$$eval";
 
 [@bs.send.pipe: t]
 external selectAllEval4 :
-  (string, (Dom.nodeList, 'a, 'b, 'c, 'd) => 'r, 'a, 'b, 'c, 'd) =>
+  (
+    string,
+    [@bs.uncurry] ((Dom.nodeList, 'a, 'b, 'c, 'd) => 'r),
+    'a,
+    'b,
+    'c,
+    'd
+  ) =>
   Js.Promise.t('r) =
   "$$eval";
 
@@ -209,7 +255,7 @@ external selectAllEval4 :
 external selectAllEvalPromise4 :
   (
     string,
-    (Dom.nodeList, 'a, 'b, 'c, 'd) => Js.Promise.t('r),
+    [@bs.uncurry] ((Dom.nodeList, 'a, 'b, 'c, 'd) => Js.Promise.t('r)),
     'a,
     'b,
     'c,
@@ -231,38 +277,44 @@ external evaluatePromise : (unit => Js.Promise.t('r)) => Js.Promise.t('r) =
   "";
 
 [@bs.send.pipe: t]
-external evaluate1 : ('a => 'r, 'a) => Js.Promise.t('r) = "evaluate";
-
-[@bs.send.pipe: t]
-external evaluatePromise1 : ('a => Js.Promise.t('r), 'a) => Js.Promise.t('r) =
+external evaluate1 : ([@bs.uncurry] ('a => 'r), 'a) => Js.Promise.t('r) =
   "evaluate";
 
 [@bs.send.pipe: t]
-external evaluate2 : (('a, 'b) => 'r, 'a, 'b) => Js.Promise.t('r) =
+external evaluatePromise1 :
+  ([@bs.uncurry] ('a => Js.Promise.t('r)), 'a) => Js.Promise.t('r) =
+  "evaluate";
+
+[@bs.send.pipe: t]
+external evaluate2 :
+  ([@bs.uncurry] (('a, 'b) => 'r), 'a, 'b) => Js.Promise.t('r) =
   "evaluate";
 
 [@bs.send.pipe: t]
 external evaluatePromise2 :
-  (('a, 'b) => Js.Promise.t('r), 'a, 'b) => Js.Promise.t('r) =
+  ([@bs.uncurry] (('a, 'b) => Js.Promise.t('r)), 'a, 'b) => Js.Promise.t('r) =
   "evaluate";
 
 [@bs.send.pipe: t]
-external evaluate3 : (('a, 'b, 'c) => 'r, 'a, 'b, 'c) => Js.Promise.t('r) =
+external evaluate3 :
+  ([@bs.uncurry] (('a, 'b, 'c) => 'r), 'a, 'b, 'c) => Js.Promise.t('r) =
   "evaluate";
 
 [@bs.send.pipe: t]
 external evaluatePromise3 :
-  (('a, 'b, 'c) => Js.Promise.t('r), 'a, 'b, 'c) => Js.Promise.t('r) =
+  ([@bs.uncurry] (('a, 'b, 'c) => Js.Promise.t('r)), 'a, 'b, 'c) =>
+  Js.Promise.t('r) =
   "evaluate";
 
 [@bs.send.pipe: t]
 external evaluate4 :
-  (('a, 'b, 'c, 'd) => 'r, 'a, 'b, 'c, 'd) => Js.Promise.t('r) =
+  ([@bs.uncurry] (('a, 'b, 'c, 'd) => 'r), 'a, 'b, 'c, 'd) => Js.Promise.t('r) =
   "evaluate";
 
 [@bs.send.pipe: t]
 external evaluatePromise4 :
-  (('a, 'b, 'c, 'd) => Js.Promise.t('r), 'a, 'b, 'c, 'd) => Js.Promise.t('r) =
+  ([@bs.uncurry] (('a, 'b, 'c, 'd) => Js.Promise.t('r)), 'a, 'b, 'c, 'd) =>
+  Js.Promise.t('r) =
   "evaluate";
 
 /**
@@ -281,42 +333,53 @@ external evaluateHandlePromise :
   "";
 
 [@bs.send.pipe: t]
-external evaluateHandle1 : ('a => JSHandle.t, 'a) => Js.Promise.t(JSHandle.t) =
+external evaluateHandle1 :
+  ([@bs.uncurry] ('a => JSHandle.t), 'a) => Js.Promise.t(JSHandle.t) =
   "evaluateHandle";
 
 [@bs.send.pipe: t]
 external evaluateHandlePromise1 :
-  ('a => Js.Promise.t(JSHandle.t), 'a) => Js.Promise.t(JSHandle.t) =
+  ([@bs.uncurry] ('a => Js.Promise.t(JSHandle.t)), 'a) =>
+  Js.Promise.t(JSHandle.t) =
   "evaluateHandle";
 
 [@bs.send.pipe: t]
 external evaluateHandle2 :
-  (('a, 'b) => JSHandle.t, 'a, 'b) => Js.Promise.t(JSHandle.t) =
+  ([@bs.uncurry] (('a, 'b) => JSHandle.t), 'a, 'b) => Js.Promise.t(JSHandle.t) =
   "evaluateHandle";
 
 [@bs.send.pipe: t]
 external evaluateHandlePromise2 :
-  (('a, 'b) => Js.Promise.t(JSHandle.t), 'a, 'b) => Js.Promise.t(JSHandle.t) =
+  ([@bs.uncurry] (('a, 'b) => Js.Promise.t(JSHandle.t)), 'a, 'b) =>
+  Js.Promise.t(JSHandle.t) =
   "evaluateHandle";
 
 [@bs.send.pipe: t]
 external evaluateHandle3 :
-  (('a, 'b, 'c) => JSHandle.t, 'a, 'b, 'c) => Js.Promise.t('r) =
+  ([@bs.uncurry] (('a, 'b, 'c) => JSHandle.t), 'a, 'b, 'c) => Js.Promise.t('r) =
   "evaluateHandle";
 
 [@bs.send.pipe: t]
 external evaluateHandlePromise3 :
-  (('a, 'b, 'c) => Js.Promise.t(JSHandle.t), 'a, 'b, 'c) => Js.Promise.t('r) =
+  ([@bs.uncurry] (('a, 'b, 'c) => Js.Promise.t(JSHandle.t)), 'a, 'b, 'c) =>
+  Js.Promise.t('r) =
   "evaluateHandle";
 
 [@bs.send.pipe: t]
 external evaluateHandle4 :
-  (('a, 'b, 'c, 'd) => JSHandle.t, 'a, 'b, 'c, 'd) => Js.Promise.t('r) =
+  ([@bs.uncurry] (('a, 'b, 'c, 'd) => JSHandle.t), 'a, 'b, 'c, 'd) =>
+  Js.Promise.t('r) =
   "evaluateHandle";
 
 [@bs.send.pipe: t]
 external evaluateHandlePromise4 :
-  (('a, 'b, 'c, 'd) => Js.Promise.t(JSHandle.t), 'a, 'b, 'c, 'd) =>
+  (
+    [@bs.uncurry] (('a, 'b, 'c, 'd) => Js.Promise.t(JSHandle.t)),
+    'a,
+    'b,
+    'c,
+    'd
+  ) =>
   Js.Promise.t('r) =
   "evaluateHandle";
 
