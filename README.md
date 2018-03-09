@@ -62,9 +62,14 @@ One-off builds can be done with `npm run build`.
 ## Contributing
 
 Contributions are welcome.
-```
+
+```sh
 git clone https://github.com/bs-puppeteer/bs-puppeteer.git
 cd bs-puppeteer
 npm install
 npm start
 ```
+
+## Projects using bs-puppeteer
+
+- [Hamilton Lottery](https://github.com/jrdrg/hamilton-lottery)
