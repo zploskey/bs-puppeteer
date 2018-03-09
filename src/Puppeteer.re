@@ -5,7 +5,8 @@ type connectOptions = {
   "ignoreHTTPSErrors": Js.Nullable.t(bool),
 };
 
-/** Attach Puppeteer to an existing Chromium instance. */ [@bs.val]
+/** Attach Puppeteer to an existing Chromium instance.              */
+[@bs.val]
 external connect :
   (~options: connectOptions=?, unit) => Js.Promise.t(Browser.t) =
   "";
@@ -15,7 +16,9 @@ external connect :
 [@bs.module "puppeteer"]
 external executablePath : unit => string = "";
 
-/** Launch a browser instance. */ [@bs.val] [@bs.module "puppeteer"]
+/** Launch a browser instance.                                      */
+[@bs.val]
+[@bs.module "puppeteer"]
 external launch :
   (~options: Launcher.launchOptions=?, unit) => Js.Promise.t(Browser.t) =
   "";
