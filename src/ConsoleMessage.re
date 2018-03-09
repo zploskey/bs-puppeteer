@@ -9,29 +9,32 @@ external args : t => array(JSHandle.t) = "";
 [@bs.send]
 external text : t => string = "";
 
-/** The type of console message.                                            */
+[@bs.deriving jsConverter]
+type messageType = [
+  | `log
+  | `debug
+  | `info
+  | `error
+  | `warning
+  | `dir
+  | `dirxml
+  | `table
+  | `trace
+  | `clear
+  | `startGroup
+  | `startGroupCollapsed
+  | `endGroup
+  | [@bs.as "assert"] `assert_
+  | `profile
+  | `profileEnd
+  | `count
+  | `timeEnd
+  | `unknown
+];
+
+/** The type of console message as a string.                                 */
 [@bs.send]
-external type_ :
-  t =>
-  [@bs.string] [
-    | `log
-    | `debug
-    | `info
-    | `error
-    | `warning
-    | `dir
-    | `dirxml
-    | `table
-    | `trace
-    | `clear
-    | `startGroup
-    | `startGroupCollapsed
-    | `endGroup
-    | `assert_
-    | `profile
-    | `profileEnd
-    | `count
-    | `timeEnd
-  ] =
-  "type";
-/* TODO: make sure `assert_ actually compiles to "assert" */
+external typeString : t => string = "type";
+
+/** The console message's [messageType]. */
+let type_ = t => messageTypeFromJs(typeString(t));
