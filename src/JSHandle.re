@@ -1,18 +1,19 @@
+module Impl = (T: {type t;}) => {
+  [@bs.send] external asElement : T.t => Js.null(Types.elementHandle) = "";
+  [@bs.send] external dispose : T.t => Js.Promise.t(unit) = "";
+  [@bs.send] external executionContext : T.t => Types.executionContext = "";
+  [@bs.send]
+  external getProperties : T.t => Js.Promise.t(JSMap.t(string, T.t)) = "";
+  [@bs.send.pipe: T.t]
+  external getProperty : (~propertyName: string) => Js.Promise.t(T.t) = "";
+  [@bs.send] external jsonValue : T.t => Js.Promise.t(Js.t({..})) = "";
+};
+
 type t = Types.jsHandle;
 
-/* TODO:
- * Should be Js.null(ElementHandle.t) but these aren't currently distinct types.
- * This will more than likely cause problems. */
-[@bs.send] external asElement : t => Js.null(t) = "";
-
-[@bs.send] external dispose : t => Js.Promise.t(unit) = "";
-
-[@bs.send] external executionContext : t => Types.executionContext = "";
-
-[@bs.send]
-external getProperties : t => Js.Promise.t(JSMap.t(string, t)) = "";
-
-[@bs.send.pipe: t]
-external getProperty : (~propertyName: string) => Js.Promise.t(t) = "";
-
-[@bs.send] external jsonValue : t => Js.Promise.t(Js.t({..})) = "";
+include
+  Impl(
+    {
+      type nonrec t = t;
+    },
+  );

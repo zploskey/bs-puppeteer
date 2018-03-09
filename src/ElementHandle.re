@@ -1,6 +1,21 @@
-include JSHandle;
+type t = Types.elementHandle;
 
-/* TODO: $, $$, $x */
+include
+  JSHandle.Impl(
+    {
+      type nonrec t = t;
+    },
+  );
+
+[@bs.send.pipe: t]
+external selectOne : (~selector: string) => Js.Promise.t(Js.null(t)) = "$";
+
+[@bs.send.pipe: t]
+external selectAll : (~selector: string) => Js.Promise.t(array(t)) = "$$";
+
+[@bs.send.pipe: t]
+external selectXPath : (~xpath: string) => Js.Promise.t(array(t)) = "$x";
+
 [@bs.send.pipe: t]
 external boundingBox : Js.Promise.t(Js.null(BoundingBox.t)) = "";
 

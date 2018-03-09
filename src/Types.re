@@ -1,3 +1,5 @@
+type elementHandle;
+
 type executionContext;
 
 type jsHandle;
