@@ -35,7 +35,7 @@ let testPageCssPath = Node.Path.resolve(fixturesPath, "./testPage.css");
 let testPageContent = Node.Fs.readFileAsUtf8Sync(testPagePath);
 
 let noSandbox =
-  Launcher.makeLaunchOptions(
+  Puppeteer.makeLaunchOptions(
     ~args=[|"--no-sandbox", "--disable-setuid-sandbox"|],
     (),
   );
