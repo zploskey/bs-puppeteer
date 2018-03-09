@@ -1,12 +1,26 @@
 /** Configuration options for [connect]. */
 type connectOptions = {
   .
-  "browserWSEndpoint": Js.Nullable.t(string),
-  "ignoreHTTPSErrors": Js.Nullable.t(bool),
+  "browserWSEndpoint": Js.nullable(string),
+  "ignoreHTTPSErrors": Js.nullable(bool),
 };
+
+[@bs.obj]
+external makeConnectOptions :
+  (~browserWSEndpoint: string=?, ~ignoreHTTPSErrors: Js.boolean=?, unit) =>
+  connectOptions =
+  "";
+
+let makeConnectOptions = (~browserWSEndpoint=?, ~ignoreHTTPSErrors=?, ()) =>
+  makeConnectOptions(
+    ~browserWSEndpoint?,
+    ~ignoreHTTPSErrors=?Util.optBoolToJs(ignoreHTTPSErrors),
+    (),
+  );
 
 /** Attach Puppeteer to an existing Chromium instance.              */
 [@bs.val]
+[@bs.module "puppeteer"]
 external connect :
   (~options: connectOptions=?, unit) => Js.Promise.t(Browser.t) =
   "";
