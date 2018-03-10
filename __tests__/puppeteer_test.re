@@ -491,6 +491,41 @@ describe("Page", () => {
          )
     )
   );
+  testPromise("pdf()", () =>
+    Js.Promise.(
+      page^
+      |> Page.pdf(
+           Page.makePDFOptions(
+             ~scale=1,
+             ~displayHeaderFooter=Js.true_,
+             ~headerTemplate="[[header]]",
+             ~footerTemplate="[[footer]]",
+             ~printBackground=Js.true_,
+             ~landscape=Js.true_,
+             ~pageRanges="",
+             ~format=`A0,
+             ~width=10.0 |> Unit.cm,
+             ~height=200.0 |> Unit.mm,
+             ~margin=
+               Page.makeBoxModel(
+                 ~top=0.1 |> Unit.cm,
+                 ~right=10.0 |> Unit.px,
+                 ~bottom=1.0 |> Unit.mm,
+                 ~left=0.01 |> Unit.in_,
+                 (),
+               ),
+             (),
+           ),
+         )
+      |> then_(buffer =>
+           buffer
+           |> Js_typed_array.ArrayBuffer.byteLength
+           |> expect
+           |> toBe(23103)
+           |> Js.Promise.resolve
+         )
+    )
+  );
   afterAllPromise(() =>
     Js.Promise.(Page.close(page^) |> then_(() => Browser.close(browser^)))
   );
