@@ -196,13 +196,13 @@ describe("Page", () => {
       |> Browser.newPage
       |> then_(page => {
            let options = Navigation.makeOptions(~timeout=25000., ());
-           page |> Page.goto("https://google.com", ~options, ());
+           page |> Page.goto("file://" ++ testPagePath, ~options, ());
          })
       |> then_(res => res |> Js.Null.getExn |> Response.text)
       |> then_(text =>
            text
            |> expect
-           |> toContainString("<title>Google</title>")
+           |> toContainString("<title>Test Page</title>")
            |> resolve
          )
     )
@@ -488,6 +488,41 @@ describe("Page", () => {
       }
       |> then_(jsHandler =>
            jsHandler |> expect |> ExpectJs.toBeTruthy |> Js.Promise.resolve
+         )
+    )
+  );
+  testPromise("pdf()", () =>
+    Js.Promise.(
+      page^
+      |> Page.pdf(
+           Page.makePDFOptions(
+             ~scale=1,
+             ~displayHeaderFooter=Js.true_,
+             ~headerTemplate="[[header]]",
+             ~footerTemplate="[[footer]]",
+             ~printBackground=Js.true_,
+             ~landscape=Js.true_,
+             ~pageRanges="",
+             ~format=`A0,
+             ~width=10.0 |> Unit.cm,
+             ~height=200.0 |> Unit.mm,
+             ~margin=
+               Page.makeMargin(
+                 ~top=0.1 |> Unit.cm,
+                 ~right=10.0 |> Unit.px,
+                 ~bottom=1.0 |> Unit.mm,
+                 ~left=0.01 |> Unit.in_,
+                 (),
+               ),
+             (),
+           ),
+         )
+      |> then_(buffer =>
+           buffer
+           |> Js_typed_array.ArrayBuffer.byteLength
+           |> expect
+           |> toBeGreaterThan(20000)
+           |> Js.Promise.resolve
          )
     )
   );

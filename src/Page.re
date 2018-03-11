@@ -52,6 +52,30 @@ type emulateOption = {
   "userAgent": string,
 };
 
+type margin = {
+  .
+  "top": Js.undefined(Unit.t),
+  "right": Js.undefined(Unit.t),
+  "bottom": Js.undefined(Unit.t),
+  "left": Js.undefined(Unit.t),
+};
+
+type pdfOptions = {
+  .
+  "path": Js.undefined(string),
+  "scale": Js.undefined(int),
+  "displayHeaderFooter": Js.undefined(Js.boolean),
+  "headerTemplate": Js.undefined(string),
+  "footerTemplate": Js.undefined(string),
+  "printBackground": Js.undefined(Js.boolean),
+  "landscape": Js.undefined(Js.boolean),
+  "pageRanges": Js.undefined(string),
+  "format": Js.undefined(string),
+  "width": Js.undefined(Unit.t),
+  "height": Js.undefined(Unit.t),
+  "margin": Js.undefined(margin),
+};
+
 [@bs.obj]
 external makeCookie :
   (
@@ -67,7 +91,51 @@ external makeCookie :
     ~sameSite: string=?,
     unit
   ) =>
-  _ =
+  cookie =
+  "";
+
+[@bs.obj]
+external makeMargin :
+  (
+    ~top: Unit.t=?,
+    ~right: Unit.t=?,
+    ~bottom: Unit.t=?,
+    ~left: Unit.t=?,
+    unit
+  ) =>
+  margin =
+  "";
+
+[@bs.obj]
+external makePDFOptions :
+  (
+    ~path: string=?,
+    ~scale: int=?,
+    ~displayHeaderFooter: Js.boolean=?,
+    ~headerTemplate: string=?,
+    ~footerTemplate: string=?,
+    ~printBackground: Js.boolean=?,
+    ~landscape: Js.boolean=?,
+    ~pageRanges: string=?,
+    ~format: [@bs.string] [
+               | `Letter
+               | `Legal
+               | `Tabload
+               | `Ledger
+               | `A0
+               | `A1
+               | `A2
+               | `A3
+               | `A4
+               | `A5
+             ]
+               =?,
+    ~width: Unit.t=?,
+    ~height: Unit.t=?,
+    ~margin: margin=?,
+    unit
+  ) =>
+  pdfOptions =
   "";
 
 [@bs.send.pipe: t]
@@ -141,3 +209,7 @@ external emulateMedia :
 external emulateMediaDisable :
   ([@bs.as {json|null|json}] _) => Js.Promise.t(unit) =
   "emulateMedia";
+
+/* TODO: change return type to "Node.buffer" when its ready */
+[@bs.send.pipe: t]
+external pdf : pdfOptions => Js.Promise.t(Js_typed_array.ArrayBuffer.t) = "";
