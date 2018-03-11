@@ -210,5 +210,6 @@ external emulateMediaDisable :
   ([@bs.as {json|null|json}] _) => Js.Promise.t(unit) =
   "emulateMedia";
 
+/* TODO: change return type to "Node.buffer" when its ready */
 [@bs.send.pipe: t]
 external pdf : pdfOptions => Js.Promise.t(Js_typed_array.ArrayBuffer.t) = "";
