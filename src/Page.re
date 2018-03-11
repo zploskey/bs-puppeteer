@@ -52,7 +52,7 @@ type emulateOption = {
   "userAgent": string,
 };
 
-type boxModel = {
+type margin = {
   .
   "top": Js.undefined(Unit.t),
   "right": Js.undefined(Unit.t),
@@ -73,7 +73,7 @@ type pdfOptions = {
   "format": Js.undefined(string),
   "width": Js.undefined(Unit.t),
   "height": Js.undefined(Unit.t),
-  "margin": Js.undefined(boxModel),
+  "margin": Js.undefined(margin),
 };
 
 [@bs.obj]
@@ -95,7 +95,7 @@ external makeCookie :
   "";
 
 [@bs.obj]
-external makeBoxModel :
+external makeMargin :
   (
     ~top: Unit.t=?,
     ~right: Unit.t=?,
@@ -132,7 +132,7 @@ external makePDFOptions :
                =?,
     ~width: Unit.t=?,
     ~height: Unit.t=?,
-    ~margin: boxModel=?,
+    ~margin: margin=?,
     unit
   ) =>
   _ =

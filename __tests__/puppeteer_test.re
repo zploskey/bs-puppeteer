@@ -507,7 +507,7 @@ describe("Page", () => {
              ~width=10.0 |> Unit.cm,
              ~height=200.0 |> Unit.mm,
              ~margin=
-               Page.makeBoxModel(
+               Page.makeMargin(
                  ~top=0.1 |> Unit.cm,
                  ~right=10.0 |> Unit.px,
                  ~bottom=1.0 |> Unit.mm,
