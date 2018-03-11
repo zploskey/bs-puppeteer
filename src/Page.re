@@ -91,7 +91,7 @@ external makeCookie :
     ~sameSite: string=?,
     unit
   ) =>
-  _ =
+  cookie =
   "";
 
 [@bs.obj]
@@ -103,7 +103,7 @@ external makeMargin :
     ~left: Unit.t=?,
     unit
   ) =>
-  _ =
+  margin =
   "";
 
 [@bs.obj]
@@ -135,7 +135,7 @@ external makePDFOptions :
     ~margin: margin=?,
     unit
   ) =>
-  _ =
+  pdfOptions =
   "";
 
 [@bs.send.pipe: t]
