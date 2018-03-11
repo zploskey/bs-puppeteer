@@ -1,5 +1,9 @@
 ## 0.5.0 (coming soon)
 
+- Move Launcher.launchOptions and Launcher.makeLaunchOptions to Puppeteer module.
+  They remain in Launcher as aliases but are deprecated.
+  The Launcher module will be removed in a future version.
+  ([a19ae2f](https://github.com/bs-puppeteer/bs-puppeteer/commit/a19ae2f6a0b34ce738414c3f6a63341591f51a4f))
 - Complete bindings for Request ([#22](https://github.com/bs-puppeteer/bs-puppeteer/pull/22))
 - Complete bindings for page/frame evaluation functions ([#21](https://github.com/bs-puppeteer/bs-puppeteer/pull/21))
 
