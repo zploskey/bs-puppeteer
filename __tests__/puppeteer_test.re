@@ -521,7 +521,7 @@ describe("Page", () => {
            buffer
            |> Js_typed_array.ArrayBuffer.byteLength
            |> expect
-           |> toBe(23103)
+           |> toBeGreaterThan(20000)
            |> Js.Promise.resolve
          )
     )
