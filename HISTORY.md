@@ -1,5 +1,9 @@
 ## 0.5.0 (coming soon)
 
+- Add missing keys "env" and "devtools" to Puppeteer.launchOptions
+  ([#27](https://github.com/bs-puppeteer/bs-puppeteer/pull/27))
+- Add bindings for Page.pdf()
+  ([#26](https://github.com/bs-puppeteer/bs-puppeteer/pull/26))
 - Move Launcher.launchOptions and Launcher.makeLaunchOptions to Puppeteer module.
   They remain in Launcher as aliases but are deprecated.
   The Launcher module will be removed in a future version.
