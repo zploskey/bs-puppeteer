@@ -487,7 +487,7 @@ describe("Page", () => {
         page^ |> Page.evaluateHandle(eval);
       }
       |> then_(jsHandler =>
-           jsHandler |> expect |> ExpectJs.toBeTruthy |> Js.Promise.resolve
+           jsHandler |> expect |> ExpectJs.toBeTruthy |> resolve
          )
     )
   );
