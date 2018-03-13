@@ -1,5 +1,9 @@
+# History
+
 ## 0.5.0 (coming soon)
 
+- Add vast majority of remaining Page functions
+  ([#30](https://github.com/bs-puppeteer/bs-puppeteer/pull/30))
 - Add missing keys "env" and "devtools" to Puppeteer.launchOptions
   ([#27](https://github.com/bs-puppeteer/bs-puppeteer/pull/27))
 - Add bindings for Page.pdf()
