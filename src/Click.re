@@ -1,7 +1,17 @@
-/* TODO: handle options "left", "right", "middle" only */
 type clickOptions = {
   .
-  "button": Js.Nullable.t(string),
-  "clickCount": Js.Nullable.t(int),
-  "delay": Js.Nullable.t(float),
+  "button": Js.undefined(string),
+  "clickCount": Js.undefined(int),
+  "delay": Js.undefined(float),
 };
+
+[@bs.obj]
+external makeClickOptions :
+  (
+    ~button: [@bs.string] [ | `left | `middle | `right]=?,
+    ~clickCount: int=?,
+    ~delay: float=?,
+    unit
+  ) =>
+  clickOptions =
+  "";
