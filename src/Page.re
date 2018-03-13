@@ -141,6 +141,10 @@ external makePDFOptions :
 [@bs.send.pipe: t]
 external authenticate : Js.Null.t(authOptions) => Js.Promise.t(unit) = "";
 
+/** Bring the page to front (activate the tab).                    */
+[@bs.send]
+external bringToFront : t => Js.Promise.t(unit) = "";
+
 [@bs.send.pipe: t]
 external click :
   (string, ~options: Click.clickOptions=?, unit) => Js.Promise.t(unit) =
@@ -149,6 +153,26 @@ external click :
 [@bs.send.pipe: t] external close : Js.Promise.t(unit) = "";
 
 [@bs.send] external content : t => Js.Promise.t(string) = "";
+
+/* TODO: coverage
+   module Coverage = {
+     [@bs.send.pipe : t] external startCSSCoverage : (~options)
+   };
+
+   [@bs.get] external coverage : t => coverage = "";
+   */
+/* evaluateHandle for page? may work fine inheriting */
+/* TODO: versions handling args */
+[@bs.send.pipe: t]
+external evaluateOnNewDocument : (unit => unit) => Js.Promise.t(unit) = "";
+
+/* TODO: exposeFunction */
+[@bs.send.pipe: t]
+external focus : (~selector: string) => Js.Promise.t(unit) = "";
+
+/** Array of all frames attached to the page.                         */
+[@bs.send]
+external frames : t => array(Frame.t) = "";
 
 [@bs.send.pipe: t] external setContent : string => Js.Promise.t(unit) = "";
 
@@ -167,6 +191,33 @@ external goto :
   (string, ~options: Navigation.options=?, unit) =>
   Js.Promise.t(Js.null(Response.t)) =
   "";
+
+/**
+ * Fetches the first element matching `selector`, scrolls it into view if not
+ * already visible, then hovers over the center of the element using
+ * [Page.mouse]. Throws an error if no element matches `selector`.
+ */
+[@bs.send.pipe: t]
+external hover : (~selector: string) => Js.Promise.t(unit) = "";
+
+/** The page's virtual keyboard.                                    */
+[@bs.get]
+external keyboard : t => Keyboard.t = "";
+
+/**
+ * The main Frame that a page is guaranteed to have which persists during
+ * navigation.
+ */
+[@bs.send]
+external mainFrame : t => Frame.t = "";
+
+/** Gets the page metrics.                                          */
+[@bs.send]
+external metrics : t => Js.Promise.t(Metrics.t) = "";
+
+/** Get the virtual mouse.                                          */
+[@bs.get]
+external mouse : t => Mouse.t = "";
 
 [@bs.send.pipe: t]
 external screenshot :
@@ -213,3 +264,84 @@ external emulateMediaDisable :
 /* TODO: change return type to "Node.buffer" when its ready */
 [@bs.send.pipe: t]
 external pdf : pdfOptions => Js.Promise.t(Js_typed_array.ArrayBuffer.t) = "";
+
+/* TODO:
+      external on
+      external once
+   */
+/** Iterates the JS heap finding all the objects with the given prototype. */
+[@bs.send.pipe: t]
+external queryObjects :
+  (~prototypeHandle: JSHandle.t) => Js.Promise.t(JSHandle.t) =
+  "";
+
+/** Reload the current page.                               */
+[@bs.send.pipe: t]
+external reload :
+  (~options: Navigation.options=?, unit) => Js.Promise.t(Response.t) =
+  "";
+
+/**
+ * Selects options in a `<select>` tag. Triggers a `change` and `input` event
+ * once all the provided options have been selected. If there's no `<select>`
+ * element matching selector it throws an error.
+ */
+[@bs.send.pipe: t]
+external select :
+  (~selector: string, ~values: array(string)) => Js.Promise.t(array(string)) =
+  "";
+
+/**
+ * Change the default maximum navigation time of 30 seconds for the following:
+ * - `Page.goto`
+ * - `Page.goBack`
+ * - `Page.goForward`
+ * - `Page.reload`
+ * - `Page.waitForNavigation`
+ */
+[@bs.send.pipe: t]
+external setDefaultNavigationTimeout : (~timeout: float) => unit = "";
+
+[@bs.send.pipe: t]
+external setJavaScriptEnabled : (~enabled: Js.boolean) => Js.Promise.t(unit) =
+  "";
+
+/** Set whether to enable JavaScript on the page. */
+let setJavaScriptEnabled = (~enabled, ~page) =>
+  setJavaScriptEnabled(~enabled=Js.Boolean.to_js_boolean(enabled), page);
+
+[@bs.send.pipe: t]
+external setOfflineMode : (~enabled: Js.boolean) => Js.Promise.t(unit) = "";
+
+/** Set whether to enable offline mode for the page. */
+let setOfflineMode = (~enabled, ~page) =>
+  setOfflineMode(~enabled=Js.Boolean.to_js_boolean(enabled), page);
+
+[@bs.send.pipe: t]
+external setRequestInterception : (~enabled: Js.boolean) => Js.Promise.t(unit) =
+  "";
+
+/** Set whether to enable request interception for the page. */
+let setRequestInterception = (~enabled, ~page) =>
+  setRequestInterception(~enabled=Js.Boolean.to_js_boolean(enabled), page);
+
+[@bs.send.pipe: t]
+external setUserAgent : (~userAgent: string) => Js.Promise.t(unit) = "";
+
+[@bs.send.pipe: t]
+external tap : (~selector: string) => Js.Promise.t(unit) = "";
+
+[@bs.send] external target : t => Target.t = "";
+
+[@bs.send] external title : t => Js.Promise.t(string) = "";
+
+[@bs.get] external touchscreen : t => Touchscreen.t = "";
+
+[@bs.get] external tracing : t => Tracing.t = "";
+
+[@bs.send] external url : t => string = "";
+
+[@bs.send.pipe: t]
+external waitForNavigation :
+  (~options: Navigation.options) => Js.Promise.t(Response.t) =
+  "";
