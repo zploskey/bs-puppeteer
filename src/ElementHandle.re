@@ -49,3 +49,6 @@ external type_ :
 
 [@bs.send.pipe: t] [@bs.splice]
 external uploadFile : (~filePaths: array(string)) => Js.Promise.t(unit) = "";
+
+[@bs.send.pipe: t]
+external contentFrame : unit => Js.Promise.t(Types.frameBase) = "";

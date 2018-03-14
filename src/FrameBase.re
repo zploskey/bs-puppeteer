@@ -1,4 +1,4 @@
-type t;
+type t = Types.frameBase;
 
 type tagOptions = {
   .
