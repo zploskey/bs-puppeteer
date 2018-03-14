@@ -4,11 +4,17 @@ type tracingOptions = {
   .
   "path": string,
   "screenshots": Js.Nullable.t(bool),
+  "categories": array(string),
 };
 
 [@bs.obj]
 external makeTracingOptions :
-  (~path: string=?, ~screenshots: Js.Nullable.t(Js.boolean)=?, unit) =>
+  (
+    ~path: string=?,
+    ~screenshots: Js.Nullable.t(Js.boolean)=?,
+    ~categories: array(string)=?,
+    unit
+  ) =>
   tracingOptions =
   "";
 
