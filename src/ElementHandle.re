@@ -51,4 +51,5 @@ external type_ :
 external uploadFile : (~filePaths: array(string)) => Js.Promise.t(unit) = "";
 
 [@bs.send.pipe: t]
-external contentFrame : unit => Js.Promise.t(Types.frameBase) = "";
+external contentFrame : unit => Js.Promise.t(Js.Nullable.t(Types.frameBase)) =
+  "";
