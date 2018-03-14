@@ -14,7 +14,7 @@ external makeTagOptions :
 
 [@bs.send.pipe: t]
 external selectOne :
-  (~selector: string) => Js.Promise.t(Js.null(ElementHandle.t)) =
+  (~selector: string) => Js.Promise.t(Js.Nullable.t(ElementHandle.t)) =
   "$";
 
 [@bs.send.pipe: t]

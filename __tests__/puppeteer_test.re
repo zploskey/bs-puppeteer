@@ -530,3 +530,48 @@ describe("Page", () => {
     Js.Promise.(Page.close(page^) |> then_(() => Browser.close(browser^)))
   );
 });
+
+describe("ElementHandle", () => {
+  let browser = ref(Browser.empty());
+  let page = ref(Page.empty());
+  let elementHandle = ref(ElementHandle.empty());
+  beforeAllPromise(() =>
+    Js.Promise.(
+      Puppeteer.launch(~options=noSandbox, ())
+      |> then_(res => {
+           browser := res;
+           browser^ |> Browser.newPage;
+         })
+      |> then_(res => {
+           page := res;
+           resolve();
+         })
+      |> then_(() => Page.selectOne(page^, ~selector="body"))
+      |> then_(res =>
+           switch (res |> Js.Nullable.toOption) {
+           | Some(v) =>
+             elementHandle := v;
+             resolve();
+           | None =>
+             reject(Js.Exn.raiseError("failed to initial an elementhandle"))
+           }
+         )
+    )
+  );
+  testPromise("contentFrame()", () => pass |> Js.Promise.resolve);
+  /*   Js.Promise.( */
+  /*     elementHandle^ */
+  /*     |> ElementHandle.contentFrame */
+  /*     |> then_(frame => */
+  /*          switch (frame |> Js.Nullable.toOption) { */
+  /*          | Some(v) => v |> expect |> ExpectJs.toBeTruthy |> resolve */
+  /*          | None => */
+  /*            Js.Exn.raiseError("failed to get frame from contentFrame") */
+  /*            |> reject */
+  /*          } */
+  /*        ) */
+  /*   ) */
+  afterAllPromise(() =>
+    Js.Promise.(Page.close(page^) |> then_(() => Browser.close(browser^)))
+  );
+});
