@@ -14,7 +14,7 @@ from BuckleScript or Reason.
 These bindings are a work in progress.
 Many features have no been implemented.
 The initial goal is to get basic web-scraping and interaction capabilities.
-See [examples](examples/)
+See [examples](examples/) and the [test suite](__tests__/puppeteer_test.re)
 for use cases that are being tested.
 Features of the Puppeteer API are implemented as we need or get to them.
 If you would like to add or fix some bindings, see [contributing](#contributing).
@@ -62,6 +62,7 @@ One-off builds can be done with `npm run build`.
 ## Contributing
 
 Contributions are welcome.
+Get started by cloning the respository and starting the compiler in watch mode.
 
 ```sh
 git clone https://github.com/bs-puppeteer/bs-puppeteer.git
@@ -69,6 +70,20 @@ cd bs-puppeteer
 npm install
 npm start
 ```
+
+Any changes should pass the test suite (`npm run test`).
+One great way to contribute is by writing tests for features that don't yet have them.
+Tests can be found in the `__tests__` directory.
+
+A git hook will automatically run `refmt` on your code and run the test suite each time you commit.
+Contributors should have the latest release version of `refmt`, which is included with Reason.
+See the [Reason Global Installation](https://reasonml.github.io/docs/en/global-installation.html) instructions.
+
+Good references for writing bindings are:
+
+- [BuckleScript Interop Cheatsheet](https://bucklescript.github.io/docs/en/interop-cheatsheet.html)
+- [Puppeteer API Docs](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md)
+- [Puppeteer TypeScript Definitions](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/puppeteer/index.d.ts)
 
 ## Projects using bs-puppeteer
 
