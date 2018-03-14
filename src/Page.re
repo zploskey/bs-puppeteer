@@ -291,6 +291,16 @@ external select :
   (~selector: string, ~values: array(string)) => Js.Promise.t(array(string)) =
   "";
 
+[@bs.send.pipe: t]
+external setCacheEnabled : (~enabled: Js.boolean) => Js.Promise.t(unit) = "";
+
+/**
+ * Toggles ignoring cache for each request based on the enabled state.
+ * Caching is enabled by default.
+ */
+let setCacheEnabled = (~enabled, ~page) =>
+  page |> setCacheEnabled(~enabled=Js.Boolean.to_js_boolean(enabled));
+
 /**
  * Change the default maximum navigation time of 30 seconds for the following:
  * - `Page.goto`
