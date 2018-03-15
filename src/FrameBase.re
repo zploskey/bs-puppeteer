@@ -5,11 +5,19 @@ type tagOptions = {
   "content": Js.undefined(string),
   "path": Js.undefined(string),
   "url": Js.undefined(string),
+  "_type": Js.undefined(string),
 };
 
 [@bs.obj]
 external makeTagOptions :
-  (~url: string=?, ~path: string=?, ~content: string=?, unit) => _ =
+  (
+    ~url: string=?,
+    ~path: string=?,
+    ~content: string=?,
+    ~_type: string=?,
+    unit
+  ) =>
+  tagOptions =
   "";
 
 [@bs.send.pipe: t]
