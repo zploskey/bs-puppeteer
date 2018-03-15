@@ -10,8 +10,7 @@ include
 external empty : unit => t = "%identity";
 
 [@bs.send.pipe: t]
-external selectOne : (~selector: string) => Js.Promise.t(Js.Nullable.t(t)) =
-  "$";
+external selectOne : (~selector: string) => Js.Promise.t(Js.Null.t(t)) = "$";
 
 [@bs.send.pipe: t]
 external selectAll : (~selector: string) => Js.Promise.t(array(t)) = "$$";
@@ -20,7 +19,7 @@ external selectAll : (~selector: string) => Js.Promise.t(array(t)) = "$$";
 external selectXPath : (~xpath: string) => Js.Promise.t(array(t)) = "$x";
 
 [@bs.send.pipe: t]
-external boundingBox : Js.Promise.t(Js.Nullable.t(BoundingBox.t)) = "";
+external boundingBox : Js.Promise.t(Js.Null.t(BoundingBox.t)) = "";
 
 [@bs.send.pipe: t]
 external click : (~options: Click.clickOptions=?, unit) => Js.Promise.t(unit) =
@@ -54,4 +53,4 @@ external type_ :
 external uploadFile : (~filePaths: array(string)) => Js.Promise.t(unit) = "";
 
 [@bs.send.pipe: t]
-external contentFrame : Js.Promise.t(Js.Nullable.t(Types.frameBase)) = "";
+external contentFrame : Js.Promise.t(Js.Null.t(Types.frameBase)) = "";

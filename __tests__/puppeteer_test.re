@@ -544,9 +544,9 @@ describe("ElementHandle", () => {
          })
       |> then_(res => {
            page := res;
-           resolve();
+           page^ |> Page.goto("file://" ++ testPagePath, ());
          })
-      |> then_(() => Page.selectOne(page^, ~selector="body"))
+      |> then_(_resp => Page.selectOne(page^, ~selector="#iframe"))
       |> then_(res =>
            switch (res |> Js.Nullable.toOption) {
            | Some(v) =>
@@ -558,19 +558,20 @@ describe("ElementHandle", () => {
          )
     )
   );
-  testPromise("contentFrame()", () => pass |> Js.Promise.resolve);
-  /*   Js.Promise.( */
-  /*     elementHandle^ */
-  /*     |> ElementHandle.contentFrame */
-  /*     |> then_(frame => */
-  /*          switch (frame |> Js.Nullable.toOption) { */
-  /*          | Some(v) => v |> expect |> ExpectJs.toBeTruthy |> resolve */
-  /*          | None => */
-  /*            Js.Exn.raiseError("failed to get frame from contentFrame") */
-  /*            |> reject */
-  /*          } */
-  /*        ) */
-  /*   ) */
+  testPromise("contentFrame()", () =>
+    Js.Promise.(
+      elementHandle^
+      |> ElementHandle.contentFrame
+      |> then_(frame =>
+           switch (frame |> Js.nullToOption) {
+           | Some(v) => v |> expect |> ExpectJs.toBeTruthy |> resolve
+           | None =>
+             Js.Exn.raiseError("failed to get frame from contentFrame")
+             |> reject
+           }
+         )
+    )
+  );
   afterAllPromise(() =>
     Js.Promise.(Page.close(page^) |> then_(() => Browser.close(browser^)))
   );
