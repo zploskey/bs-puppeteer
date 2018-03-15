@@ -548,7 +548,7 @@ describe("ElementHandle", () => {
          })
       |> then_(_resp => Page.selectOne(page^, ~selector="#iframe"))
       |> then_(res =>
-           switch (res |> Js.Nullable.toOption) {
+           switch (res |> Js.nullToOption) {
            | Some(v) =>
              elementHandle := v;
              resolve();
