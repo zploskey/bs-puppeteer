@@ -13,12 +13,16 @@ from BuckleScript or Reason.
 ## Status
 
 These bindings are a work in progress.
-Many features have no been implemented.
-The initial goal is to get basic web-scraping and interaction capabilities.
+Most bindings for navigation and interaction with web pages have been implemented.
+There may be some minor breaking changes as we refine the API.
+Bindings to the the page events API are planned for a future version.
 See [examples](examples/) and the [test suite](__tests__/puppeteer_test.re)
-for use cases that are being tested.
+for examples of usage.
 Features of the Puppeteer API are implemented as we need or get to them.
-If you would like to add or fix some bindings, see [contributing](#contributing).
+We do our best to track upstream API changes.
+If you would like to add or fix some bindings, see [Contributing](#contributing).
+
+Changes are documented in [HISTORY.md](HISTORY.md).
 
 ## Creating a project using bs-puppeteer
 
