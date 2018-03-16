@@ -1,7 +1,19 @@
 # History
 
-## 0.5.0 (coming soon)
+## 0.5.0
 
+- Add binding for ElementHandle.contentFrame() (new in Puppeteer 1.2)
+  ([#34](https://github.com/bs-puppeteer/bs-puppeteer/pull/34))
+- Upgrade Puppeteer to 1.2.0
+  ([11e7474](https://github.com/bs-puppeteer/bs-puppeteer/commit/11e74747d90bb6fe04f5fc1d9abe70a2b0c66a87))
+- Add binding for metrics object (Metrics.t)
+  ([#32](https://github.com/bs-puppeteer/bs-puppeteer/pull/33))
+- Add "type" key to FrameBase.tagOptions
+  ([8d42628](https://github.com/bs-puppeteer/bs-puppeteer/commit/8d42628258a0b5ba92680858af461f1b2d6c4392))
+- Add Page.setCacheEnabled()
+  ([eb6e83b](https://github.com/bs-puppeteer/bs-puppeteer/commit/eb6e83bf54cc088d57c81f5d8d2184b4fd0ba8f9))
+- Add makeTracingOptions() and "content" to tracing type
+  ([#32](https://github.com/bs-puppeteer/bs-puppeteer/pull/32))
 - Add vast majority of remaining Page functions
   ([#30](https://github.com/bs-puppeteer/bs-puppeteer/pull/30))
 - Add missing keys "env" and "devtools" to Puppeteer.launchOptions
