@@ -4,7 +4,11 @@ external empty : unit => t = "%identity";
 
 [@bs.send.pipe: t] external close : Js.Promise.t(unit) = "";
 
+[@bs.send] external disconnect : t => unit = "";
+
 [@bs.send.pipe: t] external newPage : Js.Promise.t(Page.t) = "";
+
+[@bs.send] external pages : t => Js.Promise.t(array(Page.t)) = "";
 
 [@bs.send.pipe: t] external version : Js.Promise.t(string) = "";
 
