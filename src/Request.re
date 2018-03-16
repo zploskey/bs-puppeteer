@@ -85,6 +85,13 @@ external frame : t => option(FrameBase.t) = "";
 [@bs.send] [@bs.return nullable] external postData : t => option(string) = "";
 
 /**
+ * The chain of requests initiated to fetch a resource. If there were no
+ * redirects the chain will be empty.
+ */
+[@bs.send]
+external redirectChain : t => array(t) = "";
+
+/**
  * The request's resource type as it was perceived by the rendering engine.
  * ResourceType will be one of the following:
  * document, stylesheet, image, media, font, script, texttrack, xhr, fetch,
