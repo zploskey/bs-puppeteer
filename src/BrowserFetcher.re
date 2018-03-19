@@ -1,0 +1,28 @@
+type t;
+
+type revisionInfo = {
+  .
+  "revision": string,
+  "folderPath": string,
+  "executablePath": string,
+  "url": string,
+  "local": Js.boolean,
+};
+
+[@bs.send]
+external canDownload : (t, string) => Js.Promise.t(Js.boolean) = "";
+
+[@bs.send]
+external download :
+  (t, string, (float, float) => unit) => Js.Promise.t(revisionInfo) =
+  "";
+
+[@bs.send] external localRevisions : t => Js.Promise.t(array(string)) = "";
+
+/* Returns one of mac, linux, win32 or win64. */
+[@bs.send] external platform : t => string = "";
+
+[@bs.send] external remove : (t, string) => Js.Promise.t(unit) = "";
+
+[@bs.send]
+external revisionInfo : (t, string) => Js.Promise.t(revisionInfo) = "";
