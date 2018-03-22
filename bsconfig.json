@@ -1,7 +1,6 @@
 {
   "name": "bs-puppeteer",
   "namespace": true,
-  "bsc-flags": ["-bs-super-errors"],
   "sources": [
     "src",
     {
@@ -21,5 +20,8 @@
     "@glennsl/bs-jest"
   ],
   "refmt": 3,
-  "bsc-flags": ["-bs-no-version-header"]
+  "bsc-flags": [
+    "-bs-no-version-header",
+    "-bs-super-errors"
+  ]
 }
