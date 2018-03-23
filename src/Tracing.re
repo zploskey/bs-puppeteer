@@ -22,4 +22,4 @@ external makeTracingOptions :
 external start : (~options: tracingOptions=?, unit) => Js.Promise.t(unit) =
   "";
 
-[@bs.send.pipe: t] external stop : Js.Promise.t(unit) = "";
+[@bs.send] external stop : t => Js.Promise.t(unit) = "";

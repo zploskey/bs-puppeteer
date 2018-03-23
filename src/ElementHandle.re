@@ -18,8 +18,8 @@ external selectAll : (~selector: string) => Js.Promise.t(array(t)) = "$$";
 [@bs.send.pipe: t]
 external selectXPath : (~xpath: string) => Js.Promise.t(array(t)) = "$x";
 
-[@bs.send.pipe: t]
-external boundingBox : Js.Promise.t(Js.Null.t(BoundingBox.t)) = "";
+[@bs.send]
+external boundingBox : t => Js.Promise.t(Js.Null.t(BoundingBox.t)) = "";
 
 [@bs.send.pipe: t]
 external click : (~options: Click.clickOptions=?, unit) => Js.Promise.t(unit) =
@@ -27,7 +27,7 @@ external click : (~options: Click.clickOptions=?, unit) => Js.Promise.t(unit) =
 
 [@bs.send] external focus : t => Js.Promise.t(unit) = "";
 
-[@bs.send.pipe: t] external hover : Js.Promise.t(unit) = "";
+[@bs.send] external hover : t => Js.Promise.t(unit) = "";
 
 [@bs.send.pipe: t]
 external press :
@@ -40,9 +40,9 @@ external screenshot :
   Js.Promise.t(Js.Typed_array.ArrayBuffer.t) =
   "";
 
-[@bs.send.pipe: t] external tap : Js.Promise.t(unit) = "";
+[@bs.send] external tap : t => Js.Promise.t(unit) = "";
 
-[@bs.send.pipe: t] external toString : string = "";
+[@bs.send] external toString : t => string = "";
 
 [@bs.send.pipe: t]
 external type_ :
@@ -52,5 +52,5 @@ external type_ :
 [@bs.send.pipe: t] [@bs.splice]
 external uploadFile : (~filePaths: array(string)) => Js.Promise.t(unit) = "";
 
-[@bs.send.pipe: t]
-external contentFrame : Js.Promise.t(Js.Null.t(Types.frameBase)) = "";
+[@bs.send]
+external contentFrame : t => Js.Promise.t(Js.Null.t(Types.frameBase)) = "";
