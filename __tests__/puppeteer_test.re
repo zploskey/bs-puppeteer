@@ -49,22 +49,34 @@ describe("Puppeteer", () => {
   );
 });
 
-describe("BrowserFetcher", () =>
+describe("BrowserFetcher", () => {
+  let browserFetcher = ref(BrowserFetcher.empty());
+  beforeAll(() =>
+    browserFetcher :=
+      Puppeteer.createBrowserFetcher(
+        ~options=
+          Puppeteer.makeBrowserFetcherOption(
+            ~host="https://storage.googleapis.com",
+            ~path="<root>/.local-chromium",
+            ~platform=`Linux,
+            (),
+          ),
+        (),
+      )
+  );
   test("createBrowserFetcher", () =>
-    Puppeteer.createBrowserFetcher(
-      ~options=
-        Puppeteer.makeBrowserFetcherOption(
-          ~host="https://storage.googleapis.com",
-          ~path="<root>/.local-chromium",
-          ~platform=`Linux,
-          (),
-        ),
-      (),
+    browserFetcher |> expect |> ExpectJs.toBeTruthy
+  );
+  testPromise("canDownload", () =>
+    Js.Promise.(
+      browserFetcher^
+      |> BrowserFetcher.canDownload(_, "533271")
+      |> then_(boolean =>
+           boolean |> Js.to_bool |> expect |> toBe(true) |> resolve
+         )
     )
-    |> expect
-    |> ExpectJs.toBeTruthy
-  )
-);
+  );
+});
 
 describe("Browser", () => {
   let browser = ref(Browser.empty());

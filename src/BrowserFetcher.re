@@ -9,6 +9,8 @@ type revisionInfo = {
   "local": Js.boolean,
 };
 
+external empty : unit => t = "%identity";
+
 [@bs.send]
 external canDownload : (t, string) => Js.Promise.t(Js.boolean) = "";
 

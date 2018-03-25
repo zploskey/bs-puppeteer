@@ -143,5 +143,5 @@ let makeBrowserFetcherOption =
 
 [@bs.val] [@bs.module "puppeteer"]
 external createBrowserFetcher :
-  (~options: browserFetcherOptions=?, unit) => Js.Promise.t(BrowserFetcher.t) =
+  (~options: browserFetcherOptions=?, unit) => BrowserFetcher.t =
   "";
