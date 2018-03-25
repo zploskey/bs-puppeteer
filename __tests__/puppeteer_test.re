@@ -54,13 +54,7 @@ describe("BrowserFetcher", () => {
   beforeAll(() =>
     browserFetcher :=
       Puppeteer.createBrowserFetcher(
-        ~options=
-          Puppeteer.makeBrowserFetcherOption(
-            ~host="https://storage.googleapis.com",
-            ~path="<root>/.local-chromium",
-            ~platform=`Linux,
-            (),
-          ),
+        ~options=Puppeteer.makeBrowserFetcherOption(),
         (),
       )
   );
@@ -74,6 +68,13 @@ describe("BrowserFetcher", () => {
       |> then_(boolean =>
            boolean |> Js.to_bool |> expect |> toBe(true) |> resolve
          )
+    )
+  );
+  testPromise("download", () =>
+    Js.Promise.(
+      browserFetcher^
+      |> BrowserFetcher.download(~revision="533271")
+      |> then_(info => info##revision |> expect |> toBe("533271") |> resolve)
     )
   );
 });

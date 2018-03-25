@@ -16,8 +16,14 @@ external canDownload : (t, string) => Js.Promise.t(Js.boolean) = "";
 
 [@bs.send]
 external download :
-  (t, string, (float, float) => unit) => Js.Promise.t(revisionInfo) =
+  (t, string, Js.Undefined.t((float, float) => unit)) =>
+  Js.Promise.t(revisionInfo) =
   "";
+
+let download =
+    (~revision, ~progressCallback=?, t)
+    : Js.Promise.t(revisionInfo) =>
+  download(t, revision, progressCallback |> Js.Undefined.fromOption);
 
 [@bs.send] external localRevisions : t => Js.Promise.t(array(string)) = "";
 
