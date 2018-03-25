@@ -1,1 +1,2 @@
 *.re linguist-language=Reason
+*.js linguist-generated=true
