@@ -19,8 +19,16 @@ external download :
 
 [@bs.send] external localRevisions : t => Js.Promise.t(array(string)) = "";
 
+[@bs.deriving jsConverter]
+type platform = [
+  | [@bs.as "mac"] `Mac
+  | [@bs.as "linux"] `Linux
+  | [@bs.as "win32"] `Win32
+  | [@bs.as "Win64"] `Win64
+];
+
 /* Returns one of mac, linux, win32 or win64. */
-[@bs.send] external platform : t => string = "";
+[@bs.send] external platform : t => platform = "";
 
 [@bs.send] external remove : (t, string) => Js.Promise.t(unit) = "";
 

@@ -49,6 +49,23 @@ describe("Puppeteer", () => {
   );
 });
 
+describe("BrowserFetcher", () =>
+  test("createBrowserFetcher", () =>
+    Puppeteer.createBrowserFetcher(
+      ~options=
+        Puppeteer.makeBrowserFetcherOption(
+          ~host="https://storage.googleapis.com",
+          ~path="<root>/.local-chromium",
+          ~platform=`Linux,
+          (),
+        ),
+      (),
+    )
+    |> expect
+    |> ExpectJs.toBeTruthy
+  )
+);
+
 describe("Browser", () => {
   let browser = ref(Browser.empty());
   beforeAllPromise(() =>
