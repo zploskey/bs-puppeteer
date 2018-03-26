@@ -77,6 +77,13 @@ describe("BrowserFetcher", () => {
       |> then_(info => info##revision |> expect |> toBe("533271") |> resolve)
     )
   );
+  testPromise("localRevisions", () =>
+    Js.Promise.(
+      browserFetcher^
+      |> BrowserFetcher.localRevisions
+      |> then_(revisions => revisions |> expect |> toHaveLength(2) |> resolve)
+    )
+  );
 });
 
 describe("Browser", () => {
