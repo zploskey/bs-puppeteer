@@ -60,9 +60,6 @@ describe("BrowserFetcher", () => {
         (),
       )
   );
-  test("createBrowserFetcher", () =>
-    browserFetcher |> expect |> ExpectJs.toBeTruthy
-  );
   testPromise("canDownload", () =>
     Js.Promise.(
       browserFetcher^
