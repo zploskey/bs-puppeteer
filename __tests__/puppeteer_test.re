@@ -84,6 +84,12 @@ describe("BrowserFetcher", () => {
       |> then_(revisions => revisions |> expect |> toHaveLength(2) |> resolve)
     )
   );
+  test("platform", () =>
+    browserFetcher^
+    |> BrowserFetcher.platform
+    |> expect
+    |> toEqual(Some(`Linux))
+  );
 });
 
 describe("Browser", () => {

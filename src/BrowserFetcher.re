@@ -36,7 +36,9 @@ type platform = [
 ];
 
 /* Returns one of mac, linux, win32 or win64. */
-[@bs.send] external platform : t => platform = "";
+[@bs.send] external platform : t => string = "";
+
+let platform = t => platform(t) |> platformFromJs;
 
 [@bs.send] external remove : (t, string) => Js.Promise.t(unit) = "";
 
