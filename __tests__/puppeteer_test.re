@@ -4,6 +4,8 @@ open BsPuppeteer;
 
 open Expect;
 
+let seconds = v => v * 1000;
+
 let getElementValueJs: Dom.element => string = [%raw
   {| function (element) { return element.value; } |}
 ];
@@ -70,7 +72,7 @@ describe("BrowserFetcher", () => {
          )
     )
   );
-  testPromise("download", () =>
+  testPromise("download", ~timeout=30 |> seconds, () =>
     Js.Promise.(
       browserFetcher^
       |> BrowserFetcher.download(~revision="533271")
@@ -89,6 +91,19 @@ describe("BrowserFetcher", () => {
     |> BrowserFetcher.platform
     |> expect
     |> toEqual(Some(`Linux))
+  );
+  testPromise("remove", ~timeout=30 |> seconds, () =>
+    Js.Promise.(
+      browserFetcher^
+      |> BrowserFetcher.download(~revision="533273")
+      |> then_(_info =>
+           browserFetcher^ |> BrowserFetcher.remove(_, "533273")
+         )
+      |> then_(() => pass |> resolve)
+      |> catch(_error =>
+           fail("the revision has not been downloaded") |> resolve
+         )
+    )
   );
 });
 
