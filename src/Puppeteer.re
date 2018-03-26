@@ -116,3 +116,32 @@ external launch : (~options: launchOptions=?, unit) => Js.Promise.t(Browser.t) =
 [@bs.val]
 [@bs.module "puppeteer"]
 external defaultArgs : unit => array(string) = "";
+
+type browserFetcherOptions = {
+  .
+  "host": Js.undefined(string),
+  "path": Js.undefined(string),
+  "platform": Js.undefined(string),
+};
+
+[@bs.obj]
+external makeBrowserFetcherOptions :
+  (~host: string=?, ~path: string=?, ~platform: string=?, unit) =>
+  browserFetcherOptions =
+  "";
+
+let makeBrowserFetcherOptions =
+    (~host=?, ~path=?, ~platform=?, ())
+    : browserFetcherOptions =>
+  makeBrowserFetcherOptions(
+    ~host?,
+    ~path?,
+    ~platform=?
+      platform |> Js.Option.map((. v) => v |> BrowserFetcher.platformToJs),
+    (),
+  );
+
+[@bs.val] [@bs.module "puppeteer"]
+external createBrowserFetcher :
+  (~options: browserFetcherOptions=?, unit) => BrowserFetcher.t =
+  "";

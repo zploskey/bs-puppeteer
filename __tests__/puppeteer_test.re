@@ -4,6 +4,8 @@ open BsPuppeteer;
 
 open Expect;
 
+let seconds = v => v * 1000;
+
 let getElementValueJs: Dom.element => string = [%raw
   {| function (element) { return element.value; } |}
 ];
@@ -47,6 +49,70 @@ describe("Puppeteer", () => {
   test("defaultArgs()", () =>
     Puppeteer.defaultArgs() |> Array.length |> expect |> toBeGreaterThan(0)
   );
+});
+
+describe("BrowserFetcher", () => {
+  let browserFetcher = ref(BrowserFetcher.empty());
+  beforeAll(() =>
+    browserFetcher :=
+      Puppeteer.createBrowserFetcher(
+        ~options=Puppeteer.makeBrowserFetcherOptions(),
+        (),
+      )
+  );
+  testPromise("canDownload", () =>
+    Js.Promise.(
+      browserFetcher^
+      |> BrowserFetcher.canDownload(_, "533271")
+      |> then_(boolean =>
+           boolean |> Js.to_bool |> expect |> toBe(true) |> resolve
+         )
+    )
+  );
+  testPromise("download", ~timeout=30 |> seconds, () =>
+    Js.Promise.(
+      browserFetcher^
+      |> BrowserFetcher.download(~revision="533271")
+      |> then_(info => info##revision |> expect |> toBe("533271") |> resolve)
+    )
+  );
+  testPromise("localRevisions", () =>
+    Js.Promise.(
+      browserFetcher^
+      |> BrowserFetcher.localRevisions
+      |> then_(revisions => revisions |> expect |> toHaveLength(2) |> resolve)
+    )
+  );
+  test("platform", () =>
+    browserFetcher^
+    |> BrowserFetcher.platform
+    |> expect
+    |> toEqual(Some(`linux))
+  );
+  testPromise("remove", ~timeout=30 |> seconds, () =>
+    Js.Promise.(
+      browserFetcher^
+      |> BrowserFetcher.download(~revision="533273")
+      |> then_(_info =>
+           browserFetcher^ |> BrowserFetcher.remove(_, "533273")
+         )
+      |> then_(() => pass |> resolve)
+      |> catch(_error =>
+           fail("the revision has not been downloaded") |> resolve
+         )
+    )
+  );
+  test("revisionInfo", () => {
+    let revisionInfo =
+      browserFetcher^ |> BrowserFetcher.revisionInfo(_, "533271");
+    revisionInfo##revision |> expect |> toBe("533271");
+    revisionInfo##executablePath |> expect |> toContainString("chromium");
+    revisionInfo##folderPath |> expect |> toContainString("chromium");
+    revisionInfo##local |> expect |> toBe(Js.true_);
+    revisionInfo##url
+    |> expect
+    |> toContainString("https://storage.googleapis.com/");
+  });
 });
 
 describe("Browser", () => {
