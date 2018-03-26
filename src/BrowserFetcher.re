@@ -42,5 +42,4 @@ let platform = t => platform(t) |> platformFromJs;
 
 [@bs.send] external remove : (t, string) => Js.Promise.t(unit) = "";
 
-[@bs.send]
-external revisionInfo : (t, string) => Js.Promise.t(revisionInfo) = "";
+[@bs.send] external revisionInfo : (t, string) => revisionInfo = "";

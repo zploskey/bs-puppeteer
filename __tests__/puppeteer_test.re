@@ -105,6 +105,17 @@ describe("BrowserFetcher", () => {
          )
     )
   );
+  test("revisionInfo", () => {
+    let revisionInfo =
+      browserFetcher^ |> BrowserFetcher.revisionInfo(_, "533271");
+    revisionInfo##revision |> expect |> toBe("533271");
+    revisionInfo##executablePath |> expect |> toContainString("chromium");
+    revisionInfo##folderPath |> expect |> toContainString("chromium");
+    revisionInfo##local |> expect |> toBe(Js.true_);
+    revisionInfo##url
+    |> expect
+    |> toContainString("https://storage.googleapis.com/");
+  });
 });
 
 describe("Browser", () => {
