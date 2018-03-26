@@ -90,7 +90,7 @@ describe("BrowserFetcher", () => {
     browserFetcher^
     |> BrowserFetcher.platform
     |> expect
-    |> toEqual(Some(`Linux))
+    |> toEqual(Some(`linux))
   );
   testPromise("remove", ~timeout=30 |> seconds, () =>
     Js.Promise.(

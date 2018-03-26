@@ -28,14 +28,8 @@ let download =
 [@bs.send] external localRevisions : t => Js.Promise.t(array(string)) = "";
 
 [@bs.deriving jsConverter]
-type platform = [
-  | [@bs.as "mac"] `Mac
-  | [@bs.as "linux"] `Linux
-  | [@bs.as "win32"] `Win32
-  | [@bs.as "win64"] `Win64
-];
+type platform = [ | `mac | `linux | `win32 | `win64];
 
-/* Returns one of mac, linux, win32 or win64. */
 [@bs.send] external platform : t => string = "";
 
 let platform = t => platform(t) |> platformFromJs;
