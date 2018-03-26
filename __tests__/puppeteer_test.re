@@ -56,7 +56,7 @@ describe("BrowserFetcher", () => {
   beforeAll(() =>
     browserFetcher :=
       Puppeteer.createBrowserFetcher(
-        ~options=Puppeteer.makeBrowserFetcherOption(),
+        ~options=Puppeteer.makeBrowserFetcherOptions(),
         (),
       )
   );

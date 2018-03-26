@@ -125,15 +125,15 @@ type browserFetcherOptions = {
 };
 
 [@bs.obj]
-external makeBrowserFetcherOption :
+external makeBrowserFetcherOptions :
   (~host: string=?, ~path: string=?, ~platform: string=?, unit) =>
   browserFetcherOptions =
   "";
 
-let makeBrowserFetcherOption =
+let makeBrowserFetcherOptions =
     (~host=?, ~path=?, ~platform=?, ())
     : browserFetcherOptions =>
-  makeBrowserFetcherOption(
+  makeBrowserFetcherOptions(
     ~host?,
     ~path?,
     ~platform=?
