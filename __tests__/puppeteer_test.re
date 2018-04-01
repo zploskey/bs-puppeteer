@@ -592,6 +592,9 @@ describe("Page", () => {
          )
     )
   );
+  test("target()", () =>
+    page^ |> Page.target |> Target.url |> expect |> toBe("about:blank")
+  );
   afterAllPromise(() =>
     Js.Promise.(Page.close(page^) |> then_(() => Browser.close(browser^)))
   );
@@ -640,5 +643,46 @@ describe("ElementHandle", () => {
   );
   afterAllPromise(() =>
     Js.Promise.(Page.close(page^) |> then_(() => Browser.close(browser^)))
+  );
+});
+
+describe("Target", () => {
+  let target = ref(Target.empty());
+  beforeAllPromise(() =>
+    Js.Promise.(
+      Puppeteer.launch(~options=noSandbox, ())
+      |> then_(Browser.newPage)
+      |> then_(page => {
+           target := page |> Page.target;
+           target |> resolve;
+         })
+    )
+  );
+  testPromise("page", () =>
+    Js.Promise.(
+      target^
+      |> Target.page
+      |> then_(page => page |> expect |> ExpectJs.toBeTruthy |> resolve)
+    )
+  );
+  test("type", () =>
+    (
+      switch (target^ |> Target.type_) {
+      | Some(t) => t === `page
+      | None => false
+      }
+    )
+    |> expect
+    |> toBe(true)
+  );
+  test("url", () =>
+    target^ |> Target.url |> expect |> toBe("about:blank")
+  );
+  testPromise("createCDPSession", () =>
+    Js.Promise.(
+      target^
+      |> Target.createCDPSession
+      |> then_(session => session |> expect |> ExpectJs.toBeTruthy |> resolve)
+    )
   );
 });
