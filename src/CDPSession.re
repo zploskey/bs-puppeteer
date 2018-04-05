@@ -1,5 +1,7 @@
 include EventEmitter;
 
+external empty : unit => t = "%identity";
+
 [@bs.send] external detach : t => Js.Promise.t(unit) = "";
 
 [@bs.send]

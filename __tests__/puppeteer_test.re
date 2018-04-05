@@ -105,10 +105,16 @@ describe("BrowserFetcher", () => {
   test("revisionInfo", () => {
     let revisionInfo =
       browserFetcher^ |> BrowserFetcher.revisionInfo(_, "533271");
-    revisionInfo##revision |> expect |> toBe("533271");
-    revisionInfo##executablePath |> expect |> toContainString("chromium");
-    revisionInfo##folderPath |> expect |> toContainString("chromium");
-    revisionInfo##local |> expect |> toBe(Js.true_);
+    revisionInfo##revision |> expect |> toBe("533271") |> ignore;
+    revisionInfo##executablePath
+    |> expect
+    |> toContainString("chromium")
+    |> ignore;
+    revisionInfo##folderPath
+    |> expect
+    |> toContainString("chromium")
+    |> ignore;
+    revisionInfo##local |> expect |> toBe(Js.true_) |> ignore;
     revisionInfo##url
     |> expect
     |> toContainString("https://storage.googleapis.com/");
@@ -682,7 +688,79 @@ describe("Target", () => {
     Js.Promise.(
       target^
       |> Target.createCDPSession
-      |> then_(session => session |> expect |> ExpectJs.toBeTruthy |> resolve)
+      |> then_(session =>
+           all2((
+             session |> expect |> ExpectJs.toBeTruthy |> resolve,
+             session |> CDPSession.detach,
+           ))
+         )
+      |> then_(((assertion, _unit)) => assertion |> resolve)
+    )
+  );
+});
+
+describe("CDPSession", () => {
+  let browser = ref(Browser.empty());
+  beforeAllPromise(() =>
+    Js.Promise.(
+      Puppeteer.launch(~options=noSandbox, ())
+      |> then_(res => {
+           browser := res;
+           res |> resolve;
+         })
+    )
+  );
+  testPromise("detach", () =>
+    Js.Promise.(
+      browser^
+      |> Browser.newPage
+      |> then_(page => page |> Page.target |> Target.createCDPSession)
+      |> then_(session =>
+           session
+           |> CDPSession.detach
+           |> then_(() =>
+                CDPSession.send(
+                  session,
+                  "Animation.getPlaybackRate",
+                  Js.Obj.empty(),
+                )
+              )
+           |> then_(_res =>
+                failwith(
+                  "expect with exception: Error: Protocol error (Animation.getPlaybackRate): Session closed. Most likely the page has been closed.",
+                )
+                |> resolve
+              )
+           |> catch(err => pass |> resolve)
+         )
+    )
+  );
+  testPromise("send", () =>
+    Js.Promise.(
+      browser^
+      |> Browser.newPage
+      |> then_(page => page |> Page.target |> Target.createCDPSession)
+      |> then_(session =>
+           CDPSession.send(
+             session,
+             "Animation.setPlaybackRate",
+             {"playbackRate": 3.1415926535},
+           )
+           |> then_(res =>
+                CDPSession.send(
+                  session,
+                  "Animation.getPlaybackRate",
+                  Js.Obj.empty(),
+                )
+              )
+           |> then_(res =>
+                all2((
+                  res##playbackRate |> expect |> toBe(3.1415926535) |> resolve,
+                  session |> CDPSession.detach,
+                ))
+              )
+           |> then_(((assertion, _unit)) => assertion |> resolve)
+         )
     )
   );
 });
