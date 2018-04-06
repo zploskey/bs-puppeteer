@@ -695,7 +695,7 @@ describe("Target", () => {
       |> then_(session => session |> expect |> ExpectJs.toBeTruthy |> resolve)
     )
   );
-  afterAllPromise(() => Js.Promise.(browser^ |> Browser.close));
+  afterAllPromise(() => browser^ |> Browser.close);
 });
 
 describe("CDPSession", () => {
@@ -730,7 +730,7 @@ describe("CDPSession", () => {
                 )
                 |> resolve
               )
-           |> catch(err => pass |> resolve)
+           |> catch(_err => pass |> resolve)
          )
     )
   );
@@ -745,7 +745,7 @@ describe("CDPSession", () => {
              "Animation.setPlaybackRate",
              {"playbackRate": 3.1415926535},
            )
-           |> then_(res =>
+           |> then_(_res =>
                 CDPSession.send(
                   session,
                   "Animation.getPlaybackRate",
@@ -753,14 +753,10 @@ describe("CDPSession", () => {
                 )
               )
            |> then_(res =>
-                all2((
-                  res##playbackRate |> expect |> toBe(3.1415926535) |> resolve,
-                  session |> CDPSession.detach,
-                ))
+                res##playbackRate |> expect |> toBe(3.1415926535) |> resolve
               )
-           |> then_(((assertion, _unit)) => assertion |> resolve)
          )
     )
   );
-  afterAllPromise(() => Js.Promise.(browser^ |> Browser.close));
+  afterAllPromise(() => browser^ |> Browser.close);
 });
