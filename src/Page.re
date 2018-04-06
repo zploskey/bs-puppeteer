@@ -154,14 +154,8 @@ external click :
 
 [@bs.send] external content : t => Js.Promise.t(string) = "";
 
-/* TODO: coverage
-   module Coverage = {
-     [@bs.send.pipe : t] external startCSSCoverage : (~options)
-   };
+[@bs.send] external coverage : t => Js.Promise.t(Coverage.t) = "";
 
-   [@bs.get] external coverage : t => coverage = "";
-   */
-/* evaluateHandle for page? may work fine inheriting */
 /* TODO: versions handling args */
 [@bs.send.pipe: t]
 external evaluateOnNewDocument : (unit => unit) => Js.Promise.t(unit) = "";

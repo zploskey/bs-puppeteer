@@ -105,10 +105,16 @@ describe("BrowserFetcher", () => {
   test("revisionInfo", () => {
     let revisionInfo =
       browserFetcher^ |> BrowserFetcher.revisionInfo(_, "533271");
-    revisionInfo##revision |> expect |> toBe("533271");
-    revisionInfo##executablePath |> expect |> toContainString("chromium");
-    revisionInfo##folderPath |> expect |> toContainString("chromium");
-    revisionInfo##local |> expect |> toBe(Js.true_);
+    revisionInfo##revision |> expect |> toBe("533271") |> ignore;
+    revisionInfo##executablePath
+    |> expect
+    |> toContainString("chromium")
+    |> ignore;
+    revisionInfo##folderPath
+    |> expect
+    |> toContainString("chromium")
+    |> ignore;
+    revisionInfo##local |> expect |> toBe(Js.true_) |> ignore;
     revisionInfo##url
     |> expect
     |> toContainString("https://storage.googleapis.com/");
