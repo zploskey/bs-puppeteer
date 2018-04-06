@@ -692,13 +692,7 @@ describe("Target", () => {
     Js.Promise.(
       target^
       |> Target.createCDPSession
-      |> then_(session =>
-           all2((
-             session |> expect |> ExpectJs.toBeTruthy |> resolve,
-             session |> CDPSession.detach,
-           ))
-         )
-      |> then_(((assertion, _unit)) => assertion |> resolve)
+      |> then_(session => session |> expect |> ExpectJs.toBeTruthy |> resolve)
     )
   );
   afterAllPromise(() => Js.Promise.(browser^ |> Browser.close));
