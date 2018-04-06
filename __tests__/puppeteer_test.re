@@ -653,11 +653,15 @@ describe("ElementHandle", () => {
 });
 
 describe("Target", () => {
+  let browser = ref(Browser.empty());
   let target = ref(Target.empty());
   beforeAllPromise(() =>
     Js.Promise.(
       Puppeteer.launch(~options=noSandbox, ())
-      |> then_(Browser.newPage)
+      |> then_(res => {
+           browser := res;
+           res |> Browser.newPage;
+         })
       |> then_(page => {
            target := page |> Page.target;
            target |> resolve;
@@ -697,6 +701,7 @@ describe("Target", () => {
       |> then_(((assertion, _unit)) => assertion |> resolve)
     )
   );
+  afterAllPromise(() => Js.Promise.(browser^ |> Browser.close));
 });
 
 describe("CDPSession", () => {
@@ -763,4 +768,5 @@ describe("CDPSession", () => {
          )
     )
   );
+  afterAllPromise(() => Js.Promise.(browser^ |> Browser.close));
 });
