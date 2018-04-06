@@ -2,8 +2,8 @@ type t;
 
 type range = {
   .
-  "start": float,
-  "end": float,
+  "start": int,
+  "end": int,
 };
 
 type report = {
