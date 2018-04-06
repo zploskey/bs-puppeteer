@@ -598,6 +598,9 @@ describe("Page", () => {
          )
     )
   );
+  test("coverage", () =>
+    page^ |> Page.coverage |> expect |> ExpectJs.toBeTruthy
+  );
   afterAllPromise(() =>
     Js.Promise.(Page.close(page^) |> then_(() => Browser.close(browser^)))
   );

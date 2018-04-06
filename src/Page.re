@@ -154,7 +154,7 @@ external click :
 
 [@bs.send] external content : t => Js.Promise.t(string) = "";
 
-[@bs.send] external coverage : t => Js.Promise.t(Coverage.t) = "";
+[@bs.get] external coverage : t => Coverage.t = "";
 
 /* TODO: versions handling args */
 [@bs.send.pipe: t]
