@@ -651,3 +651,45 @@ describe("ElementHandle", () => {
     Js.Promise.(Page.close(page^) |> then_(() => Browser.close(browser^)))
   );
 });
+
+describe("Coverage", () => {
+  let browser = ref(Browser.empty());
+  beforeAllPromise(() =>
+    Js.Promise.(
+      Puppeteer.launch(~options=noSandbox, ())
+      |> then_(res => {
+           browser := res;
+           res |> resolve;
+         })
+    )
+  );
+  testPromise("startJSCoverage, stopJSCoverage", () =>
+    Js.Promise.(
+      browser^
+      |> Browser.newPage
+      |> then_(page => {
+           let coverage = page |> Page.coverage;
+           coverage
+           |> Coverage.startJSCoverage(_, Coverage.makeJSCoverageOptions())
+           |> then_(() => page |> Page.goto("file://" ++ testPagePath, ()))
+           |> then_(_res => coverage |> Coverage.stopJSCoverage)
+           |> then_(report => report |> expect |> toMatchSnapshot |> resolve);
+         })
+    )
+  );
+  testPromise("startCSSCoverage, stopCSSCoverage", () =>
+    Js.Promise.(
+      browser^
+      |> Browser.newPage
+      |> then_(page => {
+           let coverage = page |> Page.coverage;
+           coverage
+           |> Coverage.startCSSCoverage(_, Coverage.makeCSSCoverageOptions())
+           |> then_(() => page |> Page.goto("file://" ++ testPagePath, ()))
+           |> then_(_res => coverage |> Coverage.stopCSSCoverage)
+           |> then_(report => report |> expect |> toMatchSnapshot |> resolve);
+         })
+    )
+  );
+  afterAllPromise(() => browser^ |> Browser.close);
+});

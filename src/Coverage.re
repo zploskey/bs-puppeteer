@@ -23,7 +23,7 @@ external makeCSSCoverageOptions :
   "";
 
 [@bs.obj]
-external makeJsCoverageOptions :
+external makeJSCoverageOptions :
   (~resetOnNavigation: Js.boolean=?, unit) => jsCoverageOptions =
   "";
 
@@ -32,8 +32,8 @@ external startCSSCoverage : (t, cssCoverageOptions) => Js.Promise.t(unit) =
   "";
 
 [@bs.send]
-external startJsCoverage : (t, jsCoverageOptions) => Js.Promise.t(unit) = "";
+external startJSCoverage : (t, jsCoverageOptions) => Js.Promise.t(unit) = "";
 
-[@bs.send] external stopCssCoverage : t => Js.Promise.t(array(report)) = "";
+[@bs.send] external stopCSSCoverage : t => Js.Promise.t(array(report)) = "";
 
-[@bs.send] external stopJsCoverage : t => Js.Promise.t(array(report)) = "";
+[@bs.send] external stopJSCoverage : t => Js.Promise.t(array(report)) = "";
