@@ -670,7 +670,10 @@ describe("Coverage", () => {
       |> then_(page => {
            let coverage = page |> Page.coverage;
            coverage
-           |> Coverage.startJSCoverage(_, Coverage.makeJSCoverageOptions())
+           |> Coverage.startJSCoverage(
+                ~options=
+                  Coverage.makeJSCoverageOptions(~resetOnNavigation=true, ()),
+              )
            |> then_(() => page |> Page.goto("file://" ++ testPagePath, ()))
            |> then_(_res => coverage |> Coverage.stopJSCoverage)
            |> then_(report => report |> expect |> toHaveLength(1) |> resolve);
@@ -684,7 +687,13 @@ describe("Coverage", () => {
       |> then_(page => {
            let coverage = page |> Page.coverage;
            coverage
-           |> Coverage.startCSSCoverage(_, Coverage.makeCSSCoverageOptions())
+           |> Coverage.startCSSCoverage(
+                ~options=
+                  Coverage.makeCSSCoverageOptions(
+                    ~resetOnNavigation=true,
+                    (),
+                  ),
+              )
            |> then_(() => page |> Page.goto("file://" ++ testPagePath, ()))
            |> then_(_res => coverage |> Coverage.stopCSSCoverage)
            |> then_(report => report |> expect |> toHaveLength(1) |> resolve);
