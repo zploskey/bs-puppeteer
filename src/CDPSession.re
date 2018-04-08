@@ -1,4 +1,4 @@
-include EventEmitter;
+type t;
 
 [@bs.send] external detach : t => Js.Promise.t(unit) = "";
 
