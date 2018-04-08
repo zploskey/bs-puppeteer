@@ -718,11 +718,8 @@ describe("CDPSession", () => {
            session
            |> CDPSession.detach
            |> then_(() =>
-                CDPSession.send(
-                  session,
-                  "Animation.getPlaybackRate",
-                  Js.Obj.empty(),
-                )
+                session
+                |> CDPSession.send(~method_="Animation.getPlaybackRate")
               )
            |> then_(_res =>
                 failwith(
@@ -740,17 +737,14 @@ describe("CDPSession", () => {
       |> Browser.newPage
       |> then_(page => page |> Page.target |> Target.createCDPSession)
       |> then_(session =>
-           CDPSession.send(
-             session,
-             "Animation.setPlaybackRate",
-             {"playbackRate": 3.1415926535},
-           )
+           session
+           |> CDPSession.send(
+                ~method_="Animation.setPlaybackRate",
+                ~params={"playbackRate": 3.1415926535},
+              )
            |> then_(_res =>
-                CDPSession.send(
-                  session,
-                  "Animation.getPlaybackRate",
-                  Js.Obj.empty(),
-                )
+                session
+                |> CDPSession.send(~method_="Animation.getPlaybackRate")
               )
            |> then_(res =>
                 res##playbackRate |> expect |> toBe(3.1415926535) |> resolve
