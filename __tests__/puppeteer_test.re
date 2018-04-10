@@ -601,6 +601,9 @@ describe("Page", () => {
   test("target()", () =>
     page^ |> Page.target |> Target.url |> expect |> toBe("about:blank")
   );
+  test("coverage", () =>
+    page^ |> Page.coverage |> expect |> ExpectJs.toBeTruthy
+  );
   afterAllPromise(() =>
     Js.Promise.(Page.close(page^) |> then_(() => Browser.close(browser^)))
   );
@@ -752,5 +755,119 @@ describe("CDPSession", () => {
          )
     )
   );
+  afterAllPromise(() => browser^ |> Browser.close);
+});
+
+describe("Coverage", () => {
+  let browser = ref(Browser.empty());
+  beforeAllPromise(() =>
+    Js.Promise.(
+      Puppeteer.launch(~options=noSandbox, ())
+      |> then_(res => {
+           browser := res;
+           res |> resolve;
+         })
+    )
+  );
+  describe("startJSCoverage, stopJSCoverage", () => {
+    let report = ref([||]);
+    beforeAllPromise(() =>
+      Js.Promise.(
+        browser^
+        |> Browser.newPage
+        |> then_(page => {
+             let coverage = page |> Page.coverage;
+             coverage
+             |> Coverage.startJSCoverage(
+                  ~options=
+                    Coverage.makeJSCoverageOptions(
+                      ~resetOnNavigation=true,
+                      (),
+                    ),
+                )
+             |> then_(() => page |> Page.goto("file://" ++ testPagePath, ()))
+             |> then_(_res => coverage |> Coverage.stopJSCoverage)
+             |> then_(res => {
+                  report := res;
+                  res |> resolve;
+                });
+           })
+      )
+    );
+    test("report.ranges[0]", () =>
+      {
+        let ranges = report^[0]##ranges;
+        ranges[0];
+      }
+      |> expect
+      |> ExpectJs.toMatchObject({"end": 21, "start": 0})
+    );
+    test("report.ranges[1]", () =>
+      {
+        let ranges = report^[0]##ranges;
+        ranges[1];
+      }
+      |> expect
+      |> ExpectJs.toMatchObject({"end": 65, "start": 39})
+    );
+    test("report.text", () =>
+      report^[0]##text
+      |> expect
+      |> toBe(
+           {j|
+    function foo() {function bar() { } console.log(1); } foo(); |j},
+         )
+    );
+    test("report.url", () =>
+      report^[0]##url |> expect |> toContainString("fixtures/testPage.html")
+    );
+  });
+  describe("startCSSCoverage, stopCSSCoverage", () => {
+    let report = ref([||]);
+    beforeAllPromise(() =>
+      Js.Promise.(
+        browser^
+        |> Browser.newPage
+        |> then_(page => {
+             let coverage = page |> Page.coverage;
+             coverage
+             |> Coverage.startCSSCoverage(
+                  ~options=
+                    Coverage.makeCSSCoverageOptions(
+                      ~resetOnNavigation=true,
+                      (),
+                    ),
+                )
+             |> then_(() => page |> Page.goto("file://" ++ testPagePath, ()))
+             |> then_(_res => coverage |> Coverage.stopCSSCoverage)
+             |> then_(res => {
+                  report := res;
+                  res |> resolve;
+                });
+           })
+      )
+    );
+    test("report.ranges[0]", () =>
+      {
+        let ranges = report^[0]##ranges;
+        ranges[0];
+      }
+      |> expect
+      |> ExpectJs.toMatchObject({"end": 30, "start": 7})
+    );
+    test("report.text", () =>
+      report^[0]##text
+      |> expect
+      |> toBe(
+           {j|
+      input { color: green; }
+      a { color: blue; }
+    |j},
+         )
+    );
+    test("report.url", () =>
+      report^[0]##url |> expect |> toContainString("fixtures/testPage.html")
+    );
+  });
   afterAllPromise(() => browser^ |> Browser.close);
 });
