@@ -45,6 +45,7 @@ type launchOptions = {
   "userDataDir": Js.undefined(string),
   "env": Js.undefined(Js.Dict.t(string)),
   "devtools": Js.undefined(Js.boolean),
+  "pipe": Js.undefined(Js.boolean),
 };
 
 [@bs.obj]
@@ -64,6 +65,7 @@ external makeLaunchOptions :
     ~userDataDir: string=?,
     ~env: Js.Dict.t(string)=?,
     ~devtools: Js.boolean=?,
+    ~pipe: Js.boolean=?,
     unit
   ) =>
   launchOptions =
@@ -85,6 +87,7 @@ let makeLaunchOptions =
       ~userDataDir=?,
       ~env=?,
       ~devtools=?,
+      ~pipe=?,
       (),
     )
     : launchOptions =>
@@ -103,6 +106,7 @@ let makeLaunchOptions =
     ~userDataDir?,
     ~env?,
     ~devtools=?Util.optBoolToJs(devtools),
+    ~pipe=?Util.optBoolToJs(pipe),
     (),
   );
 
