@@ -105,10 +105,16 @@ describe("BrowserFetcher", () => {
   test("revisionInfo", () => {
     let revisionInfo =
       browserFetcher^ |> BrowserFetcher.revisionInfo(_, "533271");
-    revisionInfo##revision |> expect |> toBe("533271");
-    revisionInfo##executablePath |> expect |> toContainString("chromium");
-    revisionInfo##folderPath |> expect |> toContainString("chromium");
-    revisionInfo##local |> expect |> toBe(Js.true_);
+    revisionInfo##revision |> expect |> toBe("533271") |> ignore;
+    revisionInfo##executablePath
+    |> expect
+    |> toContainString("chromium")
+    |> ignore;
+    revisionInfo##folderPath
+    |> expect
+    |> toContainString("chromium")
+    |> ignore;
+    revisionInfo##local |> expect |> toBe(Js.true_) |> ignore;
     revisionInfo##url
     |> expect
     |> toContainString("https://storage.googleapis.com/");
@@ -592,6 +598,9 @@ describe("Page", () => {
          )
     )
   );
+  test("target()", () =>
+    page^ |> Page.target |> Target.url |> expect |> toBe("about:blank")
+  );
   afterAllPromise(() =>
     Js.Promise.(Page.close(page^) |> then_(() => Browser.close(browser^)))
   );
@@ -641,4 +650,107 @@ describe("ElementHandle", () => {
   afterAllPromise(() =>
     Js.Promise.(Page.close(page^) |> then_(() => Browser.close(browser^)))
   );
+});
+
+describe("Target", () => {
+  let browser = ref(Browser.empty());
+  let target = ref(Target.empty());
+  beforeAllPromise(() =>
+    Js.Promise.(
+      Puppeteer.launch(~options=noSandbox, ())
+      |> then_(res => {
+           browser := res;
+           res |> Browser.newPage;
+         })
+      |> then_(page => {
+           target := page |> Page.target;
+           target |> resolve;
+         })
+    )
+  );
+  testPromise("page", () =>
+    Js.Promise.(
+      target^
+      |> Target.page
+      |> then_(page => page |> expect |> ExpectJs.toBeTruthy |> resolve)
+    )
+  );
+  test("type", () =>
+    (
+      switch (target^ |> Target.type_) {
+      | Some(t) => t === `page
+      | None => false
+      }
+    )
+    |> expect
+    |> toBe(true)
+  );
+  test("url", () =>
+    target^ |> Target.url |> expect |> toBe("about:blank")
+  );
+  testPromise("createCDPSession", () =>
+    Js.Promise.(
+      target^
+      |> Target.createCDPSession
+      |> then_(session => session |> expect |> ExpectJs.toBeTruthy |> resolve)
+    )
+  );
+  afterAllPromise(() => browser^ |> Browser.close);
+});
+
+describe("CDPSession", () => {
+  let browser = ref(Browser.empty());
+  beforeAllPromise(() =>
+    Js.Promise.(
+      Puppeteer.launch(~options=noSandbox, ())
+      |> then_(res => {
+           browser := res;
+           res |> resolve;
+         })
+    )
+  );
+  testPromise("detach", () =>
+    Js.Promise.(
+      browser^
+      |> Browser.newPage
+      |> then_(page => page |> Page.target |> Target.createCDPSession)
+      |> then_(session =>
+           session
+           |> CDPSession.detach
+           |> then_(() =>
+                session
+                |> CDPSession.send(~method_="Animation.getPlaybackRate")
+              )
+           |> then_(_res =>
+                failwith(
+                  "expect with exception: Error: Protocol error (Animation.getPlaybackRate): Session closed. Most likely the page has been closed.",
+                )
+                |> resolve
+              )
+           |> catch(_err => pass |> resolve)
+         )
+    )
+  );
+  testPromise("send", () =>
+    Js.Promise.(
+      browser^
+      |> Browser.newPage
+      |> then_(page => page |> Page.target |> Target.createCDPSession)
+      |> then_(session =>
+           session
+           |> CDPSession.send(
+                ~method_="Animation.setPlaybackRate",
+                ~params={"playbackRate": 3.1415926535},
+              )
+           |> then_(_res =>
+                session
+                |> CDPSession.send(~method_="Animation.getPlaybackRate")
+              )
+           |> then_(res =>
+                res##playbackRate |> expect |> toBe(3.1415926535) |> resolve
+              )
+         )
+    )
+  );
+  afterAllPromise(() => browser^ |> Browser.close);
 });
