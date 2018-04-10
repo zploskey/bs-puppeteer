@@ -332,6 +332,13 @@ let setRequestInterception = (~enabled, ~page) =>
 [@bs.send.pipe: t]
 external setUserAgent : (~userAgent: string) => Js.Promise.t(unit) = "";
 
+[@bs.send]
+external setBypassCSP : (t, ~enabled: Js.boolean) => Js.Promise.t(unit) = "";
+
+/** Toggle bypassing page's Content-Security-Policy. */
+let setBypassCSP = (~enabled, page) =>
+  setBypassCSP(page, ~enabled=Js.Boolean.to_js_boolean(enabled));
+
 [@bs.send.pipe: t]
 external tap : (~selector: string) => Js.Promise.t(unit) = "";
 
