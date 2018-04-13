@@ -30,4 +30,5 @@ let makeTracingOptions = (~path=?, ~screenshots=?, ~categories=?, ()) =>
 external start : (~options: tracingOptions=?, unit) => Js.Promise.t(unit) =
   "";
 
-[@bs.send] external stop : t => Js.Promise.t(unit) = "";
+[@bs.send]
+external stop : t => Js.Promise.t(Js.Typed_array.ArrayBuffer.t) = "";
