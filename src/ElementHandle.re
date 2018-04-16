@@ -9,17 +9,15 @@ include
 
 external empty : unit => t = "%identity";
 
-[@bs.send.pipe: t]
-external selectOne : (~selector: string) => Js.Promise.t(Js.Null.t(t)) = "$";
-
-[@bs.send.pipe: t]
-external selectAll : (~selector: string) => Js.Promise.t(array(t)) = "$$";
-
-[@bs.send.pipe: t]
-external selectXPath : (~xpath: string) => Js.Promise.t(array(t)) = "$x";
-
 [@bs.send]
 external boundingBox : t => Js.Promise.t(Js.Null.t(BoundingBox.t)) = "";
+
+[@bs.send]
+external boxModel : t => Js.Promise.t(Js.nullable(BoxModel.t)) = "";
+
+let boxModel = handle =>
+  boxModel(handle)
+  |> Js.Promise.(then_(handle => Js.toOption(handle) |> resolve));
 
 [@bs.send.pipe: t]
 external click : (~options: Click.clickOptions=?, unit) => Js.Promise.t(unit) =
@@ -39,6 +37,15 @@ external screenshot :
   (~options: Screenshot.options=?, unit) =>
   Js.Promise.t(Js.Typed_array.ArrayBuffer.t) =
   "";
+
+[@bs.send.pipe: t]
+external selectOne : (~selector: string) => Js.Promise.t(Js.Null.t(t)) = "$";
+
+[@bs.send.pipe: t]
+external selectAll : (~selector: string) => Js.Promise.t(array(t)) = "$$";
+
+[@bs.send.pipe: t]
+external selectXPath : (~xpath: string) => Js.Promise.t(array(t)) = "$x";
 
 [@bs.send] external tap : t => Js.Promise.t(unit) = "";
 
