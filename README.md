@@ -42,7 +42,7 @@ Add bs-puppeteer as a dependency.
 This will install the currently supported version of Puppeteer.
 
 ```sh
-npm add --save bs-puppeteer
+npm install --save bs-puppeteer
 ```
 
 Edit your `bsconfig.json` file to add `bs-puppeteer` to `bs-dependencies`:
