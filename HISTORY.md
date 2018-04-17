@@ -1,5 +1,32 @@
 # History
 
+## 0.6.0
+
+Support for Puppeteer version 1.3.
+
+- Add Request.redirectChain()
+  ([e85dbe5](https://github.com/bs-puppeteer/bs-puppeteer/commit/e85dbe5e5973bc94a892ec7f880290b142d3606f))
+- Browser: bind to disconnect() and pages()
+  ([cdc47e3](https://github.com/bs-puppeteer/bs-puppeteer/commit/cdc47e39d6fb7e1ad33197ebb59d7fea749795d1))
+- Remove Pdf module, all handled by Page.pdf() now
+  ([da71d9e](https://github.com/bs-puppeteer/bs-puppeteer/commit/da71d9ebadc19b37bfc242a5eabf7b94af833708))
+- Bindings for Dialog
+  ([1b9594b](https://github.com/bs-puppeteer/bs-puppeteer/commit/1b9594bb07ac66d8beba22a87194e0fd8b5ba377))
+- Add BrowserFetcher bindings
+  ([#42](https://github.com/bs-puppeteer/bs-puppeteer/pull/42))
+- Add bindings for CDPSession and Target
+  ([#43](https://github.com/bs-puppeteer/bs-puppeteer/pull/43))
+- Add bindings for Coverage
+  ([#44](https://github.com/bs-puppeteer/bs-puppeteer/pull/44))
+- Add pipe option to Puppeteer.launch
+  ([#50](https://github.com/bs-puppeteer/bs-puppeteer/pull/50))
+- Add Page.setBypassCSP()
+  ([#51](https://github.com/bs-puppeteer/bs-puppeteer/pull/51))
+- Fix tracing options and make Tracing.stop return a buffer
+  ([#53](https://github.com/bs-puppeteer/bs-puppeteer/pull/53))
+- Add ElementHandle.boxModel() and BoxModel module
+  ([#54](https://github.com/bs-puppeteer/bs-puppeteer/pull/54))
+
 ## 0.5.0
 
 - Add binding for ElementHandle.contentFrame() (new in Puppeteer 1.2)
