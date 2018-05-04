@@ -64,9 +64,7 @@ describe("BrowserFetcher", () => {
     Js.Promise.(
       browserFetcher^
       |> BrowserFetcher.canDownload(_, "533271")
-      |> then_(boolean =>
-           boolean |> Js.to_bool |> expect |> toBe(true) |> resolve
-         )
+      |> then_(boolean => boolean |> expect |> toBe(true) |> resolve)
     )
   );
   testPromise("download", ~timeout=30 |> seconds, () =>
@@ -114,7 +112,7 @@ describe("BrowserFetcher", () => {
     |> expect
     |> toContainString("chromium")
     |> ignore;
-    revisionInfo##local |> expect |> toBe(Js.true_) |> ignore;
+    revisionInfo##local |> expect |> toBe(true) |> ignore;
     revisionInfo##url
     |> expect
     |> toContainString("https://storage.googleapis.com/");
@@ -453,9 +451,9 @@ describe("Page", () => {
              "width": 320,
              "height": 480,
              "deviceScaleFactor": 2,
-             "isMobile": Js.true_,
-             "hasTouch": Js.true_,
-             "isLandscape": Js.true_,
+             "isMobile": true,
+             "hasTouch": true,
+             "isLandscape": true,
            },
            "userAgent": "",
          })
@@ -467,9 +465,9 @@ describe("Page", () => {
                 "width": 320,
                 "height": 480,
                 "deviceScaleFactor": 2,
-                "isMobile": Js.true_,
-                "hasTouch": Js.true_,
-                "isLandscape": Js.true_,
+                "isMobile": true,
+                "hasTouch": true,
+                "isLandscape": true,
               })
            |> resolve
          )
@@ -569,11 +567,11 @@ describe("Page", () => {
       |> Page.pdf(
            Page.makePDFOptions(
              ~scale=1,
-             ~displayHeaderFooter=Js.true_,
+             ~displayHeaderFooter=true,
              ~headerTemplate="[[header]]",
              ~footerTemplate="[[footer]]",
-             ~printBackground=Js.true_,
-             ~landscape=Js.true_,
+             ~printBackground=true,
+             ~landscape=true,
              ~pageRanges="",
              ~format=`A0,
              ~width=10.0 |> Unit.cm,

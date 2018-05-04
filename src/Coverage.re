@@ -13,31 +13,19 @@ type report = {
   "ranges": array(range),
 };
 
-type cssCoverageOptions = {. "resetOnNavigation": Js.Nullable.t(Js.boolean)};
+type cssCoverageOptions = {. "resetOnNavigation": Js.Nullable.t(bool)};
 
-type jsCoverageOptions = {. "resetOnNavigation": Js.Nullable.t(Js.boolean)};
+type jsCoverageOptions = {. "resetOnNavigation": Js.Nullable.t(bool)};
 
 [@bs.obj]
 external makeCSSCoverageOptions :
-  (~resetOnNavigation: Js.boolean=?, unit) => cssCoverageOptions =
+  (~resetOnNavigation: bool=?, unit) => cssCoverageOptions =
   "";
-
-let makeCSSCoverageOptions = (~resetOnNavigation=?, ()) =>
-  makeCSSCoverageOptions(
-    ~resetOnNavigation=?Util.optBoolToJs(resetOnNavigation),
-    (),
-  );
 
 [@bs.obj]
 external makeJSCoverageOptions :
-  (~resetOnNavigation: Js.boolean=?, unit) => jsCoverageOptions =
+  (~resetOnNavigation: bool=?, unit) => jsCoverageOptions =
   "";
-
-let makeJSCoverageOptions = (~resetOnNavigation=?, ()) =>
-  makeJSCoverageOptions(
-    ~resetOnNavigation=?Util.optBoolToJs(resetOnNavigation),
-    (),
-  );
 
 [@bs.send]
 external startCSSCoverage :

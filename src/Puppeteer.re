@@ -7,16 +7,9 @@ type connectOptions = {
 
 [@bs.obj]
 external makeConnectOptions :
-  (~browserWSEndpoint: string=?, ~ignoreHTTPSErrors: Js.boolean=?, unit) =>
+  (~browserWSEndpoint: string=?, ~ignoreHTTPSErrors: bool=?, unit) =>
   connectOptions =
   "";
-
-let makeConnectOptions = (~browserWSEndpoint=?, ~ignoreHTTPSErrors=?, ()) =>
-  makeConnectOptions(
-    ~browserWSEndpoint?,
-    ~ignoreHTTPSErrors=?Util.optBoolToJs(ignoreHTTPSErrors),
-    (),
-  );
 
 /** Attach Puppeteer to an existing Chromium instance.              */
 [@bs.val]
@@ -32,83 +25,44 @@ external executablePath : unit => string = "";
 
 type launchOptions = {
   .
-  "ignoreHTTPSErrors": Js.undefined(Js.boolean),
-  "headless": Js.undefined(Js.boolean),
+  "ignoreHTTPSErrors": Js.undefined(bool),
+  "headless": Js.undefined(bool),
   "executablePath": Js.undefined(string),
   "slowMo": Js.undefined(float),
   "args": Js.undefined(array(string)),
-  "handleSIGINT": Js.undefined(Js.boolean),
-  "handleSIGTERM": Js.undefined(Js.boolean),
-  "handleSIGHUP": Js.undefined(Js.boolean),
+  "handleSIGINT": Js.undefined(bool),
+  "handleSIGTERM": Js.undefined(bool),
+  "handleSIGHUP": Js.undefined(bool),
   "timeout": Js.undefined(int),
-  "dumpio": Js.undefined(Js.boolean),
+  "dumpio": Js.undefined(bool),
   "userDataDir": Js.undefined(string),
   "env": Js.undefined(Js.Dict.t(string)),
-  "devtools": Js.undefined(Js.boolean),
-  "pipe": Js.undefined(Js.boolean),
+  "devtools": Js.undefined(bool),
+  "pipe": Js.undefined(bool),
 };
 
 [@bs.obj]
 external makeLaunchOptions :
   (
-    ~ignoreHTTPSErrors: Js.boolean=?,
-    ~headless: Js.boolean=?,
+    ~ignoreHTTPSErrors: bool=?,
+    ~headless: bool=?,
     ~executablePath: string=?,
     ~slowMo: float=?,
     ~args: array(string)=?,
-    ~ignoreDefaultArgs: Js.boolean=?,
-    ~handleSIGINT: Js.boolean=?,
-    ~handleSIGTERM: Js.boolean=?,
-    ~handleSIGHUP: Js.boolean=?,
+    ~ignoreDefaultArgs: bool=?,
+    ~handleSIGINT: bool=?,
+    ~handleSIGTERM: bool=?,
+    ~handleSIGHUP: bool=?,
     ~timeout: float=?,
-    ~dumpio: Js.boolean=?,
+    ~dumpio: bool=?,
     ~userDataDir: string=?,
     ~env: Js.Dict.t(string)=?,
-    ~devtools: Js.boolean=?,
-    ~pipe: Js.boolean=?,
+    ~devtools: bool=?,
+    ~pipe: bool=?,
     unit
   ) =>
   launchOptions =
   "";
-
-let makeLaunchOptions =
-    (
-      ~ignoreHTTPSErrors=?,
-      ~headless=?,
-      ~executablePath=?,
-      ~slowMo=?,
-      ~args=?,
-      ~ignoreDefaultArgs=?,
-      ~handleSIGINT=?,
-      ~handleSIGTERM=?,
-      ~handleSIGHUP=?,
-      ~timeout=?,
-      ~dumpio=?,
-      ~userDataDir=?,
-      ~env=?,
-      ~devtools=?,
-      ~pipe=?,
-      (),
-    )
-    : launchOptions =>
-  makeLaunchOptions(
-    ~ignoreHTTPSErrors=?Util.optBoolToJs(ignoreHTTPSErrors),
-    ~headless=?Util.optBoolToJs(headless),
-    ~executablePath?,
-    ~slowMo?,
-    ~args?,
-    ~ignoreDefaultArgs=?Util.optBoolToJs(ignoreDefaultArgs),
-    ~handleSIGINT=?Util.optBoolToJs(handleSIGINT),
-    ~handleSIGTERM=?Util.optBoolToJs(handleSIGTERM),
-    ~handleSIGHUP=?Util.optBoolToJs(handleSIGHUP),
-    ~timeout?,
-    ~dumpio=?Util.optBoolToJs(dumpio),
-    ~userDataDir?,
-    ~env?,
-    ~devtools=?Util.optBoolToJs(devtools),
-    ~pipe=?Util.optBoolToJs(pipe),
-    (),
-  );
 
 /** Launch a browser instance.                                      */
 [@bs.val]

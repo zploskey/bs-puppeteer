@@ -30,9 +30,9 @@ type cookie = {
   "url": Js.undefined(string),
   "path": Js.undefined(string),
   "expires": Js.undefined(float),
-  "httpOnly": Js.undefined(Js.boolean),
-  "secure": Js.undefined(Js.boolean),
-  "session": Js.undefined(Js.boolean),
+  "httpOnly": Js.undefined(bool),
+  "secure": Js.undefined(bool),
+  "session": Js.undefined(bool),
   "sameSite": Js.undefined(string),
 };
 
@@ -41,9 +41,9 @@ type viewport = {
   "width": int,
   "height": int,
   "deviceScaleFactor": int,
-  "isMobile": Js.boolean,
-  "hasTouch": Js.boolean,
-  "isLandscape": Js.boolean,
+  "isMobile": bool,
+  "hasTouch": bool,
+  "isLandscape": bool,
 };
 
 type emulateOption = {
@@ -64,11 +64,11 @@ type pdfOptions = {
   .
   "path": Js.undefined(string),
   "scale": Js.undefined(int),
-  "displayHeaderFooter": Js.undefined(Js.boolean),
+  "displayHeaderFooter": Js.undefined(bool),
   "headerTemplate": Js.undefined(string),
   "footerTemplate": Js.undefined(string),
-  "printBackground": Js.undefined(Js.boolean),
-  "landscape": Js.undefined(Js.boolean),
+  "printBackground": Js.undefined(bool),
+  "landscape": Js.undefined(bool),
   "pageRanges": Js.undefined(string),
   "format": Js.undefined(string),
   "width": Js.undefined(Unit.t),
@@ -85,9 +85,9 @@ external makeCookie :
     ~url: string=?,
     ~path: string=?,
     ~expires: float=?,
-    ~httpOnly: Js.boolean=?,
-    ~secure: Js.boolean=?,
-    ~session: Js.boolean=?,
+    ~httpOnly: bool=?,
+    ~secure: bool=?,
+    ~session: bool=?,
     ~sameSite: string=?,
     unit
   ) =>
@@ -111,11 +111,11 @@ external makePDFOptions :
   (
     ~path: string=?,
     ~scale: int=?,
-    ~displayHeaderFooter: Js.boolean=?,
+    ~displayHeaderFooter: bool=?,
     ~headerTemplate: string=?,
     ~footerTemplate: string=?,
-    ~printBackground: Js.boolean=?,
-    ~landscape: Js.boolean=?,
+    ~printBackground: bool=?,
+    ~landscape: bool=?,
     ~pageRanges: string=?,
     ~format: [@bs.string] [
                | `Letter
@@ -285,15 +285,12 @@ external select :
   (~selector: string, ~values: array(string)) => Js.Promise.t(array(string)) =
   "";
 
-[@bs.send.pipe: t]
-external setCacheEnabled : (~enabled: Js.boolean) => Js.Promise.t(unit) = "";
-
 /**
  * Toggles ignoring cache for each request based on the enabled state.
  * Caching is enabled by default.
  */
-let setCacheEnabled = (~enabled, ~page) =>
-  page |> setCacheEnabled(~enabled=Js.Boolean.to_js_boolean(enabled));
+[@bs.send.pipe: t]
+external setCacheEnabled : (~enabled: bool) => Js.Promise.t(unit) = "";
 
 /**
  * Change the default maximum navigation time of 30 seconds for the following:
@@ -306,38 +303,26 @@ let setCacheEnabled = (~enabled, ~page) =>
 [@bs.send.pipe: t]
 external setDefaultNavigationTimeout : (~timeout: float) => unit = "";
 
+/** Set whether to enable JavaScript on the page.            */
 [@bs.send.pipe: t]
-external setJavaScriptEnabled : (~enabled: Js.boolean) => Js.Promise.t(unit) =
-  "";
+external setJavaScriptEnabled : (~enabled: bool) => Js.Promise.t(unit) = "";
 
-/** Set whether to enable JavaScript on the page. */
-let setJavaScriptEnabled = (~enabled, ~page) =>
-  setJavaScriptEnabled(~enabled=Js.Boolean.to_js_boolean(enabled), page);
-
+/** Set whether to enable offline mode for the page.         */
 [@bs.send.pipe: t]
-external setOfflineMode : (~enabled: Js.boolean) => Js.Promise.t(unit) = "";
-
-/** Set whether to enable offline mode for the page. */
-let setOfflineMode = (~enabled, ~page) =>
-  setOfflineMode(~enabled=Js.Boolean.to_js_boolean(enabled), page);
-
-[@bs.send.pipe: t]
-external setRequestInterception : (~enabled: Js.boolean) => Js.Promise.t(unit) =
-  "";
+external setOfflineMode : (~enabled: bool) => Js.Promise.t(unit) = "";
 
 /** Set whether to enable request interception for the page. */
-let setRequestInterception = (~enabled, ~page) =>
-  setRequestInterception(~enabled=Js.Boolean.to_js_boolean(enabled), page);
+[@bs.send.pipe: t]
+external setRequestInterception : (~enabled: bool) => Js.Promise.t(unit) = "";
 
 [@bs.send.pipe: t]
 external setUserAgent : (~userAgent: string) => Js.Promise.t(unit) = "";
 
+/** Toggle bypassing page's Content-Security-Policy.         */
 [@bs.send]
-external setBypassCSP : (t, ~enabled: Js.boolean) => Js.Promise.t(unit) = "";
+external setBypassCSP : (t, ~enabled: bool) => Js.Promise.t(unit) = "";
 
-/** Toggle bypassing page's Content-Security-Policy. */
-let setBypassCSP = (~enabled, page) =>
-  setBypassCSP(page, ~enabled=Js.Boolean.to_js_boolean(enabled));
+let setBypassCSP = (~enabled, page) => setBypassCSP(page, ~enabled);
 
 [@bs.send.pipe: t]
 external tap : (~selector: string) => Js.Promise.t(unit) = "";
