@@ -15,30 +15,10 @@ external makeOptions :
     ~path: string=?,
     ~_type: string=?,
     ~quality: float=?,
-    ~fullPage: Js.boolean=?,
+    ~fullPage: bool=?,
     ~clip: BoundingBox.t=?,
-    ~omitBackground: Js.boolean=?,
+    ~omitBackground: bool=?,
     unit
   ) =>
   options =
   "";
-
-let makeOptions =
-    (
-      ~path: option(string)=?,
-      ~_type: option(string)=?,
-      ~quality: option(float)=?,
-      ~fullPage: option(bool)=?,
-      ~clip: option(BoundingBox.t)=?,
-      ~omitBackground: option(bool)=?,
-      (),
-    ) =>
-  makeOptions(
-    ~path?,
-    ~_type?,
-    ~quality?,
-    ~fullPage=?Util.optBoolToJs(fullPage),
-    ~clip?,
-    ~omitBackground=?Util.optBoolToJs(omitBackground),
-    (),
-  );

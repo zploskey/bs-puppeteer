@@ -6,13 +6,12 @@ type revisionInfo = {
   "folderPath": string,
   "executablePath": string,
   "url": string,
-  "local": Js.boolean,
+  "local": bool,
 };
 
 external empty : unit => t = "%identity";
 
-[@bs.send]
-external canDownload : (t, string) => Js.Promise.t(Js.boolean) = "";
+[@bs.send] external canDownload : (t, string) => Js.Promise.t(bool) = "";
 
 [@bs.send]
 external download :

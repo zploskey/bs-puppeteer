@@ -44,17 +44,9 @@ type selectorOptions = {
 
 [@bs.obj]
 external makeSelectorOptions :
-  (~visible: Js.boolean=?, ~hidden: Js.boolean=?, ~timeout: float=?, unit) =>
+  (~visible: bool=?, ~hidden: bool=?, ~timeout: float=?, unit) =>
   selectorOptions =
   "";
-
-let makeSelectorOptions = (~visible=?, ~hidden=?, ~timeout=?, ()) =>
-  makeSelectorOptions(
-    ~visible=?Util.optBoolToJs(visible),
-    ~hidden=?Util.optBoolToJs(hidden),
-    ~timeout?,
-    (),
-  );
 
 [@bs.send.pipe: t]
 external waitForSelector :
