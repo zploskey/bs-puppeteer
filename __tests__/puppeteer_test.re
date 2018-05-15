@@ -87,7 +87,7 @@ describe("BrowserFetcher", () => {
     |> expect
     |> toEqual(Some(`linux))
   );
-  testPromise("remove", ~timeout=30 |> seconds, () =>
+  Skip.testPromise("remove", ~timeout=30 |> seconds, () =>
     Js.Promise.(
       browserFetcher^
       |> BrowserFetcher.download(~revision="533273")
