@@ -150,7 +150,14 @@ external click :
   (string, ~options: Click.clickOptions=?, unit) => Js.Promise.t(unit) =
   "";
 
-[@bs.send.pipe: t] external close : Js.Promise.t(unit) = "";
+type closeOptions = {. "runBeforeUnload": Js.nullable(bool)};
+
+[@bs.obj]
+external makeCloseOptions : (~runBeforeUnload: bool=?, unit) => closeOptions =
+  "";
+
+[@bs.send.pipe: t]
+external close : (~options: closeOptions=?) => Js.Promise.t(unit) = "";
 
 [@bs.send] external content : t => Js.Promise.t(string) = "";
 
