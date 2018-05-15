@@ -318,7 +318,7 @@ external setRequestInterception : (~enabled: bool) => Js.Promise.t(unit) = "";
 [@bs.send.pipe: t]
 external setUserAgent : (~userAgent: string) => Js.Promise.t(unit) = "";
 
-/** Toggle bypassing page's Content-Security-Policy.         */
+/** Toggle bypassing page's Content-Security-Policy.               */
 [@bs.send]
 external setBypassCSP : (t, ~enabled: bool) => Js.Promise.t(unit) = "";
 
