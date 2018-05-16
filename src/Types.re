@@ -1,3 +1,5 @@
+type browser;
+
 type elementHandle;
 
 type executionContext;

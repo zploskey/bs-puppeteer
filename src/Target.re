@@ -5,6 +5,8 @@ external empty : unit => t = "%identity";
 [@bs.deriving jsConverter]
 type pageType = [ | `page | `service_worker | `browser | `other];
 
+[@bs.send] external browser : t => Types.browser = "";
+
 [@bs.send] external createCDPSession : t => Js.Promise.t(CDPSession.t) = "";
 
 [@bs.send] external page : t => Js.Promise.t(Js.Nullable.t(Page.t)) = "";

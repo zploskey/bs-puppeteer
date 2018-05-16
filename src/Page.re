@@ -145,6 +145,8 @@ external authenticate : Js.Null.t(authOptions) => Js.Promise.t(unit) = "";
 [@bs.send]
 external bringToFront : t => Js.Promise.t(unit) = "";
 
+[@bs.send] external browser : t => Types.browser = "";
+
 [@bs.send.pipe: t]
 external click :
   (string, ~options: Click.clickOptions=?, unit) => Js.Promise.t(unit) =

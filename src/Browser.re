@@ -1,4 +1,4 @@
-type t;
+type t = Types.browser;
 
 external empty : unit => t = "%identity";
 
