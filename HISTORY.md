@@ -1,5 +1,16 @@
 # History
 
+## 0.7.0
+
+Support for Puppeteer 1.4.
+
+- Upgrade to bs-platform 3
+  ([#55](https://github.com/bs-puppeteer/bs-puppeteer/pull/55))
+- Add Page.close option "runBeforeUnload"
+  ([936da1b](https://github.com/bs-puppeteer/bs-puppeteer/commit/936da1b19fc024382ff678d8a76c58cbab86ab9d))
+- Add Page.browser() and Target.browser()
+  ([28a58c0](https://github.com/bs-puppeteer/bs-puppeteer/commit/28a58c0fde4f46d1791364d28fc4edb3d249b8d3))
+
 ## 0.6.0
 
 Support for Puppeteer version 1.3.
