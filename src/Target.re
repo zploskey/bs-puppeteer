@@ -3,7 +3,16 @@ type t = Types.target;
 external empty : unit => t = "%identity";
 
 [@bs.deriving jsConverter]
-type pageType = [ | `page | `service_worker | `browser | `other];
+type targetType = [ | `page | `service_worker | `browser | `other];
+
+[@ocaml.deprecated "pageType has been renamed to targetType"]
+type pageType = targetType;
+
+[@ocaml.deprecated "pageTypeToJs has been renamed to targetTypeToJs"]
+let pageTypeToJs = targetTypeToJs;
+
+[@ocaml.deprecated "pageTypeFromJs has been renamed to targetTypeFromJs"]
+let pageTypeFromJs = targetTypeFromJs;
 
 [@bs.send] external browser : t => Types.browser = "";
 
@@ -13,6 +22,6 @@ type pageType = [ | `page | `service_worker | `browser | `other];
 
 [@bs.send] external typeString : t => string = "type";
 
-let type_ = t => t |> typeString |> pageTypeFromJs;
+let type_ = t => t |> typeString |> targetTypeFromJs;
 
 [@bs.send] external url : t => string = "";
