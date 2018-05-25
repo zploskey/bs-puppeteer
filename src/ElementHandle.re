@@ -1,11 +1,8 @@
 type t = Types.elementHandle;
 
-include
-  JSHandle.Impl(
-    {
-      type nonrec t = t;
-    },
-  );
+include JSHandle.Impl({
+  type nonrec t = t;
+});
 
 external empty : unit => t = "%identity";
 

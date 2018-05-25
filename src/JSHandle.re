@@ -11,9 +11,6 @@ module Impl = (T: {type t;}) => {
 
 type t = Types.jsHandle;
 
-include
-  Impl(
-    {
-      type nonrec t = t;
-    },
-  );
+include Impl({
+  type nonrec t = t;
+});
