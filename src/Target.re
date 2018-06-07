@@ -3,7 +3,13 @@ type t = Types.target;
 external empty : unit => t = "%identity";
 
 [@bs.deriving jsConverter]
-type targetType = [ | `page | `service_worker | `browser | `other];
+type targetType = [
+  | `page
+  | `background_page
+  | `service_worker
+  | `browser
+  | `other
+];
 
 [@ocaml.deprecated "pageType has been renamed to targetType"]
 type pageType = targetType;
