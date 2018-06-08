@@ -36,6 +36,7 @@ type launchOptions = {
   "executablePath": Js.undefined(string),
   "slowMo": Js.undefined(float),
   "args": Js.undefined(array(string)),
+  "ignoreDefaultArgs": Js.undefined(bool),
   "handleSIGINT": Js.undefined(bool),
   "handleSIGTERM": Js.undefined(bool),
   "handleSIGHUP": Js.undefined(bool),
