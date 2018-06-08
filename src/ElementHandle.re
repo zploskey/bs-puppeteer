@@ -6,6 +6,9 @@ include JSHandle.Impl({
 
 external empty : unit => t = "%identity";
 
+/* Overrides asElement of JSHandle. Guaranteed to return an ElementHandle. */
+[@bs.send] external asElement : t => Types.elementHandle = "";
+
 [@bs.send]
 external boundingBox : t => Js.Promise.t(Js.Null.t(BoundingBox.t)) = "";
 
