@@ -391,6 +391,11 @@ external evaluateHandlePromise4 :
 external evaluateStringHandle : string => Js.Promise.t(JSHandle.t) =
   "evaluateHandle";
 
+[@bs.send.pipe: t]
+external click :
+  (string, ~options: Click.clickOptions=?, unit) => Js.Promise.t(unit) =
+  "";
+
 /**
  * Fetches the first element matching `selector`, scrolls it into view if not
  * already visible, then hovers over the center of the element using
