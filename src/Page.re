@@ -63,7 +63,7 @@ type margin = {
 type pdfOptions = {
   .
   "path": Js.undefined(string),
-  "scale": Js.undefined(int),
+  "scale": Js.undefined(float),
   "displayHeaderFooter": Js.undefined(bool),
   "headerTemplate": Js.undefined(string),
   "footerTemplate": Js.undefined(string),
@@ -109,7 +109,7 @@ external makeMargin :
 external makePDFOptions :
   (
     ~path: string=?,
-    ~scale: int=?,
+    ~scale: float=?,
     ~displayHeaderFooter: bool=?,
     ~headerTemplate: string=?,
     ~footerTemplate: string=?,

@@ -566,7 +566,7 @@ describe("Page", () => {
       page^
       |> Page.pdf(
            Page.makePDFOptions(
-             ~scale=1,
+             ~scale=1.,
              ~displayHeaderFooter=true,
              ~headerTemplate="[[header]]",
              ~footerTemplate="[[footer]]",
