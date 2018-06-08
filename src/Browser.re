@@ -14,8 +14,10 @@ external empty : unit => t = "%identity";
 [@bs.send] [@bs.return nullable]
 external process : t => option(Node.Process.t) = "";
 
+[@bs.send] external targets : t => array(Target.t) = "";
+
+[@bs.send] external userAgent : t => Js.Promise.t(string) = "";
+
 [@bs.send] external version : t => Js.Promise.t(string) = "";
 
 [@bs.send] external wsEndpoint : t => string = "";
-
-[@bs.send] external userAgent : t => Js.Promise.t(string) = "";
