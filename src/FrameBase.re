@@ -2,9 +2,9 @@ type t = Types.frameBase;
 
 type tagOptions = {
   .
-  "content": Js.undefined(string),
-  "path": Js.undefined(string),
   "url": Js.undefined(string),
+  "path": Js.undefined(string),
+  "content": Js.undefined(string),
   "_type": Js.undefined(string),
 };
 
