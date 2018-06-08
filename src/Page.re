@@ -269,16 +269,6 @@ external reload :
   "";
 
 /**
- * Selects options in a `<select>` tag. Triggers a `change` and `input` event
- * once all the provided options have been selected. If there's no `<select>`
- * element matching selector it throws an error.
- */
-[@bs.send.pipe: t]
-external select :
-  (~selector: string, ~values: array(string)) => Js.Promise.t(array(string)) =
-  "";
-
-/**
  * Toggles ignoring cache for each request based on the enabled state.
  * Caching is enabled by default.
  */
