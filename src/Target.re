@@ -22,7 +22,14 @@ let pageTypeFromJs = targetTypeFromJs;
 
 [@bs.send] external browser : t => Types.browser = "";
 
+/* TODO: browserContext() */
+
 [@bs.send] external createCDPSession : t => Js.Promise.t(CDPSession.t) = "";
+
+/** Target that opened this target. Top-level targets don't have an opener. */
+[@bs.send]
+[@bs.return nullable]
+external opener : t => option(t) = "";
 
 [@bs.send] external page : t => Js.Promise.t(Js.Nullable.t(Page.t)) = "";
 
