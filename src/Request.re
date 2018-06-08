@@ -80,6 +80,8 @@ external frame : t => option(FrameBase.t) = "";
 
 [@bs.send] external headers : t => headers = "";
 
+[@bs.send] external isNavigationRequest : t => bool = "";
+
 [@bs.send] external method_ : t => string = "";
 
 [@bs.send] [@bs.return nullable] external postData : t => option(string) = "";
@@ -123,6 +125,7 @@ type respondOptions = {
   "status": Js.undefined(float),
   "headers": Js.undefined(headers),
   "contentType": Js.undefined(string),
+  /* TODO: body can also be a string */
   "body": Js.undefined(Js_typed_array.ArrayBuffer.t),
 };
 
