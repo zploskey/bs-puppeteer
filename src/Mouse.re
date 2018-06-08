@@ -13,8 +13,6 @@ type mousePressOptions = {
   "clickCount": int,
 };
 
-type mouseMovements = Js.Dict.t(int);
-
 [@bs.send.pipe: t]
 external click :
   (~x: float, ~y: float, ~options: Click.clickOptions=?, unit) =>
@@ -25,9 +23,11 @@ external click :
 external down : (~options: mousePressOptions=?, unit) => Js.Promise.t(unit) =
   "";
 
+type moveOptions = {. "steps": int};
+
 [@bs.send.pipe: t]
 external move :
-  (~x: float, ~y: float, ~movements: mouseMovements=?, unit) =>
+  (~x: float, ~y: float, ~options: moveOptions=?, unit) =>
   Js.Promise.t(unit) =
   "";
 
