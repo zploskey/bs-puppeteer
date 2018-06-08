@@ -3,11 +3,17 @@ type connectOptions = {
   .
   "browserWSEndpoint": Js.nullable(string),
   "ignoreHTTPSErrors": Js.nullable(bool),
+  "slowMo": Js.nullable(float),
 };
 
 [@bs.obj]
 external makeConnectOptions :
-  (~browserWSEndpoint: string=?, ~ignoreHTTPSErrors: bool=?, unit) =>
+  (
+    ~browserWSEndpoint: string=?,
+    ~ignoreHTTPSErrors: bool=?,
+    ~slowMo: float=?,
+    unit
+  ) =>
   connectOptions =
   "";
 
