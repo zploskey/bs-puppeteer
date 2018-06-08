@@ -155,8 +155,6 @@ external makeCloseOptions : (~runBeforeUnload: bool=?, unit) => closeOptions =
 [@bs.send.pipe: t]
 external close : (~options: closeOptions=?) => Js.Promise.t(unit) = "";
 
-[@bs.send] external content : t => Js.Promise.t(string) = "";
-
 [@bs.get] external coverage : t => Coverage.t = "";
 
 /* TODO: versions handling args */

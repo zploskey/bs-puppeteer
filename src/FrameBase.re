@@ -396,6 +396,8 @@ external click :
   (string, ~options: Click.clickOptions=?, unit) => Js.Promise.t(unit) =
   "";
 
+[@bs.send] external content : t => Js.Promise.t(string) = "";
+
 /**
  * Fetches the first element matching `selector`, scrolls it into view if not
  * already visible, then hovers over the center of the element using
