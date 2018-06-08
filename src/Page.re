@@ -40,7 +40,7 @@ type viewport = {
   .
   "width": int,
   "height": int,
-  "deviceScaleFactor": int,
+  "deviceScaleFactor": float,
   "isMobile": bool,
   "hasTouch": bool,
   "isLandscape": bool,
@@ -162,6 +162,7 @@ external close : (~options: closeOptions=?) => Js.Promise.t(unit) = "";
 external evaluateOnNewDocument : (unit => unit) => Js.Promise.t(unit) = "";
 
 /* TODO: exposeFunction */
+
 [@bs.send.pipe: t]
 external focus : (~selector: string) => Js.Promise.t(unit) = "";
 

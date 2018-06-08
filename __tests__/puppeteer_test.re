@@ -450,7 +450,7 @@ describe("Page", () => {
            "viewport": {
              "width": 320,
              "height": 480,
-             "deviceScaleFactor": 2,
+             "deviceScaleFactor": 2.,
              "isMobile": true,
              "hasTouch": true,
              "isLandscape": true,
@@ -464,7 +464,7 @@ describe("Page", () => {
            |> ExpectJs.toMatchObject({
                 "width": 320,
                 "height": 480,
-                "deviceScaleFactor": 2,
+                "deviceScaleFactor": 2.,
                 "isMobile": true,
                 "hasTouch": true,
                 "isLandscape": true,
