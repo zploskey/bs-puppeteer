@@ -29,19 +29,17 @@ external makeJSCoverageOptions :
 
 [@bs.send]
 external startCSSCoverage :
-  (t, Js.Undefined.t(cssCoverageOptions)) => Js.Promise.t(unit) =
+  (t, ~options: cssCoverageOptions=?) => Js.Promise.t(unit) =
   "";
 
-let startCSSCoverage = (~options=?, t) =>
-  startCSSCoverage(t, options |> Js.Undefined.fromOption);
+let startCSSCoverage = (~options=?, t) => startCSSCoverage(t, ~options?);
 
 [@bs.send]
 external startJSCoverage :
-  (t, Js.Undefined.t(jsCoverageOptions)) => Js.Promise.t(unit) =
+  (t, ~options: jsCoverageOptions=?) => Js.Promise.t(unit) =
   "";
 
-let startJSCoverage = (~options=?, t) =>
-  startJSCoverage(t, options |> Js.Undefined.fromOption);
+let startJSCoverage = (~options=?, t) => startJSCoverage(t, ~options?);
 
 [@bs.send] external stopCSSCoverage : t => Js.Promise.t(array(report)) = "";
 
