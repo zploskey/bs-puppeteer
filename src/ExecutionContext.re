@@ -122,6 +122,9 @@ external evaluateHandlePromise4 :
 external evaluateStringHandle : string => Js.Promise.t(JSHandle.t) =
   "evaluateHandle";
 
+[@bs.send] [@bs.return nullable]
+external frame : t => option(FrameBase.t) = "";
+
 /**
  * Iterates the JavaScript heap and finds all the objects with the given
  * prototype. Returns a handle to an array of objects with this prototype.
