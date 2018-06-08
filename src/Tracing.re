@@ -2,7 +2,7 @@ type t;
 
 type tracingOptions = {
   .
-  "path": Js.nullable(string),
+  "path": string,
   "screenshots": Js.nullable(bool),
   "categories": Js.nullable(array(string)),
 };
@@ -10,7 +10,7 @@ type tracingOptions = {
 [@bs.obj]
 external makeTracingOptions :
   (
-    ~path: string=?,
+    ~path: string,
     ~screenshots: bool=?,
     ~categories: array(string)=?,
     unit
@@ -19,7 +19,7 @@ external makeTracingOptions :
   "";
 
 [@bs.send.pipe: t]
-external start : (~options: tracingOptions=?, unit) => Js.Promise.t(unit) =
+external start : (~options: tracingOptions, unit) => Js.Promise.t(unit) =
   "";
 
 [@bs.send]
