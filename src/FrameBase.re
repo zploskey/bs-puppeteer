@@ -390,3 +390,11 @@ external evaluateHandlePromise4 :
 [@bs.send.pipe: t]
 external evaluateStringHandle : string => Js.Promise.t(JSHandle.t) =
   "evaluateHandle";
+
+/**
+ * Fetches the first element matching `selector`, scrolls it into view if not
+ * already visible, then hovers over the center of the element using
+ * [Page.mouse]. Throws an error if no element matches `selector`.
+ */
+[@bs.send.pipe: t]
+external hover : (~selector: string) => Js.Promise.t(unit) = "";

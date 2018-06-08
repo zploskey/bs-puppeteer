@@ -195,14 +195,6 @@ external goto :
   Js.Promise.t(Js.null(Response.t)) =
   "";
 
-/**
- * Fetches the first element matching `selector`, scrolls it into view if not
- * already visible, then hovers over the center of the element using
- * [Page.mouse]. Throws an error if no element matches `selector`.
- */
-[@bs.send.pipe: t]
-external hover : (~selector: string) => Js.Promise.t(unit) = "";
-
 [@bs.send] external isClosed : t => bool = "";
 
 /** The page's virtual keyboard.                                    */
