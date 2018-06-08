@@ -26,8 +26,8 @@ type cookie = {
   .
   "name": string,
   "value": string,
-  "domain": Js.undefined(string),
   "url": Js.undefined(string),
+  "domain": Js.undefined(string),
   "path": Js.undefined(string),
   "expires": Js.undefined(float),
   "httpOnly": Js.undefined(bool),
@@ -81,14 +81,13 @@ external makeCookie :
   (
     ~name: string,
     ~value: string,
-    ~domain: string=?,
     ~url: string=?,
+    ~domain: string=?,
     ~path: string=?,
     ~expires: float=?,
     ~httpOnly: bool=?,
     ~secure: bool=?,
-    ~session: bool=?,
-    ~sameSite: string=?,
+    ~sameSite: [@bs.string] [ | `Strict | `Lax]=?,
     unit
   ) =>
   cookie =
