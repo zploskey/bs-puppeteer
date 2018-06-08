@@ -163,9 +163,6 @@ external evaluateOnNewDocument : (unit => unit) => Js.Promise.t(unit) = "";
 
 /* TODO: exposeFunction */
 
-[@bs.send.pipe: t]
-external focus : (~selector: string) => Js.Promise.t(unit) = "";
-
 /** Array of all frames attached to the page.                         */
 [@bs.send]
 external frames : t => array(Frame.t) = "";
