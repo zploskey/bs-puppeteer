@@ -203,6 +203,8 @@ external goto :
 [@bs.send.pipe: t]
 external hover : (~selector: string) => Js.Promise.t(unit) = "";
 
+[@bs.send] external isClosed : t => bool = "";
+
 /** The page's virtual keyboard.                                    */
 [@bs.get]
 external keyboard : t => Keyboard.t = "";
