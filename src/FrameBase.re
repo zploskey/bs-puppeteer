@@ -48,6 +48,8 @@ external makeSelectorOptions :
   selectorOptions =
   "";
 
+/* TODO: waitForFunction */
+
 [@bs.send.pipe: t]
 external waitForSelector :
   (string, ~options: selectorOptions=?, unit) => Js.Promise.t(unit) =
@@ -428,3 +430,5 @@ type typeOptions = {. "delay": float};
 external type_ :
   (string, string, ~options: typeOptions=?, unit) => Js.Promise.t(unit) =
   "type";
+
+[@bs.send] external url : t => string = "";

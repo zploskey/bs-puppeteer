@@ -311,9 +311,9 @@ external setViewport : (~viewport: viewport) => Js.Promise.t(unit) = "";
 
 [@bs.get] external tracing : t => Tracing.t = "";
 
-[@bs.send] external url : t => string = "";
-
 [@bs.send.pipe: t]
 external waitForNavigation :
   (~options: Navigation.options) => Js.Promise.t(Response.t) =
   "";
+
+/* TODO: workers() */
