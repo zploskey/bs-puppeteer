@@ -11,7 +11,4 @@ include FrameBase;
 [@bs.send] [@bs.return nullable] external parentFrame : t => option(t) = "";
 
 [@bs.send.pipe: t]
-external addScriptTag : (~url: string) => Js.Promise.t(unit) = "";
-
-[@bs.send.pipe: t]
 external injectFile : (~filePath: string) => Js.Promise.t(unit) = "";
