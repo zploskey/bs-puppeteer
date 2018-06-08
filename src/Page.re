@@ -310,9 +310,6 @@ let setBypassCSP = (~enabled, page) => setBypassCSP(page, ~enabled);
 [@bs.send.pipe: t]
 external setViewport : (~viewport: viewport) => Js.Promise.t(unit) = "";
 
-[@bs.send.pipe: t]
-external tap : (~selector: string) => Js.Promise.t(unit) = "";
-
 [@bs.send] external target : t => Types.target = "";
 
 [@bs.send] external title : t => Js.Promise.t(string) = "";

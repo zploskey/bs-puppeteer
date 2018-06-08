@@ -418,3 +418,6 @@ external hover : (~selector: string) => Js.Promise.t(unit) = "";
 external select :
   (~selector: string, ~values: array(string)) => Js.Promise.t(array(string)) =
   "";
+
+[@bs.send.pipe: t]
+external tap : (~selector: string) => Js.Promise.t(unit) = "";
