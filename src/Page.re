@@ -217,13 +217,6 @@ external setExtraHTTPHeaders :
   (~headers: Js.Dict.t(string), unit) => Js.Promise.t(unit) =
   "";
 
-type typeOptions = {. "delay": float};
-
-[@bs.send.pipe: t]
-external type_ :
-  (string, string, ~options: typeOptions=?, unit) => Js.Promise.t(unit) =
-  "type";
-
 [@bs.send.pipe: t] [@bs.splice]
 external deleteCookie : array(cookie) => Js.Promise.t(unit) = "";
 

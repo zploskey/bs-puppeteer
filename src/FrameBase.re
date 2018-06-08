@@ -421,3 +421,10 @@ external select :
 
 [@bs.send.pipe: t]
 external tap : (~selector: string) => Js.Promise.t(unit) = "";
+
+type typeOptions = {. "delay": float};
+
+[@bs.send.pipe: t]
+external type_ :
+  (string, string, ~options: typeOptions=?, unit) => Js.Promise.t(unit) =
+  "type";
