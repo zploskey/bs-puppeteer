@@ -22,7 +22,7 @@ let pageTypeFromJs = targetTypeFromJs;
 
 [@bs.send] external browser : t => Types.browser = "";
 
-/* TODO: browserContext() */
+[@bs.send] external browserContext : t => BrowserContext.t = "";
 
 [@bs.send] external createCDPSession : t => Js.Promise.t(CDPSession.t) = "";
 

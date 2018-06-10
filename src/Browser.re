@@ -2,7 +2,13 @@ type t = Types.browser;
 
 external empty : unit => t = "%identity";
 
+[@bs.send] external browserContexts : t => array(BrowserContext.t) = "";
+
 [@bs.send] external close : t => Js.Promise.t(unit) = "";
+
+[@bs.send]
+external createIncognitoBrowserContext : t => Js.Promise.t(BrowserContext.t) =
+  "";
 
 [@bs.send] external disconnect : t => unit = "";
 
