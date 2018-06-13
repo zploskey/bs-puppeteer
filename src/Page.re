@@ -316,4 +316,4 @@ external waitForNavigation :
   (~options: Navigation.options) => Js.Promise.t(Response.t) =
   "";
 
-/* TODO: workers() */
+[@bs.send] external workers : t => array(Worker.t) = "";
