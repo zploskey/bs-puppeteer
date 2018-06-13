@@ -4,7 +4,7 @@
 
 Support for Puppeteer 1.5.
 User-facing API changes are listed below.
-A couple of very minor breaking changes for consistency and correctness are marked as *breaking*.
+A couple of very minor breaking changes for consistency and correctness are marked as **breaking**.
 
 ### New Features
 
@@ -26,7 +26,7 @@ A couple of very minor breaking changes for consistency and correctness are mark
   ([7cc7478](https://github.com/bs-puppeteer/bs-puppeteer/commit/7cc7478be2965fbf71724e1b308d43c510fc4859))
 - Add ExecutionContext.frame()
   ([fdaee4a](https://github.com/bs-puppeteer/bs-puppeteer/commit/fdaee4aece687a3164ab10aa9aa4d863d43212d9))
-- Make JSHandle.asElement() return an option *breaking*
+- Make JSHandle.asElement() return an option **breaking**
   ([c6a63ad](https://github.com/bs-puppeteer/bs-puppeteer/commit/c6a63adf5a5e6d647b6481e80d5daae8221b093c))
 - Add Request.isNavigationRequest() (new in Puppeteer 1.5)
   ([deb635e](https://github.com/bs-puppeteer/bs-puppeteer/commit/deb635e72facbe22ba295cdcc293c7e8e472b278))
@@ -45,7 +45,7 @@ A couple of very minor breaking changes for consistency and correctness are mark
   ([88f6f4a](https://github.com/bs-puppeteer/bs-puppeteer/commit/88f6f4ae7bbab4b2cc886060718af232a4fa3ce9))
 - Move hover function to FrameBase (You can hover in a frame too)
   ([01b5f51](https://github.com/bs-puppeteer/bs-puppeteer/commit/01b5f510bcdd54ce04fbb6809e2710836e125a57))
-- Fixes for Page.cookie type *breaking*
+- Fixes for Page.cookie type **breaking**
   ([6ea5ddf](https://github.com/bs-puppeteer/bs-puppeteer/commit/6ea5ddf15401e8757b57e55d45d9f12cb5cbf7fd))
 - Don't override addScriptTag in Frame (Fixed this external)
   ([b263d86](https://github.com/bs-puppeteer/bs-puppeteer/commit/b263d86bef13b7b077f7f51b3b2ff2e75935248c))
@@ -53,11 +53,11 @@ A couple of very minor breaking changes for consistency and correctness are mark
   ([3433ed8](https://github.com/bs-puppeteer/bs-puppeteer/commit/3433ed8ef68c0e7440b3bc2e47e15e8d556ab718))
 - Move Page.content() to FrameBase.content() (Frames have content too)
   ([6f1b218](https://github.com/bs-puppeteer/bs-puppeteer/commit/6f1b2188e3c6e08f82162994fefd0945b75ad31b))
-- deviceScaleFactor should be a float *breaking*
+- deviceScaleFactor should be a float **breaking**
   ([3b109ac](https://github.com/bs-puppeteer/bs-puppeteer/commit/3b109ace50a1d352eb9f85d19243a738ad69c574))
 - Frames can also focus
   ([5d728a4](https://github.com/bs-puppeteer/bs-puppeteer/commit/5d728a45831edfb4eab9e76289b686401d27cdfe))
-- pdfOptions##scale should be a float *breaking*
+- pdfOptions##scale should be a float **breaking**
   ([4990439](https://github.com/bs-puppeteer/bs-puppeteer/commit/49904399e916fe1cd62bcb16fb7705b6da458127))
 - Move Page.select() to FrameBase (Can now select in a Frame)
   ([6852beb](https://github.com/bs-puppeteer/bs-puppeteer/commit/6852beb41ee6ce0d2a14688904972958a15ceb20))
