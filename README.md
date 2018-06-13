@@ -87,7 +87,7 @@ See the [Reason Global Installation](https://reasonml.github.io/docs/en/global-i
 Good references for writing bindings are:
 
 - [BuckleScript Interop Cheatsheet](https://bucklescript.github.io/docs/en/interop-cheatsheet.html)
-- [Puppeteer API Docs](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md)
+- [Puppeteer API Docs](https://pptr.dev)
 - [Puppeteer TypeScript Definitions](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/puppeteer/index.d.ts)
 
 ## Projects using bs-puppeteer
