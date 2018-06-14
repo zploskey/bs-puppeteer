@@ -208,8 +208,7 @@ external mouse : t => Mouse.t = "";
 
 [@bs.send.pipe: t]
 external screenshot :
-  (~options: Screenshot.options=?, unit) =>
-  Js.Promise.t(Js.Typed_array.ArrayBuffer.t) =
+  (~options: Screenshot.options=?, unit) => Js.Promise.t(Node.Buffer.t) =
   "";
 
 [@bs.send.pipe: t]
@@ -241,9 +240,8 @@ external emulateMediaDisable :
   ([@bs.as {json|null|json}] _) => Js.Promise.t(unit) =
   "emulateMedia";
 
-/* TODO: change return type to "Node.buffer" when its ready */
 [@bs.send.pipe: t]
-external pdf : pdfOptions => Js.Promise.t(Js_typed_array.ArrayBuffer.t) = "";
+external pdf : pdfOptions => Js.Promise.t(Node.Buffer.t) = "";
 
 /* TODO:
       external on

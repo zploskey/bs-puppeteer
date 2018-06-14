@@ -34,8 +34,7 @@ external press :
 
 [@bs.send.pipe: t]
 external screenshot :
-  (~options: Screenshot.options=?, unit) =>
-  Js.Promise.t(Js.Typed_array.ArrayBuffer.t) =
+  (~options: Screenshot.options=?, unit) => Js.Promise.t(Node.Buffer.t) =
   "";
 
 [@bs.send.pipe: t]

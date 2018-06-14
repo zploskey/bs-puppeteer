@@ -9,18 +9,11 @@ type tracingOptions = {
 
 [@bs.obj]
 external makeTracingOptions :
-  (
-    ~path: string,
-    ~screenshots: bool=?,
-    ~categories: array(string)=?,
-    unit
-  ) =>
+  (~path: string, ~screenshots: bool=?, ~categories: array(string)=?, unit) =>
   tracingOptions =
   "";
 
 [@bs.send.pipe: t]
-external start : (~options: tracingOptions, unit) => Js.Promise.t(unit) =
-  "";
+external start : (~options: tracingOptions, unit) => Js.Promise.t(unit) = "";
 
-[@bs.send]
-external stop : t => Js.Promise.t(Js.Typed_array.ArrayBuffer.t) = "";
+[@bs.send] external stop : t => Js.Promise.t(Node.Buffer.t) = "";

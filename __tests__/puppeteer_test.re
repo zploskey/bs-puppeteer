@@ -283,7 +283,8 @@ describe("Page", () => {
       |> Page.screenshot()
       |> then_(buf =>
            buf
-           |> Js_typed_array.ArrayBuffer.byteLength
+           |> Node.Buffer.toString
+           |> String.length
            |> expect
            |> toBeGreaterThanOrEqual(3236)
            |> resolve
@@ -589,7 +590,8 @@ describe("Page", () => {
          )
       |> then_(buffer =>
            buffer
-           |> Js_typed_array.ArrayBuffer.byteLength
+           |> Node.Buffer.toString
+           |> String.length
            |> expect
            |> toBeGreaterThan(20000)
            |> Js.Promise.resolve
