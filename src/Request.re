@@ -52,6 +52,8 @@ external abort :
                   | `aborted
                   | `accessdenied
                   | `addressunreachable
+                  | `blockedbyclient
+                  | `blockedbyresponse
                   | `connectionaborted
                   | `connectionclosed
                   | `connectionfailed
