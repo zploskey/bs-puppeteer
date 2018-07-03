@@ -593,7 +593,7 @@ describe("Page", () => {
            |> Node.Buffer.toString
            |> String.length
            |> expect
-           |> toBeGreaterThan(20000)
+           |> toBeGreaterThan(5000)
            |> Js.Promise.resolve
          )
     )
