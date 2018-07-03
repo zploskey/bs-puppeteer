@@ -311,7 +311,11 @@ external setViewport : (~viewport: viewport) => Js.Promise.t(unit) = "";
 
 [@bs.send.pipe: t]
 external waitForNavigation :
-  (~options: Navigation.options) => Js.Promise.t(Response.t) =
+  (~options: Navigation.options) => Js.Promise.t(Js.nullable(Response.t)) =
   "";
+
+let waitForNavigation = (~options, page) =>
+  waitForNavigation(~options, page)
+  |> Js.Promise.(then_(response => response |> Js.toOption |> resolve));
 
 [@bs.send] external workers : t => array(Worker.t) = "";
