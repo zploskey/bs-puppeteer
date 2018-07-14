@@ -27,6 +27,8 @@ external click : (~options: Click.clickOptions=?, unit) => Js.Promise.t(unit) =
 
 [@bs.send] external hover : t => Js.Promise.t(unit) = "";
 
+[@bs.send] external isIntersectingViewport : t => Js.Promise.t(bool) = "";
+
 [@bs.send.pipe: t]
 external press :
   (~key: string, ~options: Keyboard.options=?, unit) => Js.Promise.t(unit) =
