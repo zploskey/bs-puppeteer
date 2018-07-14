@@ -15,7 +15,11 @@ type report = {
 
 type cssCoverageOptions = {. "resetOnNavigation": Js.Nullable.t(bool)};
 
-type jsCoverageOptions = {. "resetOnNavigation": Js.Nullable.t(bool)};
+type jsCoverageOptions = {
+  .
+  "resetOnNavigation": Js.Nullable.t(bool),
+  "reportAnonymousScripts": Js.Nullable.t(bool),
+};
 
 [@bs.obj]
 external makeCSSCoverageOptions :
@@ -24,7 +28,8 @@ external makeCSSCoverageOptions :
 
 [@bs.obj]
 external makeJSCoverageOptions :
-  (~resetOnNavigation: bool=?, unit) => jsCoverageOptions =
+  (~resetOnNavigation: bool=?, ~reportAnonymousScripts: bool=?, unit) =>
+  jsCoverageOptions =
   "";
 
 [@bs.send]
