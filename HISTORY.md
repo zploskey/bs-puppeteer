@@ -1,5 +1,27 @@
 # History
 
+## 0.9.0
+
+Bug fixes and new features from Puppeteer 1.6.
+
+### New Features
+
+- Add ElementHandle.isIntersectingViewport()
+  ([fa075d6](https://github.com/bs-puppeteer/bs-puppeteer/commit/fa075d6b67ee6cb9a9b3d44cc911f1256f1ebc12))
+- Add reportAnonymousScripts option for JS coverage
+  ([cd67702](https://github.com/bs-puppeteer/bs-puppeteer/commit/cd67702f950d9db24501d279e0b3c30aaad32c43))
+- Add blockedbyclient and blockedbyresponse error codes to Request.abort()
+  ([e43b8b5](https://github.com/bs-puppeteer/bs-puppeteer/commit/e43b8b5be08c8ba566bbbd48011adacdb20aece1))
+
+### Bug Fixes / Improvements
+
+- Make waitForNavigation returned response optional
+  ([5a62dad](https://github.com/bs-puppeteer/bs-puppeteer/commit/5a62dad37187c01658b76a0f3262268bf0cf8e72))
+- Use bs.string for Screenshot.options `_type` field
+  ([2e7c567](https://github.com/bs-puppeteer/bs-puppeteer/commit/2e7c5678cc2e387f207c2aa9eda5a1eae9dea1d5))
+- Use `Node.Buffer.t` instead of `Typed_array`
+  ([5c7ae0d](https://github.com/bs-puppeteer/bs-puppeteer/commit/5c7ae0d085e6c0e41bd120943c4401e112dbd835))
+
 ## 0.8.0
 
 Support for Puppeteer 1.5.
