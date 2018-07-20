@@ -27,8 +27,7 @@ type moveOptions = {. "steps": int};
 
 [@bs.send.pipe: t]
 external move :
-  (~x: float, ~y: float, ~options: moveOptions=?, unit) =>
-  Js.Promise.t(unit) =
+  (~x: float, ~y: float, ~options: moveOptions=?, unit) => Js.Promise.t(unit) =
   "";
 
 [@bs.send.pipe: t]
