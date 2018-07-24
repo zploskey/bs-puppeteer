@@ -36,11 +36,7 @@ let testPageCssPath = Node.Path.resolve(fixturesPath, "./testPage.css");
 
 let testPageContent = Node.Fs.readFileAsUtf8Sync(testPagePath);
 
-let noSandbox =
-  Puppeteer.makeLaunchOptions(
-    ~args=[|"--no-sandbox", "--disable-setuid-sandbox"|],
-    (),
-  );
+let noSandbox = Puppeteer.makeLaunchOptions(~args=[|"--no-sandbox"|], ());
 
 describe("Puppeteer", () => {
   test("executablePath", () =>

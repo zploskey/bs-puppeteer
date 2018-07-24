@@ -29,7 +29,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "puppeteer": "^1.6.0"
+    "puppeteer": "^1.6.1"
   },
   "devDependencies": {
     "@glennsl/bs-jest": "^0.4.2",
