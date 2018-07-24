@@ -2,6 +2,11 @@ dist: trusty
 language: node_js
 node_js:
   - 8
+addons:
+  apt:
+    packages:
+      # Needed for Chrome on Trusty
+      - libnss3
 cache:
   directories:
     - node_modules
