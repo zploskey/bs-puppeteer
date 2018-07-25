@@ -318,4 +318,61 @@ let waitForNavigation = (~options, page) =>
   waitForNavigation(~options, page)
   |> Js.Promise.(then_(response => response |> Js.toOption |> resolve));
 
+module WaitForRequest = {
+  [@bs.deriving abstract]
+  type options = {
+    [@bs.optional]
+    timeout: float,
+  };
+
+  [@bs.send]
+  external waitForRequest :
+    (t, Request.t => bool, ~options: options=?, unit) =>
+    Js.Promise.t(Request.t) =
+    "";
+
+  [@bs.send]
+  external waitForRequestRe :
+    (t, Request.t => Js.Re.t, ~options: options=?, unit) =>
+    Js.Promise.t(Request.t) =
+    "waitForRequest";
+
+  [@bs.send]
+  external waitForRequestUrl :
+    (t, string, ~options: options=?, unit) => Js.Promise.t(Request.t) =
+    "waitForRequest";
+};
+
+module WaitForResponse = {
+  [@bs.deriving abstract]
+  type options = {
+    [@bs.optional]
+    timeout: float,
+  };
+
+  [@bs.send]
+  external waitForResponse :
+    (t, Response.t => bool, ~options: options=?, unit) =>
+    Js.Promise.t(Response.t) =
+    "";
+
+  [@bs.send]
+  external waitForResponseRe :
+    (t, Response.t => Js.Re.t, ~options: options=?, unit) =>
+    Js.Promise.t(Response.t) =
+    "waitForResponse";
+
+  [@bs.send]
+  external waitForResponseUrl :
+    (t, string, ~options: options=?, unit) => Js.Promise.t(Response.t) =
+    "waitForResponse";
+};
+
+let waitForRequest = WaitForRequest.waitForRequest;
+let waitForRequestRe = WaitForRequest.waitForRequestRe;
+let waitForRequestUrl = WaitForRequest.waitForRequestUrl;
+let waitForResponse = WaitForResponse.waitForResponse;
+let waitForResponseRe = WaitForResponse.waitForResponseRe;
+let waitForResponseUrl = WaitForResponse.waitForResponseUrl;
+
 [@bs.send] external workers : t => array(Worker.t) = "";

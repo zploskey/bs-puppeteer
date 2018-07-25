@@ -6,6 +6,8 @@ open Expect;
 
 let seconds = v => v * 1000;
 
+[@bs.val] external fetch : string => Js.Promise.t(Response.t) = "";
+
 let getElementValueJs: Dom.element => string = [%raw
   {| function (element) { return element.value; } |}
 ];
@@ -287,6 +289,17 @@ describe("Page", () => {
          )
     )
   );
+  /* TODO: Run a test http server so these fetches can actually work. */
+  Skip.testPromise("waitForResponseUrl()", () => {
+    let url = "file:///" ++ testPagePath;
+    Js.Promise.all2((
+      page^ |. Page.waitForResponseUrl(url, ()),
+      page^ |> Page.evaluate(() => fetch("/testPage.html")),
+    ))
+    |> Js.Promise.then_(((res, _)) =>
+         res |> Response.url |> expect |> toEqual(url) |> Js.Promise.resolve
+       );
+  });
   testPromise("waitForSelector()", () =>
     Js.Promise.(
       page^
