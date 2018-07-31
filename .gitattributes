@@ -1,2 +1,2 @@
 *.re linguist-language=Reason
-lib/*.js linguist-generated=true
+lib/** linguist-generated=true
