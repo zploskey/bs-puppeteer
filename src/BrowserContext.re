@@ -8,4 +8,6 @@ type t;
 
 [@bs.send] external newPage : t => Js.Promise.t(Page.t) = "";
 
+[@bs.send] external pages : t => Js.Promise.t(array(Page.t)) = "";
+
 [@bs.send] external targets : t => array(Types.target) = "";
