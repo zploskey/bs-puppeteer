@@ -74,6 +74,7 @@ type pdfOptions = {
   "width": Js.undefined(Unit.t),
   "height": Js.undefined(Unit.t),
   "margin": Js.undefined(margin),
+  "preferCSSPageSize": Js.undefined(bool),
 };
 
 [@bs.obj]
@@ -132,6 +133,7 @@ external makePDFOptions :
     ~width: Unit.t=?,
     ~height: Unit.t=?,
     ~margin: margin=?,
+    ~preferCSSPageSize: bool=?,
     unit
   ) =>
   pdfOptions =
