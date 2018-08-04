@@ -454,9 +454,8 @@ describe("Page", () => {
     )
   );
   testPromise("emulate()", () => {
-    module V = Page.Viewport;
     let viewport =
-      V.make(
+      Page.Viewport.make(
         ~width=320,
         ~height=480,
         ~deviceScaleFactor=2.,
