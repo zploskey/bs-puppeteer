@@ -453,36 +453,23 @@ describe("Page", () => {
       |> then_(cookies => cookies |> expect |> toHaveLength(0) |> resolve)
     )
   );
-  testPromise("emulate()", () =>
+  testPromise("emulate()", () => {
+    let viewport =
+      Page.Viewport.make(
+        ~width=320,
+        ~height=480,
+        ~deviceScaleFactor=2.,
+        ~hasTouch=true,
+        (),
+      );
     Js.Promise.(
       page^
-      |> Page.emulate({
-           "viewport": {
-             "width": 320,
-             "height": 480,
-             "deviceScaleFactor": 2.,
-             "isMobile": true,
-             "hasTouch": true,
-             "isLandscape": true,
-           },
-           "userAgent": "",
-         })
+      |> Page.emulate({"viewport": viewport, "userAgent": ""})
       |> then_(() =>
-           page^
-           |> Page.viewport()
-           |> expect
-           |> ExpectJs.toMatchObject({
-                "width": 320,
-                "height": 480,
-                "deviceScaleFactor": 2.,
-                "isMobile": true,
-                "hasTouch": true,
-                "isLandscape": true,
-              })
-           |> resolve
+           expect(Page.viewport(page^)) |> toEqual(viewport) |> resolve
          )
-    )
-  );
+    );
+  });
   testPromise("emulateMedia()", () =>
     Js.Promise.(
       page^ |> Page.emulateMedia(`print) |> then_(() => pass |> resolve)
