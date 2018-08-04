@@ -36,21 +36,34 @@ type cookie = {
   "sameSite": Js.undefined(string),
 };
 
-type viewport = {
-  .
-  "width": int,
-  "height": int,
-  "deviceScaleFactor": float,
-  "isMobile": bool,
-  "hasTouch": bool,
-  "isLandscape": bool,
+module Viewport = {
+  [@bs.deriving abstract]
+  type t = {
+    width: int,
+    height: int,
+    [@bs.optional]
+    deviceScaleFactor: float,
+    [@bs.optional]
+    isMobile: bool,
+    [@bs.optional]
+    hasTouch: bool,
+    [@bs.optional]
+    isLandscape: bool,
+  };
+
+  let make = t;
 };
 
-type emulateOption = {
+type viewport = Viewport.t;
+
+type emulateOptions = {
   .
   "viewport": viewport,
   "userAgent": string,
 };
+
+[@ocaml.deprecated "emulateOption has been renamed emulateOptions"]
+type emulateOption = emulateOptions;
 
 type margin = {
   .
@@ -228,9 +241,9 @@ external cookies : array(string) => Js.Promise.t(array(cookie)) = "";
 external setCookie : array(cookie) => Js.Promise.t(unit) = "";
 
 [@bs.send.pipe: t]
-external emulate : emulateOption => Js.Promise.t(unit) = "";
+external emulate : emulateOptions => Js.Promise.t(unit) = "";
 
-[@bs.send.pipe: t] external viewport : unit => viewport = "";
+[@bs.send.pipe: t] external viewport : viewport = "";
 
 [@bs.send.pipe: t]
 external emulateMedia :
