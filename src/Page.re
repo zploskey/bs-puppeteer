@@ -225,7 +225,8 @@ external setCookie : array(cookie) => Js.Promise.t(unit) = "";
 [@bs.send.pipe: t]
 external emulate : emulateOptions => Js.Promise.t(unit) = "";
 
-[@bs.send.pipe: t] external viewport : viewport = "";
+[@bs.send] [@bs.return nullable]
+external viewport : t => option(viewport) = "";
 
 [@bs.send.pipe: t]
 external emulateMedia :

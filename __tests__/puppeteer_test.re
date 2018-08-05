@@ -466,7 +466,9 @@ describe("Page", () => {
       page^
       |> Page.emulate({"viewport": viewport, "userAgent": ""})
       |> then_(() =>
-           expect(Page.viewport(page^)) |> toEqual(viewport) |> resolve
+           expect(Page.viewport(page^) |> Js.Option.getExn)
+           |> toEqual(viewport)
+           |> resolve
          )
     );
   });
