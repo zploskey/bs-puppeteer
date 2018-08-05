@@ -36,24 +36,6 @@ type cookie = {
   "sameSite": Js.undefined(string),
 };
 
-module Viewport = {
-  [@bs.deriving abstract]
-  type t = {
-    width: int,
-    height: int,
-    [@bs.optional]
-    deviceScaleFactor: float,
-    [@bs.optional]
-    isMobile: bool,
-    [@bs.optional]
-    hasTouch: bool,
-    [@bs.optional]
-    isLandscape: bool,
-  };
-
-  let make = t;
-};
-
 type viewport = Viewport.t;
 
 type emulateOptions = {
@@ -243,7 +225,8 @@ external setCookie : array(cookie) => Js.Promise.t(unit) = "";
 [@bs.send.pipe: t]
 external emulate : emulateOptions => Js.Promise.t(unit) = "";
 
-[@bs.send.pipe: t] external viewport : viewport = "";
+[@bs.send] [@bs.return nullable]
+external viewport : t => option(viewport) = "";
 
 [@bs.send.pipe: t]
 external emulateMedia :
