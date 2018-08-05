@@ -3,6 +3,7 @@ type connectOptions = {
   .
   "browserWSEndpoint": Js.nullable(string),
   "ignoreHTTPSErrors": Js.nullable(bool),
+  "defaultViewport": Js.nullable(Viewport.t),
   "slowMo": Js.nullable(float),
 };
 
@@ -11,6 +12,7 @@ external makeConnectOptions :
   (
     ~browserWSEndpoint: string=?,
     ~ignoreHTTPSErrors: bool=?,
+    ~defaultViewport: Viewport.t=?,
     ~slowMo: float=?,
     unit
   ) =>
@@ -35,6 +37,7 @@ type launchOptions = {
   "headless": Js.undefined(bool),
   "executablePath": Js.undefined(string),
   "slowMo": Js.undefined(float),
+  "defaultViewport": Js.nullable(Viewport.t),
   "args": Js.undefined(array(string)),
   "ignoreDefaultArgs": Js.undefined(bool),
   "handleSIGINT": Js.undefined(bool),
@@ -57,6 +60,7 @@ external makeLaunchOptions :
     ~slowMo: float=?,
     ~args: array(string)=?,
     ~ignoreDefaultArgs: bool=?,
+    ~defaultViewport: Viewport.t=?,
     ~handleSIGINT: bool=?,
     ~handleSIGTERM: bool=?,
     ~handleSIGHUP: bool=?,

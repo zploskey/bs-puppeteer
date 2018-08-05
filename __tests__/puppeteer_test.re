@@ -455,7 +455,7 @@ describe("Page", () => {
   );
   testPromise("emulate()", () => {
     let viewport =
-      Page.Viewport.make(
+      Viewport.make(
         ~width=320,
         ~height=480,
         ~deviceScaleFactor=2.,
