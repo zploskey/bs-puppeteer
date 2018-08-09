@@ -3,11 +3,11 @@ type t;
 
 /** The message arguments.                                                  */
 [@bs.send]
-external args : t => array(JSHandle.t) = "";
+external args: t => array(JSHandle.t) = "";
 
 /** The message text.                                                       */
 [@bs.send]
-external text : t => string = "";
+external text: t => string = "";
 
 [@bs.deriving jsConverter]
 type messageType = [
@@ -33,7 +33,7 @@ type messageType = [
 
 /** The type of console message as a string.                                 */
 [@bs.send]
-external typeString : t => string = "type";
+external typeString: t => string = "type";
 
 /** The console message's [messageType]. */
 let type_ = t => messageTypeFromJs(typeString(t));

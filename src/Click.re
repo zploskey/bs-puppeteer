@@ -6,7 +6,7 @@ type clickOptions = {
 };
 
 [@bs.obj]
-external makeClickOptions :
+external makeClickOptions:
   (
     ~button: [@bs.string] [ | `left | `middle | `right]=?,
     ~clickCount: int=?,

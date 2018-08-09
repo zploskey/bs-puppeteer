@@ -13,7 +13,7 @@ type tagOptions = {
 };
 
 [@bs.obj]
-external makeTagOptions :
+external makeTagOptions:
   (
     ~url: string=?,
     ~path: string=?,
@@ -25,17 +25,17 @@ external makeTagOptions :
   "";
 
 [@bs.send.pipe: t]
-external selectOne :
+external selectOne:
   (~selector: string) => Js.Promise.t(Js.Null.t(ElementHandle.t)) =
   "$";
 
 [@bs.send.pipe: t]
-external selectAll :
+external selectAll:
   (~selector: string) => Js.Promise.t(array(ElementHandle.t)) =
   "$$";
 
 [@bs.send.pipe: t]
-external selectXPath :
+external selectXPath:
   (~xpath: string) => Js.Promise.t(array(ElementHandle.t)) =
   "$x";
 
@@ -47,7 +47,7 @@ type selectorOptions = {
 };
 
 [@bs.obj]
-external makeSelectorOptions :
+external makeSelectorOptions:
   (~visible: bool=?, ~hidden: bool=?, ~timeout: float=?, unit) =>
   selectorOptions =
   "";
@@ -55,12 +55,12 @@ external makeSelectorOptions :
 /* TODO: waitForFunction */
 
 [@bs.send.pipe: t]
-external waitForSelector :
+external waitForSelector:
   (string, ~options: selectorOptions=?, unit) => Js.Promise.t(unit) =
   "";
 
 [@bs.send.pipe: t]
-external waitForXPath :
+external waitForXPath:
   (~xpath: string, ~options: selectorOptions=?, unit) =>
   Js.Promise.t(ElementHandle.t) =
   "";
@@ -72,7 +72,7 @@ external waitForXPath :
  * throws an error.
  */
 [@bs.send.pipe: t]
-external selectOneEval :
+external selectOneEval:
   (string, [@bs.uncurry] (Dom.element => 'r)) => Js.Promise.t('r) =
   "$eval";
 
@@ -83,7 +83,7 @@ external selectOneEval :
  * throws an error. `fn` must return a promise.
  */
 [@bs.send.pipe: t]
-external selectOneEvalPromise :
+external selectOneEvalPromise:
   (string, [@bs.uncurry] (Dom.element => Js.Promise.t('r))) =>
   Js.Promise.t('r) =
   "$eval";
@@ -96,7 +96,7 @@ external selectOneEvalPromise :
  * error.
  */
 [@bs.send.pipe: t]
-external selectOneEval1 :
+external selectOneEval1:
   (string, [@bs.uncurry] ((Dom.element, 'a) => 'r), 'a) => Js.Promise.t('r) =
   "$eval";
 
@@ -108,19 +108,19 @@ external selectOneEval1 :
  * error. `fn` must return a promise.
  */
 [@bs.send.pipe: t]
-external selectOneEvalPromise1 :
+external selectOneEvalPromise1:
   (string, [@bs.uncurry] ((Dom.element, 'a) => Js.Promise.t('r)), 'a) =>
   Js.Promise.t('r) =
   "$eval";
 
 [@bs.send.pipe: t]
-external selectOneEval2 :
+external selectOneEval2:
   (string, [@bs.uncurry] ((Dom.element, 'a, 'b) => 'r), 'a, 'b) =>
   Js.Promise.t('r) =
   "$eval";
 
 [@bs.send.pipe: t]
-external selectOneEvalPromise2 :
+external selectOneEvalPromise2:
   (
     string,
     [@bs.uncurry] ((Dom.element, 'a, 'b) => Js.Promise.t('r)),
@@ -131,13 +131,13 @@ external selectOneEvalPromise2 :
   "$eval";
 
 [@bs.send.pipe: t]
-external selectOneEval3 :
+external selectOneEval3:
   (string, [@bs.uncurry] ((Dom.element, 'a, 'b, 'c) => 'r), 'a, 'b, 'c) =>
   Js.Promise.t('r) =
   "$eval";
 
 [@bs.send.pipe: t]
-external selectOneEvalPromise3 :
+external selectOneEvalPromise3:
   (
     string,
     [@bs.uncurry] ((Dom.element, 'a, 'b, 'c) => Js.Promise.t('r)),
@@ -149,7 +149,7 @@ external selectOneEvalPromise3 :
   "$eval";
 
 [@bs.send.pipe: t]
-external selectOneEval4 :
+external selectOneEval4:
   (
     string,
     [@bs.uncurry] ((Dom.element, 'a, 'b, 'c, 'd) => 'r),
@@ -162,7 +162,7 @@ external selectOneEval4 :
   "$eval";
 
 [@bs.send.pipe: t]
-external selectOneEvalPromise4 :
+external selectOneEvalPromise4:
   (
     string,
     [@bs.uncurry] ((Dom.element, 'a, 'b, 'c, 'd) => Js.Promise.t('r)),
@@ -180,7 +180,7 @@ external selectOneEvalPromise4 :
  * `fn`.
  */
 [@bs.send.pipe: t]
-external selectAllEval :
+external selectAllEval:
   (string, [@bs.uncurry] (Dom.nodeList => 'r)) => Js.Promise.t('r) =
   "$$eval";
 
@@ -188,7 +188,7 @@ external selectAllEval :
  * `fn`. `fn` must return a promise.
  * */
 [@bs.send.pipe: t]
-external selectAllEvalPromise :
+external selectAllEvalPromise:
   (string, [@bs.uncurry] (Dom.nodeList => Js.Promise.t('r))) =>
   Js.Promise.t('r) =
   "$$eval";
@@ -199,24 +199,24 @@ external selectAllEvalPromise :
  * first argument to `fn`. It passes `arg1` as the second argument to `fn`.
  */
 [@bs.send.pipe: t]
-external selectAllEval1 :
+external selectAllEval1:
   (string, [@bs.uncurry] ((Dom.nodeList, 'a) => 'r), 'a) => Js.Promise.t('r) =
   "$$eval";
 
 [@bs.send.pipe: t]
-external selectAllEvalPromise1 :
+external selectAllEvalPromise1:
   (string, [@bs.uncurry] ((Dom.nodeList, 'a) => 'r), Js.Promise.t('a)) =>
   Js.Promise.t('r) =
   "$$eval";
 
 [@bs.send.pipe: t]
-external selectAllEval2 :
+external selectAllEval2:
   (string, [@bs.uncurry] ((Dom.nodeList, 'a, 'b) => 'r), 'a, 'b) =>
   Js.Promise.t('r) =
   "$$eval";
 
 [@bs.send.pipe: t]
-external selectAllEvalPromise2 :
+external selectAllEvalPromise2:
   (
     string,
     [@bs.uncurry] ((Dom.nodeList, 'a, 'b) => Js.Promise.t('r)),
@@ -227,13 +227,13 @@ external selectAllEvalPromise2 :
   "$$eval";
 
 [@bs.send.pipe: t]
-external selectAllEval3 :
+external selectAllEval3:
   (string, [@bs.uncurry] ((Dom.nodeList, 'a, 'b, 'c) => 'r), 'a, 'b, 'c) =>
   Js.Promise.t('r) =
   "$$eval";
 
 [@bs.send.pipe: t]
-external selectAllEvalPromise3 :
+external selectAllEvalPromise3:
   (
     string,
     [@bs.uncurry] ((Dom.nodeList, 'a, 'b, 'c) => Js.Promise.t('r)),
@@ -245,7 +245,7 @@ external selectAllEvalPromise3 :
   "$$eval";
 
 [@bs.send.pipe: t]
-external selectAllEval4 :
+external selectAllEval4:
   (
     string,
     [@bs.uncurry] ((Dom.nodeList, 'a, 'b, 'c, 'd) => 'r),
@@ -258,7 +258,7 @@ external selectAllEval4 :
   "$$eval";
 
 [@bs.send.pipe: t]
-external selectAllEvalPromise4 :
+external selectAllEvalPromise4:
   (
     string,
     [@bs.uncurry] ((Dom.nodeList, 'a, 'b, 'c, 'd) => Js.Promise.t('r)),
@@ -271,20 +271,20 @@ external selectAllEvalPromise4 :
   "$$eval";
 
 [@bs.send.pipe: t]
-external addScriptTag : tagOptions => Js.Promise.t(ElementHandle.t) = "";
+external addScriptTag: tagOptions => Js.Promise.t(ElementHandle.t) = "";
 
 [@bs.send.pipe: t]
-external addStyleTag : tagOptions => Js.Promise.t(ElementHandle.t) = "";
+external addStyleTag: tagOptions => Js.Promise.t(ElementHandle.t) = "";
 
 [@bs.send.pipe: t]
-external click :
+external click:
   (string, ~options: Click.clickOptions=?, unit) => Js.Promise.t(unit) =
   "";
 
-[@bs.send] external content : t => Js.Promise.t(string) = "";
+[@bs.send] external content: t => Js.Promise.t(string) = "";
 
 [@bs.send.pipe: t]
-external focus : (~selector: string) => Js.Promise.t(unit) = "";
+external focus: (~selector: string) => Js.Promise.t(unit) = "";
 
 /**
  * Fetches the first element matching `selector`, scrolls it into view if not
@@ -292,7 +292,7 @@ external focus : (~selector: string) => Js.Promise.t(unit) = "";
  * [Page.mouse]. Throws an error if no element matches `selector`.
  */
 [@bs.send.pipe: t]
-external hover : (~selector: string) => Js.Promise.t(unit) = "";
+external hover: (~selector: string) => Js.Promise.t(unit) = "";
 
 /**
  * Selects options in a `<select>` tag. Triggers a `change` and `input` event
@@ -300,18 +300,18 @@ external hover : (~selector: string) => Js.Promise.t(unit) = "";
  * element matching selector it throws an error.
  */
 [@bs.send.pipe: t]
-external select :
+external select:
   (~selector: string, ~values: array(string)) => Js.Promise.t(array(string)) =
   "";
 
 [@bs.send.pipe: t]
-external tap : (~selector: string) => Js.Promise.t(unit) = "";
+external tap: (~selector: string) => Js.Promise.t(unit) = "";
 
 type typeOptions = {. "delay": float};
 
 [@bs.send.pipe: t]
-external type_ :
+external type_:
   (string, string, ~options: typeOptions=?, unit) => Js.Promise.t(unit) =
   "type";
 
-[@bs.send] external url : t => string = "";
+[@bs.send] external url: t => string = "";

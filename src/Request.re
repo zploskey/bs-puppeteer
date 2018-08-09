@@ -26,7 +26,7 @@ type overrides = {
 };
 
 [@bs.obj]
-external makeOverrides :
+external makeOverrides:
   (
     ~url: string=?,
     ~method_: [@bs.string] [
@@ -46,7 +46,7 @@ external makeOverrides :
   "";
 
 [@bs.send.pipe: t]
-external abort :
+external abort:
   (
     ~errorCode: [@bs.string] [
                   | `aborted
@@ -71,29 +71,28 @@ external abort :
   "";
 
 [@bs.send.pipe: t]
-external continue : (~overrides: overrides=?, unit) => Js.Promise.t(unit) =
-  "";
+external continue: (~overrides: overrides=?, unit) => Js.Promise.t(unit) = "";
 
 [@bs.send] [@bs.return nullable]
-external failure : t => option({. "errorText": string}) = "";
+external failure: t => option({. "errorText": string}) = "";
 
 [@bs.send] [@bs.return nullable]
-external frame : t => option(FrameBase.t) = "";
+external frame: t => option(FrameBase.t) = "";
 
-[@bs.send] external headers : t => headers = "";
+[@bs.send] external headers: t => headers = "";
 
-[@bs.send] external isNavigationRequest : t => bool = "";
+[@bs.send] external isNavigationRequest: t => bool = "";
 
-[@bs.send] external method_ : t => string = "";
+[@bs.send] external method_: t => string = "";
 
-[@bs.send] [@bs.return nullable] external postData : t => option(string) = "";
+[@bs.send] [@bs.return nullable] external postData: t => option(string) = "";
 
 /**
  * The chain of requests initiated to fetch a resource. If there were no
  * redirects the chain will be empty.
  */
 [@bs.send]
-external redirectChain : t => array(t) = "";
+external redirectChain: t => array(t) = "";
 
 /**
  * The request's resource type as it was perceived by the rendering engine.
@@ -102,7 +101,7 @@ external redirectChain : t => array(t) = "";
  * eventsource, websocket, manifest, other.
  */
 [@bs.send]
-external resourceType : t => string = "";
+external resourceType: t => string = "";
 
 let resourceType = req =>
   switch (resourceType(req)) {
@@ -132,7 +131,7 @@ type respondOptions = {
 };
 
 [@bs.obj]
-external makeRespondOptions :
+external makeRespondOptions:
   (
     ~status: float=?,
     ~headers: headers=?,
@@ -144,9 +143,9 @@ external makeRespondOptions :
   "";
 
 [@bs.send.pipe: t]
-external respond : respondOptions => Js.Promise.t(unit) = "";
+external respond: respondOptions => Js.Promise.t(unit) = "";
 
 [@bs.send] [@bs.return nullable]
-external response : t => option(Types.response) = "";
+external response: t => option(Types.response) = "";
 
-[@bs.send] external url : t => string = "";
+[@bs.send] external url: t => string = "";

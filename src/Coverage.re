@@ -22,30 +22,30 @@ type jsCoverageOptions = {
 };
 
 [@bs.obj]
-external makeCSSCoverageOptions :
+external makeCSSCoverageOptions:
   (~resetOnNavigation: bool=?, unit) => cssCoverageOptions =
   "";
 
 [@bs.obj]
-external makeJSCoverageOptions :
+external makeJSCoverageOptions:
   (~resetOnNavigation: bool=?, ~reportAnonymousScripts: bool=?, unit) =>
   jsCoverageOptions =
   "";
 
 [@bs.send]
-external startCSSCoverage :
+external startCSSCoverage:
   (t, ~options: cssCoverageOptions=?) => Js.Promise.t(unit) =
   "";
 
 let startCSSCoverage = (~options=?, t) => startCSSCoverage(t, ~options?);
 
 [@bs.send]
-external startJSCoverage :
+external startJSCoverage:
   (t, ~options: jsCoverageOptions=?) => Js.Promise.t(unit) =
   "";
 
 let startJSCoverage = (~options=?, t) => startJSCoverage(t, ~options?);
 
-[@bs.send] external stopCSSCoverage : t => Js.Promise.t(array(report)) = "";
+[@bs.send] external stopCSSCoverage: t => Js.Promise.t(array(report)) = "";
 
-[@bs.send] external stopJSCoverage : t => Js.Promise.t(array(report)) = "";
+[@bs.send] external stopJSCoverage: t => Js.Promise.t(array(report)) = "";
