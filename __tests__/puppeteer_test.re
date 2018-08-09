@@ -293,7 +293,7 @@ describe("Page", () => {
   Skip.testPromise("waitForResponseUrl()", () => {
     let url = "file:///" ++ testPagePath;
     Js.Promise.all2((
-      (page^)->(Page.waitForResponseUrl(url, ())),
+      (page^)->Page.waitForResponseUrl(url, ()),
       page^ |> Page.evaluate(() => fetch("/testPage.html")),
     ))
     |> Js.Promise.then_(((res, _)) =>
