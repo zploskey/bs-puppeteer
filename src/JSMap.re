@@ -1,4 +1,5 @@
 /** Module for using the JavaScript ES6 Map collection. */
+
 /** Javascript's mutable Map collection. */
 type t('key, 'value) =
   | JSMap('key, 'value);

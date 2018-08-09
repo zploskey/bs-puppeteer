@@ -19,7 +19,7 @@ external makeConnectOptions:
   connectOptions =
   "";
 
-/** Attach Puppeteer to an existing Chromium instance.              */
+/** Attach Puppeteer to an existing Chromium instance. */
 [@bs.val] [@bs.module "puppeteer"]
 external connect:
   (~options: connectOptions=?, unit) => Js.Promise.t(Browser.t) =
@@ -73,7 +73,7 @@ external makeLaunchOptions:
   launchOptions =
   "";
 
-/** Launch a browser instance.                                      */
+/** Launch a browser instance. */
 [@bs.val] [@bs.module "puppeteer"]
 external launch: (~options: launchOptions=?, unit) => Js.Promise.t(Browser.t) =
   "";

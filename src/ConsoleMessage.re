@@ -31,7 +31,7 @@ type messageType = [
   | `timeEnd
 ];
 
-/** The type of console message as a string.                                 */
+/** The type of console message as a string. */
 [@bs.send]
 external typeString: t => string = "type";
 

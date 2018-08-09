@@ -1,18 +1,18 @@
 type t = Types.response;
 
-/** Promise which resolves to a buffer with response body.                    */
+/** Promise which resolves to a buffer with response body. */
 [@bs.send]
 external buffer: t => Js.Promise.t(Node.Buffer.t) = "";
 
-/** If the response was served from the disk cache or memory cache.           */
+/** If the response was served from the disk cache or memory cache. */
 [@bs.send]
 external fromCache: t => bool = "";
 
-/** If the response was served by a service worker.                           */
+/** If the response was served by a service worker. */
 [@bs.send]
 external fromServiceWorker: t => bool = "";
 
-/** HTTP headers associated with the response. Header names are lower-case.   */
+/** HTTP headers associated with the response. Header names are lower-case. */
 [@bs.send]
 external headers: t => Js.Dict.t(string) = "";
 
@@ -23,11 +23,11 @@ external headers: t => Js.Dict.t(string) = "";
 [@bs.send]
 external json: t => Js.Promise.t(Js.Json.t) = "";
 
-/** True if the response was successful (status in the range 200-299).        */
+/** True if the response was successful (status in the range 200-299). */
 [@bs.send]
 external ok: t => bool = "";
 
-/** A matching Request object.                                                */
+/** A matching Request object. */
 [@bs.send]
 external request: t => Types.request = "";
 
@@ -35,14 +35,12 @@ external request: t => Types.request = "";
 [@bs.send] [@bs.return nullable]
 external securityDetails: t => option(SecurityDetails.t) = "";
 
-/** The status code of the response.                                          */
+/** The status code of the response. */
 [@bs.send]
 external status: t => int = "";
 
-/** Promise which resolves to the text of the response body.                  */
+/** Promise which resolves to the text of the response body. */
 [@bs.send]
 external text: t => Js.Promise.t(string) = "";
 
-/** The url of the response.                                                  */
-[@bs.send]
-external url: t => string = "";
+/** The url of the response. */ [@bs.send] external url: t => string = "";
