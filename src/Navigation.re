@@ -18,7 +18,7 @@ type options = {
 };
 
 [@bs.obj]
-external makeOptions :
+external makeOptions:
   (
     ~timeout: float=?,
     ~waitUntil: [@bs.string] [

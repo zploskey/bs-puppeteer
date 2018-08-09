@@ -20,7 +20,7 @@ type options = {
  *                   Defaults to false.
  */
 [@bs.obj]
-external makeOptions :
+external makeOptions:
   (
     ~path: string=?,
     ~_type: [@bs.string] [ | `jpeg | `png]=?,

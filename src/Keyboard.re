@@ -7,24 +7,22 @@ type options = {
 };
 
 [@bs.obj]
-external makeOptions : (~text: string=?, ~delay: float=?, unit) => options =
+external makeOptions: (~text: string=?, ~delay: float=?, unit) => options = "";
+
+[@bs.send.pipe: t]
+external down: (~key: string, ~options: options=?, unit) => Js.Promise.t(unit) =
   "";
 
 [@bs.send.pipe: t]
-external down :
+external press:
   (~key: string, ~options: options=?, unit) => Js.Promise.t(unit) =
   "";
 
-[@bs.send.pipe: t]
-external press :
-  (~key: string, ~options: options=?, unit) => Js.Promise.t(unit) =
-  "";
-
-[@bs.send.pipe: t] external sendCharacter : string => Js.Promise.t(unit) = "";
+[@bs.send.pipe: t] external sendCharacter: string => Js.Promise.t(unit) = "";
 
 [@bs.send.pipe: t]
-external type_ :
+external type_:
   (~text: string, ~options: options=?, unit) => Js.Promise.t(unit) =
   "type";
 
-[@bs.send.pipe: t] external up : string => Js.Promise.t(unit) = "";
+[@bs.send.pipe: t] external up: string => Js.Promise.t(unit) = "";

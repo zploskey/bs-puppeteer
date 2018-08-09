@@ -14,22 +14,21 @@ type mousePressOptions = {
 };
 
 [@bs.send.pipe: t]
-external click :
+external click:
   (~x: float, ~y: float, ~options: Click.clickOptions=?, unit) =>
   Js.Promise.t(unit) =
   "";
 
 [@bs.send.pipe: t]
-external down : (~options: mousePressOptions=?, unit) => Js.Promise.t(unit) =
+external down: (~options: mousePressOptions=?, unit) => Js.Promise.t(unit) =
   "";
 
 type moveOptions = {. "steps": int};
 
 [@bs.send.pipe: t]
-external move :
+external move:
   (~x: float, ~y: float, ~options: moveOptions=?, unit) => Js.Promise.t(unit) =
   "";
 
 [@bs.send.pipe: t]
-external up : (~options: mousePressOptions=?, unit) => Js.Promise.t(unit) =
-  "";
+external up: (~options: mousePressOptions=?, unit) => Js.Promise.t(unit) = "";

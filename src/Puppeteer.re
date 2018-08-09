@@ -8,7 +8,7 @@ type connectOptions = {
 };
 
 [@bs.obj]
-external makeConnectOptions :
+external makeConnectOptions:
   (
     ~browserWSEndpoint: string=?,
     ~ignoreHTTPSErrors: bool=?,
@@ -19,17 +19,15 @@ external makeConnectOptions :
   connectOptions =
   "";
 
-/** Attach Puppeteer to an existing Chromium instance.              */
-[@bs.val]
-[@bs.module "puppeteer"]
-external connect :
+/** Attach Puppeteer to an existing Chromium instance. */
+[@bs.val] [@bs.module "puppeteer"]
+external connect:
   (~options: connectOptions=?, unit) => Js.Promise.t(Browser.t) =
   "";
 
 /** Path where Puppeteer expects to find bundled Chromium. */
-[@bs.val]
-[@bs.module "puppeteer"]
-external executablePath : unit => string = "";
+[@bs.val] [@bs.module "puppeteer"]
+external executablePath: unit => string = "";
 
 type launchOptions = {
   .
@@ -52,7 +50,7 @@ type launchOptions = {
 };
 
 [@bs.obj]
-external makeLaunchOptions :
+external makeLaunchOptions:
   (
     ~ignoreHTTPSErrors: bool=?,
     ~headless: bool=?,
@@ -75,16 +73,14 @@ external makeLaunchOptions :
   launchOptions =
   "";
 
-/** Launch a browser instance.                                      */
-[@bs.val]
-[@bs.module "puppeteer"]
-external launch : (~options: launchOptions=?, unit) => Js.Promise.t(Browser.t) =
+/** Launch a browser instance. */
+[@bs.val] [@bs.module "puppeteer"]
+external launch: (~options: launchOptions=?, unit) => Js.Promise.t(Browser.t) =
   "";
 
 /** The default flags that Chromium will launch with. */
-[@bs.val]
-[@bs.module "puppeteer"]
-external defaultArgs : unit => array(string) = "";
+[@bs.val] [@bs.module "puppeteer"]
+external defaultArgs: unit => array(string) = "";
 
 type browserFetcherOptions = {
   .
@@ -94,14 +90,13 @@ type browserFetcherOptions = {
 };
 
 [@bs.obj]
-external makeBrowserFetcherOptions :
+external makeBrowserFetcherOptions:
   (~host: string=?, ~path: string=?, ~platform: string=?, unit) =>
   browserFetcherOptions =
   "";
 
 let makeBrowserFetcherOptions =
-    (~host=?, ~path=?, ~platform=?, ())
-    : browserFetcherOptions =>
+    (~host=?, ~path=?, ~platform=?, ()): browserFetcherOptions =>
   makeBrowserFetcherOptions(
     ~host?,
     ~path?,
@@ -111,6 +106,6 @@ let makeBrowserFetcherOptions =
   );
 
 [@bs.val] [@bs.module "puppeteer"]
-external createBrowserFetcher :
+external createBrowserFetcher:
   (~options: browserFetcherOptions=?, unit) => BrowserFetcher.t =
   "";

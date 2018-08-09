@@ -5,6 +5,6 @@ include Evaluator.Impl({
 });
 
 [@bs.send]
-external executionContext : t => Js.Promise.t(ExecutionContext.t) = "";
+external executionContext: t => Js.Promise.t(ExecutionContext.t) = "";
 
-[@bs.send] external url : t => string = "";
+[@bs.send] external url: t => string = "";

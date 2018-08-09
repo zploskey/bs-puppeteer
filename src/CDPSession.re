@@ -1,9 +1,9 @@
 type t;
 
-[@bs.send] external detach : t => Js.Promise.t(unit) = "";
+[@bs.send] external detach: t => Js.Promise.t(unit) = "";
 
 [@bs.send]
-external send :
+external send:
   (t, string, Js.Undefined.t(Js.t({..}))) => Js.Promise.t(Js.t({..})) =
   "";
 

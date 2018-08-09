@@ -6,7 +6,7 @@ open Expect;
 
 let seconds = v => v * 1000;
 
-[@bs.val] external fetch : string => Js.Promise.t(Response.t) = "";
+[@bs.val] external fetch: string => Js.Promise.t(Response.t) = "";
 
 let getElementValueJs: Dom.element => string = [%raw
   {| function (element) { return element.value; } |}
@@ -293,7 +293,7 @@ describe("Page", () => {
   Skip.testPromise("waitForResponseUrl()", () => {
     let url = "file:///" ++ testPagePath;
     Js.Promise.all2((
-      page^ |. Page.waitForResponseUrl(url, ()),
+      (page^)->Page.waitForResponseUrl(url, ()),
       page^ |> Page.evaluate(() => fetch("/testPage.html")),
     ))
     |> Js.Promise.then_(((res, _)) =>

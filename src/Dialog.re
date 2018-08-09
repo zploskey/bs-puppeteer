@@ -4,14 +4,14 @@ type t;
 type dialogType = [ | `alert | `beforeunload | `confirm | `prompt];
 
 [@bs.send]
-external accept : (t, ~promptText: string=?, unit) => Js.Promise.t(unit) = "";
+external accept: (t, ~promptText: string=?, unit) => Js.Promise.t(unit) = "";
 
-[@bs.send] external defaultValue : t => string = "";
+[@bs.send] external defaultValue: t => string = "";
 
-[@bs.send] external dismiss : t => Js.Promise.t(unit) = "";
+[@bs.send] external dismiss: t => Js.Promise.t(unit) = "";
 
-[@bs.send] external message : t => string = "";
+[@bs.send] external message: t => string = "";
 
-[@bs.send] external typeString : t => string = "type";
+[@bs.send] external typeString: t => string = "type";
 
 let type_ = dialog => dialogTypeFromJs(typeString(dialog));
