@@ -2,24 +2,6 @@
   "name": "bs-puppeteer",
   "version": "0.9.0",
   "description": "Bucklescript bindings for Puppeteer (headless chrome browser) written in Reason",
-  "main": "src/Puppeteer.re",
-  "scripts": {
-    "build": "bsb -make-world",
-    "clean": "bsb -clean-world",
-    "lint-staged": "lint-staged",
-    "precommit": "lint-staged && npm test",
-    "start": "bsb -make-world -w",
-    "test": "npm run build && jest",
-    "test:ci": "jest --bail --ci",
-    "test:watch": "jest --watch"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/bs-puppeteer/bs-puppeteer.git"
-  },
-  "homepage": "https://github.com/bs-puppeteer/bs-puppeteer#readme",
-  "bugs": "https://github.com/bs-puppeteer/bs-puppeteer/issues",
-  "author": "Zach Ploskey <zach@ploskey.com>",
   "keywords": [
     "BuckleScript",
     "Puppeteer",
@@ -28,6 +10,21 @@
     "scraping"
   ],
   "license": "MIT",
+  "homepage": "https://github.com/bs-puppeteer/bs-puppeteer",
+  "bugs": "https://github.com/bs-puppeteer/bs-puppeteer/issues",
+  "repository": "github:bs-puppeteer/bs-puppeteer",
+  "author": "Zach Ploskey <zach@ploskey.com>",
+  "main": "src/Puppeteer.re",
+  "scripts": {
+    "build": "bsb -make-world",
+    "clean": "bsb -clean-world",
+    "lint-staged": "lint-staged",
+    "precommit": "lint-staged",
+    "start": "bsb -make-world -w",
+    "test": "bsb -make-world && jest",
+    "test:ci": "jest --bail --ci",
+    "test:watch": "jest --watch"
+  },
   "dependencies": {
     "puppeteer": "^1.6.2-next.1533165898296"
   },
