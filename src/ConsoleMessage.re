@@ -1,11 +1,11 @@
 /** [ConsoleMessage] sent by [Page] through the "console" event. */
 type t;
 
-/** The message arguments.                                                  */
+/** The message arguments. */
 [@bs.send]
 external args: t => array(JSHandle.t) = "";
 
-/** The message text.                                                       */
+/** The text of the console message. */
 [@bs.send]
 external text: t => string = "";
 

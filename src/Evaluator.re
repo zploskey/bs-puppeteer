@@ -49,9 +49,7 @@ module Impl = (T: {type t;}) => {
     Js.Promise.t('r) =
     "evaluate";
 
-  /**
-   * Evaluates a JavaScript expression in context and returns result in a promise.
-   */
+  /** Evaluate a js expression in context. Returns the result in a promise. */
   [@bs.send.pipe: T.t]
   external evaluateString: string => Js.Promise.t('r) = "evaluate";
 

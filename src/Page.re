@@ -137,7 +137,7 @@ external makePDFOptions:
 [@bs.send.pipe: t]
 external authenticate: Js.Null.t(authOptions) => Js.Promise.t(unit) = "";
 
-/** Bring the page to front (activate the tab).                    */
+/** Bring the page to front (activate the tab). */
 [@bs.send]
 external bringToFront: t => Js.Promise.t(unit) = "";
 
@@ -160,7 +160,7 @@ external evaluateOnNewDocument: (unit => unit) => Js.Promise.t(unit) = "";
 
 /* TODO: exposeFunction */
 
-/** Array of all frames attached to the page.                         */
+/** Array of all frames attached to the page. */
 [@bs.send]
 external frames: t => array(Frame.t) = "";
 
@@ -184,7 +184,7 @@ external goto:
 
 [@bs.send] external isClosed: t => bool = "";
 
-/** The page's virtual keyboard.                                    */
+/** The page's virtual keyboard. */
 [@bs.get]
 external keyboard: t => Keyboard.t = "";
 
@@ -195,11 +195,11 @@ external keyboard: t => Keyboard.t = "";
 [@bs.send]
 external mainFrame: t => Frame.t = "";
 
-/** Gets the page metrics.                                          */
+/** Gets the page metrics. */
 [@bs.send]
 external metrics: t => Js.Promise.t(Metrics.t) = "";
 
-/** Get the virtual mouse.                                          */
+/** Get the page's virtual mouse. */
 [@bs.get]
 external mouse: t => Mouse.t = "";
 
@@ -251,7 +251,7 @@ external queryObjects:
   (~prototypeHandle: JSHandle.t) => Js.Promise.t(JSHandle.t) =
   "";
 
-/** Reload the current page.                               */
+/** Reload the current page. */
 [@bs.send.pipe: t]
 external reload:
   (~options: Navigation.options=?, unit) => Js.Promise.t(Response.t) =
@@ -275,7 +275,7 @@ external setCacheEnabled: (~enabled: bool) => Js.Promise.t(unit) = "";
 [@bs.send.pipe: t]
 external setDefaultNavigationTimeout: (~timeout: float) => unit = "";
 
-/** Set whether to enable JavaScript on the page.            */
+/** Set whether to enable JavaScript on the page. */
 [@bs.send.pipe: t]
 external setJavaScriptEnabled: (~enabled: bool) => Js.Promise.t(unit) = "";
 
