@@ -1,9 +1,9 @@
-# BuckleScript Puppeteer (bs-puppeteer)
+# bs-puppeteer
 
 BuckleScript bindings to
 [Puppeteer](https://github.com/GoogleChrome/puppeteer)
 (the Headless Chrome Node API)
-written in [Reason](https://reasonml.github.io).
+written in [ReasonML](https://reasonml.github.io).
 This allows programmatic control of an instance of the Chrome or Chromium browser
 from BuckleScript or Reason.
 
@@ -29,7 +29,6 @@ Changes are documented in [HISTORY.md](HISTORY.md).
 Create a new BuckleScript project if you have not already:
 
 ```sh
-npm install -g bs-platform
 bsb -init my-project -theme basic-reason
 cd my-project
 ```
@@ -42,7 +41,8 @@ Add bs-puppeteer as a dependency.
 This will install the currently supported version of Puppeteer.
 
 ```sh
-npm install --save bs-puppeteer
+yarn
+yarn add bs-puppeteer
 ```
 
 Edit your `bsconfig.json` file to add `bs-puppeteer` to `bs-dependencies`:
@@ -56,27 +56,27 @@ Edit your `bsconfig.json` file to add `bs-puppeteer` to `bs-dependencies`:
 Now run:
 
 ```sh
-npm install
-npm start
+yarn start
 ```
 
 The `Puppeteer` module should now be available in your Reason source files.
-While `npm start` is running, it will attempt to recompile your code each time you save it.
-One-off builds can be done with `npm run build`.
+While the `start` command is running, it will attempt to recompile your code each time you save it.
+One-off builds can be done with `yarn build`.
 
 ## Contributing
 
 Contributions are welcome.
 Get started by cloning the respository and starting the compiler in watch mode.
+We recommend using [yarn](https://yarnpkg.com/), but `npm` should also work.
 
 ```sh
 git clone https://github.com/bs-puppeteer/bs-puppeteer.git
 cd bs-puppeteer
-npm install
-npm start
+yarn
+yarn start
 ```
 
-Any changes should pass the test suite (`npm run test`).
+Any changes should pass the test suite (`yarn test`).
 One great way to contribute is by writing tests for features that don't yet have them.
 Tests can be found in the `__tests__` directory.
 
