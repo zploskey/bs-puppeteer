@@ -2,7 +2,10 @@
   "name": "bs-puppeteer",
   "namespace": true,
   "sources": [
-    "src",
+    {
+      "dir": "src",
+      "subdirs": true
+    },
     {
       "dir": "examples",
       "public": []
