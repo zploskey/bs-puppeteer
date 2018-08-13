@@ -10,6 +10,5 @@ node_modules/
 .merlin
 lib/bs/
 .bsb.lock
-yarn.lock
 package-lock.json
 screenshot.png
