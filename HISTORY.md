@@ -1,5 +1,22 @@
 # History
 
+## 0.10.0
+
+Updates with new features and changes from Puppeteer 1.7.
+
+- Add waitForRequest and waitForResponse functions ([#67](https://github.com/bs-puppeteer/bs-puppeteer/pull/67))
+- Add BrowserContext.pages method ([#69](https://github.com/bs-puppeteer/bs-puppeteer/pull/69))
+- Add "preferCSSPageSize" to Page.pdfOptions ([#70](https://github.com/bs-puppeteer/bs-puppeteer/pull/70))
+- Fix Page.viewport and Page.emulate ([#71](https://github.com/bs-puppeteer/bs-puppeteer/pull/71))
+  - Make all fields in viewport optional except for width and height.
+  - Construct the viewport using bs.deriving abstract.
+  - Remove unnecessary unit argument to Page.viewport().
+  - Rename Page.emulateOption to emulateOptions.
+- Add defaultViewport options and handle null viewports ([#73](https://github.com/bs-puppeteer/bs-puppeteer/pull/73))
+  - Note: Page.viewport() now may return null
+  - Make Viewport a top level module
+- Add options arg to Puppeteer.defaultArgs ([0fb495d](https://github.com/bs-puppeteer/bs-puppeteer/commit/0fb495d23bc620d5644e75d3f898ba3f5b16ce20))
+
 ## 0.9.0
 
 Bug fixes and new features from Puppeteer 1.6.
