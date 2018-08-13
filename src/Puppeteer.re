@@ -78,9 +78,26 @@ external makeLaunchOptions:
 external launch: (~options: launchOptions=?, unit) => Js.Promise.t(Browser.t) =
   "";
 
+module DefaultArgsOptions = {
+  [@bs.deriving abstract]
+  type t = {
+    [@bs.optional]
+    headless: bool,
+    [@bs.optional]
+    args: array(string),
+    [@bs.optional]
+    userDataDir: string,
+    [@bs.optional]
+    devtools: bool,
+  };
+  let make = t;
+};
+
 /** The default flags that Chromium will launch with. */
 [@bs.val] [@bs.module "puppeteer"]
-external defaultArgs: unit => array(string) = "";
+external defaultArgs:
+  (~options: DefaultArgsOptions.t=?, unit) => array(string) =
+  "";
 
 type browserFetcherOptions = {
   .

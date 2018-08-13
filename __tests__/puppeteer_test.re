@@ -41,12 +41,18 @@ let testPageContent = Node.Fs.readFileAsUtf8Sync(testPagePath);
 let noSandbox = Puppeteer.makeLaunchOptions(~args=[|"--no-sandbox"|], ());
 
 describe("Puppeteer", () => {
+  open Puppeteer;
   test("executablePath", () =>
-    Puppeteer.executablePath() |> expect |> toContainString("chromium")
+    executablePath() |> expect |> toContainString("chromium")
   );
   test("defaultArgs()", () =>
-    Puppeteer.defaultArgs() |> Array.length |> expect |> toBeGreaterThan(0)
+    defaultArgs() |> Array.length |> expect |> toBeGreaterThan(0)
   );
+  test("calling defaultArgs with options", () => {
+    let options = DefaultArgsOptions.make(~headless=true, ());
+    let args = defaultArgs(~options, ());
+    args |> Array.length |> expect |> toBeGreaterThan(0);
+  });
 });
 
 describe("BrowserFetcher", () => {
