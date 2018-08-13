@@ -2,3 +2,5 @@
 "{src,examples,__tests__}/**/*.{re,rei}":
   - "refmt --in-place"
   - "git add"
+"lib/js/**/*.js":
+  - "jest --bail --findRelatedTests"
