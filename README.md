@@ -9,6 +9,7 @@ from BuckleScript or Reason.
 
 [![NPM bs-puppeteer package](https://img.shields.io/npm/v/bs-puppeteer.svg)](https://npmjs.org/package/bs-puppeteer)
 [![Travis build status](https://travis-ci.org/bs-puppeteer/bs-puppeteer.svg?branch=master)](https://travis-ci.org/bs-puppeteer/bs-puppeteer)
+[![Greenkeeper badge](https://badges.greenkeeper.io/bs-puppeteer/bs-puppeteer.svg)](https://greenkeeper.io/)
 
 ## Status
 
