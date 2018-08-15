@@ -1,17 +1,27 @@
 dist: trusty
-language: node_js
-node_js:
-  - 8
 addons:
   apt:
     packages:
       # Needed for Chrome on Trusty
       - libnss3
+language: node_js
+node_js:
+  - 8
+
+before_install: yarn global add greenkeeper-lockfile@1
+install: yarn install
 cache:
+  yarn: true
   directories:
     - node_modules
+
 before_script:
-  - "npm run clean"
-  - "npm run build"
-script:
-  - "npm run test:ci"
+  - greenkeeper-lockfile-update
+  - yarn clean
+  - yarn build
+after_script: greenkeeper-lockfile-upload
+
+branches:
+  only:
+    - master
+    - /^greenkeeper/.*$/
