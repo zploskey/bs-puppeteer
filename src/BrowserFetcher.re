@@ -15,13 +15,9 @@ external empty: unit => t = "%identity";
 
 [@bs.send]
 external download:
-  (t, string, Js.Undefined.t((float, float) => unit)) =>
+  (t, ~revision: string, ~progressCallback: (float, float) => unit=?, unit) =>
   Js.Promise.t(revisionInfo) =
   "";
-
-let download =
-    (~revision, ~progressCallback=?, t): Js.Promise.t(revisionInfo) =>
-  download(t, revision, progressCallback |> Js.Undefined.fromOption);
 
 [@bs.send] external localRevisions: t => Js.Promise.t(array(string)) = "";
 

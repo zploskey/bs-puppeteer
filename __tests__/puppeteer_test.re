@@ -56,7 +56,8 @@ describe("Puppeteer", () => {
 });
 
 describe("BrowserFetcher", () => {
-  let browserFetcher = ref(BrowserFetcher.empty());
+  open BrowserFetcher;
+  let browserFetcher = ref(empty());
   let revision = ref("");
   beforeAll(() =>
     browserFetcher :=
@@ -65,62 +66,64 @@ describe("BrowserFetcher", () => {
         (),
       )
   );
+  testPromise("localRevisions", () =>
+    (browserFetcher^)->localRevisions
+    |> Js.Promise.(
+         then_(revisions => {
+           revision := revisions[0];
+           revisions |> expect |> toHaveLength(1) |> resolve;
+         })
+       )
+  );
   Skip.testPromise("canDownload", () =>
-    Js.Promise.(
-      browserFetcher^
-      |> BrowserFetcher.canDownload(_, "533271")
-      |> then_(boolean => boolean |> expect |> toBe(true) |> resolve)
-    )
+    (browserFetcher^)->canDownload("533271")
+    |> Js.Promise.(
+         then_(boolean => boolean |> expect |> toBe(true) |> resolve)
+       )
   );
   Skip.testPromise("download", ~timeout=30 |> seconds, () =>
-    Js.Promise.(
-      browserFetcher^
-      |> BrowserFetcher.download(~revision="533271")
-      |> then_(info => info##revision |> expect |> toBe("533271") |> resolve)
-    )
+    (browserFetcher^)->download(~revision="533271", ())
+    |> Js.Promise.then_(info =>
+         info##revision |> expect |> toBe("533271") |> Js.Promise.resolve
+       )
   );
-  testPromise("localRevisions", () =>
-    Js.Promise.(
-      browserFetcher^
-      |> BrowserFetcher.localRevisions
-      |> then_(revisions => revisions |> expect |> toHaveLength(1) |> resolve)
-    )
-  );
+  /* TODO: Determine the platform from node and verify it properly. */
   test("platform", () =>
-    browserFetcher^
-    |> BrowserFetcher.platform
-    |> expect
-    |> toEqual(Some(`linux))
+    (browserFetcher^)->platform |> expect |> toEqual(Some(`linux))
   );
-  Skip.testPromise("remove", ~timeout=30 |> seconds, () =>
-    Js.Promise.(
-      browserFetcher^
-      |> BrowserFetcher.download(~revision="533273")
-      |> then_(_info =>
-           browserFetcher^ |> BrowserFetcher.remove(_, "533273")
-         )
+  Skip.testPromise(
+    "remove",
+    ~timeout=30000,
+    () => {
+      open Js.Promise;
+      let bf = browserFetcher^;
+      bf->download(~revision="533273", ())
+      |> then_(_info => bf->remove("533273"))
       |> then_(() => pass |> resolve)
       |> catch(_error =>
            fail("the revision has not been downloaded") |> resolve
-         )
-    )
+         );
+    },
   );
-  test("revisionInfo", () => {
-    let rev = revision^;
-    let revisionInfo = (browserFetcher^)->BrowserFetcher.revisionInfo(rev);
-    revisionInfo##revision |> expect |> toBe(rev) |> ignore;
-    revisionInfo##executablePath
-    |> expect
-    |> toContainString("chromium")
-    |> ignore;
-    revisionInfo##folderPath
-    |> expect
-    |> toContainString("chromium")
-    |> ignore;
-    revisionInfo##local |> expect |> toBe(true) |> ignore;
-    revisionInfo##url
-    |> expect
-    |> toContainString("https://storage.googleapis.com/");
+  test("t->revisionInfo##revision == t->revisions[0]", () => {
+    let revisionInfo = (browserFetcher^)->revisionInfo(revision^);
+    revisionInfo##revision |> expect |> toBe(revision^);
+  });
+  test("t->revisionInfo##folderPath should contain chromium", () => {
+    let revisionInfo = (browserFetcher^)->revisionInfo(revision^);
+    expect(revisionInfo##folderPath) |> toContainString("chromium");
+  });
+  test("t->revisionInfo##local property should be true", () => {
+    let revisionInfo = (browserFetcher^)->revisionInfo(revision^);
+    revisionInfo##local |> expect |> toBe(true);
+  });
+  test("t->revisionInfo##local property should be true", () => {
+    let r = (browserFetcher^)->revisionInfo(revision^);
+    expect(r##url) |> toContainString("https://storage.googleapis.com/");
+  });
+  test("revisionInfo##executablePath should contain \"chromium\"", () => {
+    let revisionInfo = (browserFetcher^)->revisionInfo(revision^);
+    expect(revisionInfo##executablePath) |> toContainString("chromium");
   });
 });
 
