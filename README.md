@@ -83,7 +83,7 @@ Tests can be found in the `__tests__` directory.
 
 A git hook will automatically run `refmt` on your code and run the test suite each time you commit.
 Contributors should have the latest release version of `refmt`, which is included with Reason.
-See the [Reason Global Installation](https://reasonml.github.io/docs/en/global-installation.html) instructions.
+See the [Reason installation instructions](https://reasonml.github.io/docs/en/installation).
 
 Good references for writing bindings are:
 
