@@ -94,3 +94,4 @@ Good references for writing bindings are:
 ## Projects using bs-puppeteer
 
 - [Hamilton Lottery](https://github.com/jrdrg/hamilton-lottery)
+- [lux-pos-web-wallet-e2e](https://github.com/rej156/lux-pos-web-wallet-e2e)
