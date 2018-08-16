@@ -217,15 +217,13 @@ describe("Page", () => {
   );
   testPromise("$$eval()", () =>
     Js.Promise.(
-      page^
-      |> Page.selectAllEval("html,body", getLengthOfElementsJs)
+      (page^)->Page.selectAllEval("html,body", getLengthOfElementsJs)
       |> then_(length => length |> expect |> toBe(2.0) |> resolve)
     )
   );
   testPromise("$eval() with 0 args", () =>
     Js.Promise.(
-      page^
-      |> Page.selectOneEval("html", getElementOuterHTMLJs)
+      (page^)->Page.selectOneEval("html", getElementOuterHTMLJs)
       |> then_(html =>
            html
            |> expect
@@ -236,8 +234,7 @@ describe("Page", () => {
   );
   testPromise("$eval() with 0 args returning a promise", () =>
     Js.Promise.(
-      page^
-      |> Page.selectOneEvalPromise("html", getElementOuterHTMLJsPromise)
+      (page^)->Page.selectOneEvalPromise("html", getElementOuterHTMLJsPromise)
       |> then_(h =>
            h
            |> expect
@@ -251,21 +248,21 @@ describe("Page", () => {
       page^
       |> Page.setContent(testPageContent)
       |> then_(() =>
-           page^
-           |> Page.selectOneEval1(
-                "input",
-                [%raw
-                  {| function (el, prop) { return el.getAttribute(prop); } |}
-                ],
-                "id",
-              )
+           (page^)
+           ->Page.selectOneEval1(
+               "input",
+               [%raw
+                 {| function (el, prop) { return el.getAttribute(prop); } |}
+               ],
+               "id",
+             )
          )
       |> then_(id => id |> expect |> toBe("input") |> resolve)
     )
   );
   testPromise("click()", () =>
     Js.Promise.(
-      page^ |> Page.click("body", ()) |> then_(() => pass |> resolve)
+      (page^)->Page.click("body", ()) |> then_(() => pass |> resolve)
     )
   );
   testPromise("goto()", () =>
@@ -312,19 +309,18 @@ describe("Page", () => {
   });
   testPromise("waitForSelector()", () =>
     Js.Promise.(
-      page^
-      |> Page.waitForSelector("body", ())
+      (page^)->Page.waitForSelector("body", ())
       |> then_(() => pass |> resolve)
     )
   );
   testPromise("waitForXPath()", () =>
     Js.Promise.(
-      page^
-      |> Page.waitForXPath(
-           ~xpath="/html/body",
-           ~options=Page.makeSelectorOptions(~timeout=100., ()),
-           (),
-         )
+      (page^)
+      ->Page.waitForXPath(
+          ~xpath="/html/body",
+          ~options=Page.makeSelectorOptions(~timeout=100., ()),
+          (),
+        )
       |> then_(elementHandle =>
            elementHandle |> expect |> ExpectJs.toBeTruthy |> resolve
          )
@@ -348,9 +344,9 @@ describe("Page", () => {
       |> then_(page =>
            page
            |> Page.setContent(testPageContent)
-           |> then_(() => page |> Page.type_("#input", "hello world", ()))
+           |> then_(() => page->Page.type_("#input", "hello world", ()))
            |> then_(() =>
-                page |> Page.selectOneEval("#input", getElementValueJs)
+                page->Page.selectOneEval("#input", getElementValueJs)
               )
          )
       |> then_(value => value |> expect |> toBe("hello world") |> resolve)
@@ -362,9 +358,7 @@ describe("Page", () => {
       |> Browser.newPage
       |> then_(page =>
            page
-           |> Page.addScriptTag(
-                Page.makeTagOptions(~path=testPageJsPath, ()),
-              )
+           ->Page.addScriptTag(Page.makeTagOptions(~path=testPageJsPath, ()))
            |> then_(_elementHandle => Page.content(page))
            |> then_(content =>
                 Page.close(page)
@@ -380,13 +374,10 @@ describe("Page", () => {
   );
   testPromise("addStyleTag()", () =>
     Js.Promise.(
-      browser^
-      |> Browser.newPage
+      Browser.newPage(browser^)
       |> then_(page =>
            page
-           |> Page.addStyleTag(
-                Page.makeTagOptions(~path=testPageCssPath, ()),
-              )
+           ->Page.addStyleTag(Page.makeTagOptions(~path=testPageCssPath, ()))
            |> then_(_elementHandle => Page.content(page))
            |> then_(content =>
                 Page.close(page)

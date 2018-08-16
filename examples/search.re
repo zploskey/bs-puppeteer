@@ -14,17 +14,17 @@ let search = () =>
               Navigation.makeOptions(~timeout=20000., ~waitUntil=`load, ());
             page
             |> Page.goto("https://google.com", ~options, ())
-            |> then_(_ => page |> Page.type_("#lst-ib", "puppeteer", ()))
-            |> then_(() => page |> Page.click("input[type='submit']", ()))
-            |> then_(() => page |> Page.waitForSelector("h3 a", ()))
+            |> then_(_ => page->Page.type_("#lst-ib", "puppeteer", ()))
+            |> then_(() => page->Page.click("input[type='submit']", ()))
+            |> then_(() => page->Page.waitForSelector("h3 a", ()))
             |> then_(() =>
                  page
-                 |> Page.selectOneEval(
-                      "h3 a",
-                      [%raw
-                        {| function (element) { return element.textContent; } |}
-                      ],
-                    )
+                 ->Page.selectOneEval(
+                     "h3 a",
+                     [%raw
+                       {| function (element) { return element.textContent; } |}
+                     ],
+                   )
                )
             |> then_(text => Js.log2("Got:", text) |> resolve)
             |> then_(_ => Browser.close(browser))
