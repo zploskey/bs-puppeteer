@@ -134,8 +134,9 @@ external makePDFOptions:
   pdfOptions =
   "";
 
-[@bs.send.pipe: t]
-external authenticate: Js.Null.t(authOptions) => Js.Promise.t(unit) = "";
+[@bs.send]
+external authenticate: (t, Js.Null.t(authOptions)) => Js.Promise.t(unit) =
+  "";
 
 /** Bring the page to front (activate the tab). */
 [@bs.send]
@@ -149,14 +150,15 @@ type closeOptions = {. "runBeforeUnload": Js.nullable(bool)};
 external makeCloseOptions: (~runBeforeUnload: bool=?, unit) => closeOptions =
   "";
 
-[@bs.send.pipe: t]
-external close: (~options: closeOptions=?) => Js.Promise.t(unit) = "";
+[@bs.send]
+external close: (t, ~options: closeOptions=?, unit) => Js.Promise.t(unit) =
+  "";
 
 [@bs.get] external coverage: t => Coverage.t = "";
 
 /* TODO: versions handling args */
-[@bs.send.pipe: t]
-external evaluateOnNewDocument: (unit => unit) => Js.Promise.t(unit) = "";
+[@bs.send]
+external evaluateOnNewDocument: (t, unit => unit) => Js.Promise.t(unit) = "";
 
 /* TODO: exposeFunction */
 

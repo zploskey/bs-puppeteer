@@ -358,7 +358,7 @@ describe("Page", () => {
            ->Page.addScriptTag(Page.makeTagOptions(~path=testPageJsPath, ()))
            |> then_(_elementHandle => Page.content(page))
            |> then_(content =>
-                Page.close(page)
+                page->Page.close()
                 |> then_(() =>
                      content
                      |> expect
@@ -377,7 +377,7 @@ describe("Page", () => {
            ->Page.addStyleTag(Page.makeTagOptions(~path=testPageCssPath, ()))
            |> then_(_elementHandle => Page.content(page))
            |> then_(content =>
-                Page.close(page)
+                page->Page.close()
                 |> then_(() =>
                      content
                      |> expect
@@ -390,10 +390,10 @@ describe("Page", () => {
   );
   testPromise("authenticate()", () =>
     Js.Promise.(
-      page^
-      |> Page.authenticate(
-           Js.Null.return({"username": "foo", "password": "bar"}),
-         )
+      (page^)
+      ->Page.authenticate(
+          Js.Null.return({"username": "foo", "password": "bar"}),
+        )
       |> then_(() => pass |> resolve)
     )
   );
@@ -598,7 +598,7 @@ describe("Page", () => {
     Page.coverage(page^) |> expect |> ExpectJs.toBeTruthy
   );
   afterAllPromise(() =>
-    Js.Promise.(Page.close(page^) |> then_(() => Browser.close(browser^)))
+    Js.Promise.((page^)->Page.close() |> then_(() => Browser.close(browser^)))
   );
 });
 
@@ -644,7 +644,7 @@ describe("ElementHandle", () => {
     )
   );
   afterAllPromise(() =>
-    Js.Promise.(Page.close(page^) |> then_(() => Browser.close(browser^)))
+    Js.Promise.((page^)->Page.close() |> then_(() => Browser.close(browser^)))
   );
 });
 

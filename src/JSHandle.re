@@ -9,8 +9,9 @@ module Impl = (T: {type t;}) => {
   [@bs.send]
   external getProperties: T.t => Js.Promise.t(JSMap.t(string, T.t)) = "";
 
-  [@bs.send.pipe: T.t]
-  external getProperty: (~propertyName: string) => Js.Promise.t(T.t) = "";
+  [@bs.send]
+  external getProperty: (T.t, ~propertyName: string) => Js.Promise.t(T.t) =
+    "";
 
   [@bs.send] external jsonValue: T.t => Js.Promise.t(Js.t({..})) = "";
 };
