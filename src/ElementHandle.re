@@ -19,8 +19,9 @@ let boxModel = handle =>
   boxModel(handle)
   |> Js.Promise.(then_(handle => Js.toOption(handle) |> resolve));
 
-[@bs.send.pipe: t]
-external click: (~options: Click.clickOptions=?, unit) => Js.Promise.t(unit) =
+[@bs.send]
+external click:
+  (t, ~options: Click.clickOptions=?, unit) => Js.Promise.t(unit) =
   "";
 
 [@bs.send] external focus: t => Js.Promise.t(unit) = "";
@@ -29,36 +30,39 @@ external click: (~options: Click.clickOptions=?, unit) => Js.Promise.t(unit) =
 
 [@bs.send] external isIntersectingViewport: t => Js.Promise.t(bool) = "";
 
-[@bs.send.pipe: t]
+[@bs.send]
 external press:
-  (~key: string, ~options: Keyboard.options=?, unit) => Js.Promise.t(unit) =
+  (t, ~key: string, ~options: Keyboard.options=?, unit) => Js.Promise.t(unit) =
   "";
 
-[@bs.send.pipe: t]
+[@bs.send]
 external screenshot:
-  (~options: Screenshot.options=?, unit) => Js.Promise.t(Node.Buffer.t) =
+  (t, ~options: Screenshot.options=?, unit) => Js.Promise.t(Node.Buffer.t) =
   "";
 
-[@bs.send.pipe: t]
-external selectOne: (~selector: string) => Js.Promise.t(Js.Null.t(t)) = "$";
+[@bs.send]
+external selectOne: (t, ~selector: string) => Js.Promise.t(Js.Null.t(t)) =
+  "$";
 
-[@bs.send.pipe: t]
-external selectAll: (~selector: string) => Js.Promise.t(array(t)) = "$$";
+[@bs.send]
+external selectAll: (t, ~selector: string) => Js.Promise.t(array(t)) = "$$";
 
-[@bs.send.pipe: t]
-external selectXPath: (~xpath: string) => Js.Promise.t(array(t)) = "$x";
+[@bs.send]
+external selectXPath: (t, ~xpath: string) => Js.Promise.t(array(t)) = "$x";
 
 [@bs.send] external tap: t => Js.Promise.t(unit) = "";
 
 [@bs.send] external toString: t => string = "";
 
-[@bs.send.pipe: t]
+[@bs.send]
 external type_:
-  (~text: string, ~options: {. "delay": float}=?, unit) => Js.Promise.t(unit) =
+  (t, ~text: string, ~options: {. "delay": float}=?, unit) =>
+  Js.Promise.t(unit) =
   "type";
 
-[@bs.send.pipe: t] [@bs.splice]
-external uploadFile: (~filePaths: array(string)) => Js.Promise.t(unit) = "";
+[@bs.send] [@bs.splice]
+external uploadFile: (t, ~filePaths: array(string)) => Js.Promise.t(unit) =
+  "";
 
 [@bs.send]
 external contentFrame: t => Js.Promise.t(Js.Null.t(Types.frameBase)) = "";

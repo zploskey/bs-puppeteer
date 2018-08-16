@@ -34,17 +34,13 @@ external makeJSCoverageOptions:
 
 [@bs.send]
 external startCSSCoverage:
-  (t, ~options: cssCoverageOptions=?) => Js.Promise.t(unit) =
+  (t, ~options: cssCoverageOptions=?, unit) => Js.Promise.t(unit) =
   "";
-
-let startCSSCoverage = (~options=?, t) => startCSSCoverage(t, ~options?);
 
 [@bs.send]
 external startJSCoverage:
-  (t, ~options: jsCoverageOptions=?) => Js.Promise.t(unit) =
+  (t, ~options: jsCoverageOptions=?, unit) => Js.Promise.t(unit) =
   "";
-
-let startJSCoverage = (~options=?, t) => startJSCoverage(t, ~options?);
 
 [@bs.send] external stopCSSCoverage: t => Js.Promise.t(array(report)) = "";
 

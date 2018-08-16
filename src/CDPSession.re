@@ -4,8 +4,5 @@ type t;
 
 [@bs.send]
 external send:
-  (t, string, Js.Undefined.t(Js.t({..}))) => Js.Promise.t(Js.t({..})) =
+  (t, string, ~params: Js.t({..})=?, unit) => Js.Promise.t(Js.t({..})) =
   "";
-
-let send = (~method_, ~params=?, t) =>
-  send(t, method_, params |> Js.Undefined.fromOption);

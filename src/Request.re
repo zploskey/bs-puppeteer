@@ -45,9 +45,10 @@ external makeOverrides:
   overrides =
   "";
 
-[@bs.send.pipe: t]
+[@bs.send]
 external abort:
   (
+    t,
     ~errorCode: [@bs.string] [
                   | `aborted
                   | `accessdenied
@@ -70,8 +71,9 @@ external abort:
   Js.Promise.t(unit) =
   "";
 
-[@bs.send.pipe: t]
-external continue: (~overrides: overrides=?, unit) => Js.Promise.t(unit) = "";
+[@bs.send]
+external continue: (t, ~overrides: overrides=?, unit) => Js.Promise.t(unit) =
+  "";
 
 [@bs.send] [@bs.return nullable]
 external failure: t => option({. "errorText": string}) = "";
@@ -142,8 +144,7 @@ external makeRespondOptions:
   respondOptions =
   "";
 
-[@bs.send.pipe: t]
-external respond: respondOptions => Js.Promise.t(unit) = "";
+[@bs.send] external respond: (t, respondOptions) => Js.Promise.t(unit) = "";
 
 [@bs.send] [@bs.return nullable]
 external response: t => option(Types.response) = "";

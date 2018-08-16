@@ -10,5 +10,5 @@ include FrameBase;
 
 [@bs.send] [@bs.return nullable] external parentFrame: t => option(t) = "";
 
-[@bs.send.pipe: t]
-external injectFile: (~filePath: string) => Js.Promise.t(unit) = "";
+[@bs.send]
+external injectFile: (t, ~filePath: string) => Js.Promise.t(unit) = "";

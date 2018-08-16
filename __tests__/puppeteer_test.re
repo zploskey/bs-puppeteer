@@ -56,7 +56,8 @@ describe("Puppeteer", () => {
 });
 
 describe("BrowserFetcher", () => {
-  let browserFetcher = ref(BrowserFetcher.empty());
+  open BrowserFetcher;
+  let browserFetcher = ref(empty());
   let revision = ref("");
   beforeAll(() =>
     browserFetcher :=
@@ -65,62 +66,64 @@ describe("BrowserFetcher", () => {
         (),
       )
   );
+  testPromise("localRevisions", () =>
+    (browserFetcher^)->localRevisions
+    |> Js.Promise.(
+         then_(revisions => {
+           revision := revisions[0];
+           revisions |> expect |> toHaveLength(1) |> resolve;
+         })
+       )
+  );
   Skip.testPromise("canDownload", () =>
-    Js.Promise.(
-      browserFetcher^
-      |> BrowserFetcher.canDownload(_, "533271")
-      |> then_(boolean => boolean |> expect |> toBe(true) |> resolve)
-    )
+    (browserFetcher^)->canDownload("533271")
+    |> Js.Promise.(
+         then_(boolean => boolean |> expect |> toBe(true) |> resolve)
+       )
   );
   Skip.testPromise("download", ~timeout=30 |> seconds, () =>
-    Js.Promise.(
-      browserFetcher^
-      |> BrowserFetcher.download(~revision="533271")
-      |> then_(info => info##revision |> expect |> toBe("533271") |> resolve)
-    )
+    (browserFetcher^)->download(~revision="533271", ())
+    |> Js.Promise.then_(info =>
+         info##revision |> expect |> toBe("533271") |> Js.Promise.resolve
+       )
   );
-  testPromise("localRevisions", () =>
-    Js.Promise.(
-      browserFetcher^
-      |> BrowserFetcher.localRevisions
-      |> then_(revisions => revisions |> expect |> toHaveLength(1) |> resolve)
-    )
-  );
+  /* TODO: Determine the platform from node and verify it properly. */
   test("platform", () =>
-    browserFetcher^
-    |> BrowserFetcher.platform
-    |> expect
-    |> toEqual(Some(`linux))
+    (browserFetcher^)->platform |> expect |> toEqual(Some(`linux))
   );
-  Skip.testPromise("remove", ~timeout=30 |> seconds, () =>
-    Js.Promise.(
-      browserFetcher^
-      |> BrowserFetcher.download(~revision="533273")
-      |> then_(_info =>
-           browserFetcher^ |> BrowserFetcher.remove(_, "533273")
-         )
+  Skip.testPromise(
+    "remove",
+    ~timeout=30000,
+    () => {
+      open Js.Promise;
+      let bf = browserFetcher^;
+      bf->download(~revision="533273", ())
+      |> then_(_info => bf->remove("533273"))
       |> then_(() => pass |> resolve)
       |> catch(_error =>
            fail("the revision has not been downloaded") |> resolve
-         )
-    )
+         );
+    },
   );
-  test("revisionInfo", () => {
-    let rev = revision^;
-    let revisionInfo = (browserFetcher^)->BrowserFetcher.revisionInfo(rev);
-    revisionInfo##revision |> expect |> toBe(rev) |> ignore;
-    revisionInfo##executablePath
-    |> expect
-    |> toContainString("chromium")
-    |> ignore;
-    revisionInfo##folderPath
-    |> expect
-    |> toContainString("chromium")
-    |> ignore;
-    revisionInfo##local |> expect |> toBe(true) |> ignore;
-    revisionInfo##url
-    |> expect
-    |> toContainString("https://storage.googleapis.com/");
+  test("t->revisionInfo##revision == t->revisions[0]", () => {
+    let revisionInfo = (browserFetcher^)->revisionInfo(revision^);
+    revisionInfo##revision |> expect |> toBe(revision^);
+  });
+  test("t->revisionInfo##folderPath should contain chromium", () => {
+    let revisionInfo = (browserFetcher^)->revisionInfo(revision^);
+    expect(revisionInfo##folderPath) |> toContainString("chromium");
+  });
+  test("t->revisionInfo##local property should be true", () => {
+    let revisionInfo = (browserFetcher^)->revisionInfo(revision^);
+    revisionInfo##local |> expect |> toBe(true);
+  });
+  test("t->revisionInfo##local property should be true", () => {
+    let r = (browserFetcher^)->revisionInfo(revision^);
+    expect(r##url) |> toContainString("https://storage.googleapis.com/");
+  });
+  test("revisionInfo##executablePath should contain \"chromium\"", () => {
+    let revisionInfo = (browserFetcher^)->revisionInfo(revision^);
+    expect(revisionInfo##executablePath) |> toContainString("chromium");
   });
 });
 
@@ -214,15 +217,13 @@ describe("Page", () => {
   );
   testPromise("$$eval()", () =>
     Js.Promise.(
-      page^
-      |> Page.selectAllEval("html,body", getLengthOfElementsJs)
+      (page^)->Page.selectAllEval("html,body", getLengthOfElementsJs)
       |> then_(length => length |> expect |> toBe(2.0) |> resolve)
     )
   );
   testPromise("$eval() with 0 args", () =>
     Js.Promise.(
-      page^
-      |> Page.selectOneEval("html", getElementOuterHTMLJs)
+      (page^)->Page.selectOneEval("html", getElementOuterHTMLJs)
       |> then_(html =>
            html
            |> expect
@@ -233,8 +234,7 @@ describe("Page", () => {
   );
   testPromise("$eval() with 0 args returning a promise", () =>
     Js.Promise.(
-      page^
-      |> Page.selectOneEvalPromise("html", getElementOuterHTMLJsPromise)
+      (page^)->Page.selectOneEvalPromise("html", getElementOuterHTMLJsPromise)
       |> then_(h =>
            h
            |> expect
@@ -245,24 +245,23 @@ describe("Page", () => {
   );
   testPromise("$eval() with 1 arg", () =>
     Js.Promise.(
-      page^
-      |> Page.setContent(testPageContent)
+      (page^)->Page.setContent(testPageContent)
       |> then_(() =>
-           page^
-           |> Page.selectOneEval1(
-                "input",
-                [%raw
-                  {| function (el, prop) { return el.getAttribute(prop); } |}
-                ],
-                "id",
-              )
+           (page^)
+           ->Page.selectOneEval1(
+               "input",
+               [%raw
+                 {| function (el, prop) { return el.getAttribute(prop); } |}
+               ],
+               "id",
+             )
          )
       |> then_(id => id |> expect |> toBe("input") |> resolve)
     )
   );
   testPromise("click()", () =>
     Js.Promise.(
-      page^ |> Page.click("body", ()) |> then_(() => pass |> resolve)
+      (page^)->Page.click("body", ()) |> then_(() => pass |> resolve)
     )
   );
   testPromise("goto()", () =>
@@ -271,7 +270,7 @@ describe("Page", () => {
       |> Browser.newPage
       |> then_(page => {
            let options = Navigation.makeOptions(~timeout=25000., ());
-           page |> Page.goto("file://" ++ testPagePath, ~options, ());
+           page->Page.goto("file://" ++ testPagePath, ~options, ());
          })
       |> then_(res => res |> Js.Null.getExn |> Response.text)
       |> then_(text =>
@@ -284,8 +283,7 @@ describe("Page", () => {
   );
   testPromise("screenshot()", () =>
     Js.Promise.(
-      page^
-      |> Page.screenshot()
+      (page^)->Page.screenshot()
       |> then_(buf =>
            buf
            |> Node.Buffer.toString
@@ -301,7 +299,7 @@ describe("Page", () => {
     let url = "file:///" ++ testPagePath;
     Js.Promise.all2((
       (page^)->Page.waitForResponseUrl(url, ()),
-      page^ |> Page.evaluate(() => fetch("/testPage.html")),
+      (page^)->Page.evaluate(() => fetch("/testPage.html")),
     ))
     |> Js.Promise.then_(((res, _)) =>
          res |> Response.url |> expect |> toEqual(url) |> Js.Promise.resolve
@@ -309,19 +307,18 @@ describe("Page", () => {
   });
   testPromise("waitForSelector()", () =>
     Js.Promise.(
-      page^
-      |> Page.waitForSelector("body", ())
+      (page^)->Page.waitForSelector("body", ())
       |> then_(() => pass |> resolve)
     )
   );
   testPromise("waitForXPath()", () =>
     Js.Promise.(
-      page^
-      |> Page.waitForXPath(
-           ~xpath="/html/body",
-           ~options=Page.makeSelectorOptions(~timeout=100., ()),
-           (),
-         )
+      (page^)
+      ->Page.waitForXPath(
+          ~xpath="/html/body",
+          ~options=Page.makeSelectorOptions(~timeout=100., ()),
+          (),
+        )
       |> then_(elementHandle =>
            elementHandle |> expect |> ExpectJs.toBeTruthy |> resolve
          )
@@ -329,11 +326,11 @@ describe("Page", () => {
   );
   testPromise("setExtraHTTPHeaders", () =>
     Js.Promise.(
-      page^
-      |> Page.setExtraHTTPHeaders(
-           ~headers=Js.Dict.fromList([("extra-http-header", "header01")]),
-           (),
-         )
+      (page^)
+      ->Page.setExtraHTTPHeaders(
+          ~headers=Js.Dict.fromList([("extra-http-header", "header01")]),
+          (),
+        )
       /* TODO: Better way to verify extra HTTP headers */
       |> then_(() => pass |> resolve)
     )
@@ -343,11 +340,10 @@ describe("Page", () => {
       browser^
       |> Browser.newPage
       |> then_(page =>
-           page
-           |> Page.setContent(testPageContent)
-           |> then_(() => page |> Page.type_("#input", "hello world", ()))
+           page->Page.setContent(testPageContent)
+           |> then_(() => page->Page.type_("#input", "hello world", ()))
            |> then_(() =>
-                page |> Page.selectOneEval("#input", getElementValueJs)
+                page->Page.selectOneEval("#input", getElementValueJs)
               )
          )
       |> then_(value => value |> expect |> toBe("hello world") |> resolve)
@@ -359,12 +355,10 @@ describe("Page", () => {
       |> Browser.newPage
       |> then_(page =>
            page
-           |> Page.addScriptTag(
-                Page.makeTagOptions(~path=testPageJsPath, ()),
-              )
+           ->Page.addScriptTag(Page.makeTagOptions(~path=testPageJsPath, ()))
            |> then_(_elementHandle => Page.content(page))
            |> then_(content =>
-                Page.close(page)
+                page->Page.close()
                 |> then_(() =>
                      content
                      |> expect
@@ -377,16 +371,13 @@ describe("Page", () => {
   );
   testPromise("addStyleTag()", () =>
     Js.Promise.(
-      browser^
-      |> Browser.newPage
+      Browser.newPage(browser^)
       |> then_(page =>
            page
-           |> Page.addStyleTag(
-                Page.makeTagOptions(~path=testPageCssPath, ()),
-              )
+           ->Page.addStyleTag(Page.makeTagOptions(~path=testPageCssPath, ()))
            |> then_(_elementHandle => Page.content(page))
            |> then_(content =>
-                Page.close(page)
+                page->Page.close()
                 |> then_(() =>
                      content
                      |> expect
@@ -399,64 +390,64 @@ describe("Page", () => {
   );
   testPromise("authenticate()", () =>
     Js.Promise.(
-      page^
-      |> Page.authenticate(
-           Js.Null.return({"username": "foo", "password": "bar"}),
-         )
+      (page^)
+      ->Page.authenticate(
+          Js.Null.return({"username": "foo", "password": "bar"}),
+        )
       |> then_(() => pass |> resolve)
     )
   );
   testPromise("cookies()", () =>
     Js.Promise.(
-      page^
-      |> Page.setCookie([|
-           Page.makeCookie(
-             ~name="foo",
-             ~value="bar",
-             ~url="http://localhost",
-             (),
-           ),
-         |])
-      |> then_(() => page^ |> Page.cookies([|"http://localhost"|]))
+      (page^)
+      ->Page.setCookie([|
+          Page.makeCookie(
+            ~name="foo",
+            ~value="bar",
+            ~url="http://localhost",
+            (),
+          ),
+        |])
+      |> then_(() => (page^)->Page.cookies([|"http://localhost"|]))
       |> then_(cookies => cookies |> expect |> toHaveLength(1) |> resolve)
     )
   );
   testPromise("setCookie()", () =>
     Js.Promise.(
-      page^
-      |> Page.setCookie([|
-           Page.makeCookie(
-             ~name="foo",
-             ~value="bar",
-             ~url="http://localhost",
-             (),
-           ),
-           Page.makeCookie(
-             ~name="foo2",
-             ~value="bar2",
-             ~url="http://localhost2",
-             (),
-           ),
-         |])
+      (page^)
+      ->Page.setCookie([|
+          Page.makeCookie(
+            ~name="foo",
+            ~value="bar",
+            ~url="http://localhost",
+            (),
+          ),
+          Page.makeCookie(
+            ~name="foo2",
+            ~value="bar2",
+            ~url="http://localhost2",
+            (),
+          ),
+        |])
       |> then_(() =>
-           page^ |> Page.cookies([|"http://localhost", "http://localhost2"|])
+           (page^)->Page.cookies([|"http://localhost", "http://localhost2"|])
          )
       |> then_(cookies => cookies |> expect |> toHaveLength(2) |> resolve)
     )
   );
   testPromise("deleteCookie()", () =>
     Js.Promise.(
-      page^
-      |> Page.setCookie([|
-           Page.makeCookie(
-             ~name="foo",
-             ~value="bar",
-             ~url="http://localhost",
-             (),
-           ),
-         |])
-      |> then_(() => page^ |> Page.deleteCookie([||]))
-      |> then_(() => page^ |> Page.cookies([||]))
+      (page^)
+      ->Page.setCookie([|
+          Page.makeCookie(
+            ~name="foo",
+            ~value="bar",
+            ~url="http://localhost",
+            (),
+          ),
+        |])
+      |> then_(() => (page^)->Page.deleteCookie([||]))
+      |> then_(() => (page^)->Page.cookies([||]))
       |> then_(cookies => cookies |> expect |> toHaveLength(0) |> resolve)
     )
   );
@@ -470,8 +461,7 @@ describe("Page", () => {
         (),
       );
     Js.Promise.(
-      page^
-      |> Page.emulate({"viewport": viewport, "userAgent": ""})
+      (page^)->Page.emulate({"viewport": viewport, "userAgent": ""})
       |> then_(() =>
            expect(Page.viewport(page^) |> Js.Option.getExn)
            |> toEqual(viewport)
@@ -481,19 +471,19 @@ describe("Page", () => {
   });
   testPromise("emulateMedia()", () =>
     Js.Promise.(
-      page^ |> Page.emulateMedia(`print) |> then_(() => pass |> resolve)
+      (page^)->Page.emulateMedia(`print) |> then_(() => pass |> resolve)
     )
   );
   testPromise("emulateMediaDisable()", () =>
     Js.Promise.(
-      page^ |> Page.emulateMediaDisable |> then_(() => pass |> resolve)
+      Page.emulateMediaDisable(page^) |> then_(() => pass |> resolve)
     )
   );
   testPromise("evaluate()", () =>
     Js.Promise.(
       {
         let eval = () => "ok";
-        page^ |> Page.evaluate(eval);
+        (page^)->Page.evaluate(eval);
       }
       |> then_(res => res |> expect |> toBe("ok") |> resolve)
     )
@@ -502,7 +492,7 @@ describe("Page", () => {
     Js.Promise.(
       {
         let eval = arg => arg ++ "iedoke";
-        page^ |> Page.evaluate1(eval, "ok");
+        (page^)->Page.evaluate1(eval, "ok");
       }
       |> then_(res => res |> expect |> toBe("okiedoke") |> resolve)
     )
@@ -511,7 +501,7 @@ describe("Page", () => {
     Js.Promise.(
       {
         let eval = (arg1, arg2) => arg1 ++ " " ++ arg2;
-        page^ |> Page.evaluate1(eval("hello"), "world");
+        (page^)->Page.evaluate1(eval("hello"), "world");
       }
       |> then_(res => res |> expect |> toBe("hello world") |> resolve)
     )
@@ -520,7 +510,7 @@ describe("Page", () => {
     Js.Promise.(
       {
         let eval = (arg1, arg2) => resolve(arg1 ++ " " ++ arg2);
-        page^ |> Page.evaluatePromise1(eval("hello"), "world");
+        (page^)->Page.evaluatePromise1(eval("hello"), "world");
       }
       |> then_(res => res |> expect |> toBe("hello world") |> resolve)
     )
@@ -529,7 +519,7 @@ describe("Page", () => {
     Js.Promise.(
       {
         let eval = (arg1, arg2, arg3) => resolve(arg1 ++ " " ++ arg2 ++ arg3);
-        page^ |> Page.evaluatePromise2(eval("hello"), "world", "!");
+        (page^)->Page.evaluatePromise2(eval("hello"), "world", "!");
       }
       |> then_(res => res |> expect |> toBe("hello world!") |> resolve)
     )
@@ -539,18 +529,16 @@ describe("Page", () => {
       {
         let eval = (arg1, arg2) =>
           (arg1 |> String.length |> Js.Int.toString) ++ arg1 ++ " " ++ arg2;
-        page^ |> Page.evaluate2(eval, "hello", "world");
+        (page^)->Page.evaluate2(eval, "hello", "world");
       }
       |> then_(res => res |> expect |> toBe("5hello world") |> resolve)
     )
   );
   testPromise("evaluateString()", () => {
     let getTitleStr = {| document.getElementsByTagName("title")[0].innerHTML; |};
-    page^
-    |> Page.setContent(testPageContent)
+    (page^)->Page.setContent(testPageContent)
     |> Js.Promise.then_(() =>
-         page^
-         |> Page.evaluateString(getTitleStr)
+         (page^)->Page.evaluateString(getTitleStr)
          |> Js.Promise.then_(title =>
               title |> expect |> toBe("Test Page") |> Js.Promise.resolve
             )
@@ -560,7 +548,7 @@ describe("Page", () => {
     Js.Promise.(
       {
         let eval = () => [%raw {| document |}];
-        page^ |> Page.evaluateHandle(eval);
+        (page^)->Page.evaluateHandle(eval);
       }
       |> then_(jsHandler =>
            jsHandler |> expect |> ExpectJs.toBeTruthy |> resolve
@@ -569,30 +557,30 @@ describe("Page", () => {
   );
   testPromise("pdf()", () =>
     Js.Promise.(
-      page^
-      |> Page.pdf(
-           Page.makePDFOptions(
-             ~scale=1.,
-             ~displayHeaderFooter=true,
-             ~headerTemplate="[[header]]",
-             ~footerTemplate="[[footer]]",
-             ~printBackground=true,
-             ~landscape=true,
-             ~pageRanges="",
-             ~format=`A0,
-             ~width=10.0 |> Unit.cm,
-             ~height=200.0 |> Unit.mm,
-             ~margin=
-               Page.makeMargin(
-                 ~top=0.1 |> Unit.cm,
-                 ~right=10.0 |> Unit.px,
-                 ~bottom=1.0 |> Unit.mm,
-                 ~left=0.01 |> Unit.in_,
-                 (),
-               ),
-             (),
-           ),
-         )
+      (page^)
+      ->Page.pdf(
+          Page.makePDFOptions(
+            ~scale=1.,
+            ~displayHeaderFooter=true,
+            ~headerTemplate="[[header]]",
+            ~footerTemplate="[[footer]]",
+            ~printBackground=true,
+            ~landscape=true,
+            ~pageRanges="",
+            ~format=`A0,
+            ~width=10.0 |> Unit.cm,
+            ~height=200.0 |> Unit.mm,
+            ~margin=
+              Page.makeMargin(
+                ~top=0.1 |> Unit.cm,
+                ~right=10.0 |> Unit.px,
+                ~bottom=1.0 |> Unit.mm,
+                ~left=0.01 |> Unit.in_,
+                (),
+              ),
+            (),
+          ),
+        )
       |> then_(buffer =>
            buffer
            |> Node.Buffer.toString
@@ -607,10 +595,10 @@ describe("Page", () => {
     page^ |> Page.target |> Target.url |> expect |> toBe("about:blank")
   );
   test("coverage", () =>
-    page^ |> Page.coverage |> expect |> ExpectJs.toBeTruthy
+    Page.coverage(page^) |> expect |> ExpectJs.toBeTruthy
   );
   afterAllPromise(() =>
-    Js.Promise.(Page.close(page^) |> then_(() => Browser.close(browser^)))
+    Js.Promise.((page^)->Page.close() |> then_(() => Browser.close(browser^)))
   );
 });
 
@@ -627,7 +615,7 @@ describe("ElementHandle", () => {
          })
       |> then_(res => {
            page := res;
-           page^ |> Page.goto("file://" ++ testPagePath, ());
+           (page^)->Page.goto("file://" ++ testPagePath, ());
          })
       |> then_(_resp => Page.selectOne(page^, ~selector="#iframe"))
       |> then_(res =>
@@ -656,7 +644,7 @@ describe("ElementHandle", () => {
     )
   );
   afterAllPromise(() =>
-    Js.Promise.(Page.close(page^) |> then_(() => Browser.close(browser^)))
+    Js.Promise.((page^)->Page.close() |> then_(() => Browser.close(browser^)))
   );
 });
 
@@ -721,13 +709,12 @@ describe("CDPSession", () => {
     Js.Promise.(
       browser^
       |> Browser.newPage
-      |> then_(page => page |> Page.target |> Target.createCDPSession)
+      |> then_(page => page->Page.target->Target.createCDPSession)
       |> then_(session =>
            session
            |> CDPSession.detach
            |> then_(() =>
-                session
-                |> CDPSession.send(~method_="Animation.getPlaybackRate")
+                session->CDPSession.send("Animation.getPlaybackRate", ())
               )
            |> then_(_res =>
                 failwith(
@@ -743,19 +730,19 @@ describe("CDPSession", () => {
     Js.Promise.(
       browser^
       |> Browser.newPage
-      |> then_(page => page |> Page.target |> Target.createCDPSession)
+      |> then_(page => page->Page.target->Target.createCDPSession)
       |> then_(session =>
            session
-           |> CDPSession.send(
-                ~method_="Animation.setPlaybackRate",
-                ~params={"playbackRate": 3.1415926535},
-              )
+           ->CDPSession.send(
+               "Animation.setPlaybackRate",
+               ~params={"playbackRate": 3.1415926535},
+               (),
+             )
            |> then_(_res =>
-                session
-                |> CDPSession.send(~method_="Animation.getPlaybackRate")
+                session->CDPSession.send("Animation.getPlaybackRate", ())
               )
            |> then_(res =>
-                res##playbackRate |> expect |> toBe(3.1415926535) |> resolve
+                expect(res##playbackRate) |> toBe(3.1415926535) |> resolve
               )
          )
     )
@@ -781,17 +768,12 @@ describe("Coverage", () => {
         browser^
         |> Browser.newPage
         |> then_(page => {
-             let coverage = page |> Page.coverage;
-             coverage
-             |> Coverage.startJSCoverage(
-                  ~options=
-                    Coverage.makeJSCoverageOptions(
-                      ~resetOnNavigation=true,
-                      (),
-                    ),
-                )
-             |> then_(() => page |> Page.goto("file://" ++ testPagePath, ()))
-             |> then_(_res => coverage |> Coverage.stopJSCoverage)
+             let coverage = page->Page.coverage;
+             let options =
+               Coverage.makeJSCoverageOptions(~resetOnNavigation=true, ());
+             coverage->Coverage.startJSCoverage(~options, ())
+             |> then_(() => page->Page.goto("file://" ++ testPagePath, ()))
+             |> then_(_res => Coverage.stopJSCoverage(coverage))
              |> then_(res => {
                   report := res;
                   res |> resolve;
@@ -831,20 +813,14 @@ describe("Coverage", () => {
     let report = ref([||]);
     beforeAllPromise(() =>
       Js.Promise.(
-        browser^
-        |> Browser.newPage
+        (browser^)->Browser.newPage
         |> then_(page => {
-             let coverage = page |> Page.coverage;
-             coverage
-             |> Coverage.startCSSCoverage(
-                  ~options=
-                    Coverage.makeCSSCoverageOptions(
-                      ~resetOnNavigation=true,
-                      (),
-                    ),
-                )
-             |> then_(() => page |> Page.goto("file://" ++ testPagePath, ()))
-             |> then_(_res => coverage |> Coverage.stopCSSCoverage)
+             let coverage = page->Page.coverage;
+             let options =
+               Coverage.makeCSSCoverageOptions(~resetOnNavigation=true, ());
+             coverage->Coverage.startCSSCoverage(~options, ())
+             |> then_(() => page->Page.goto("file://" ++ testPagePath, ()))
+             |> then_(_res => coverage->Coverage.stopCSSCoverage)
              |> then_(res => {
                   report := res;
                   res |> resolve;
