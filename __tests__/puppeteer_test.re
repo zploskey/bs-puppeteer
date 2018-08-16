@@ -610,7 +610,7 @@ describe("Page", () => {
     page^ |> Page.target |> Target.url |> expect |> toBe("about:blank")
   );
   test("coverage", () =>
-    page^ |> Page.coverage |> expect |> ExpectJs.toBeTruthy
+    Page.coverage(page^) |> expect |> ExpectJs.toBeTruthy
   );
   afterAllPromise(() =>
     Js.Promise.(Page.close(page^) |> then_(() => Browser.close(browser^)))
@@ -783,17 +783,12 @@ describe("Coverage", () => {
         browser^
         |> Browser.newPage
         |> then_(page => {
-             let coverage = page |> Page.coverage;
-             coverage
-             |> Coverage.startJSCoverage(
-                  ~options=
-                    Coverage.makeJSCoverageOptions(
-                      ~resetOnNavigation=true,
-                      (),
-                    ),
-                )
+             let coverage = page->Page.coverage;
+             let options =
+               Coverage.makeJSCoverageOptions(~resetOnNavigation=true, ());
+             coverage->Coverage.startJSCoverage(~options, ())
              |> then_(() => page |> Page.goto("file://" ++ testPagePath, ()))
-             |> then_(_res => coverage |> Coverage.stopJSCoverage)
+             |> then_(_res => Coverage.stopJSCoverage(coverage))
              |> then_(res => {
                   report := res;
                   res |> resolve;
@@ -833,20 +828,14 @@ describe("Coverage", () => {
     let report = ref([||]);
     beforeAllPromise(() =>
       Js.Promise.(
-        browser^
-        |> Browser.newPage
+        (browser^)->Browser.newPage
         |> then_(page => {
-             let coverage = page |> Page.coverage;
-             coverage
-             |> Coverage.startCSSCoverage(
-                  ~options=
-                    Coverage.makeCSSCoverageOptions(
-                      ~resetOnNavigation=true,
-                      (),
-                    ),
-                )
+             let coverage = page->Page.coverage;
+             let options =
+               Coverage.makeCSSCoverageOptions(~resetOnNavigation=true, ());
+             coverage->Coverage.startCSSCoverage(~options, ())
              |> then_(() => page |> Page.goto("file://" ++ testPagePath, ()))
-             |> then_(_res => coverage |> Coverage.stopCSSCoverage)
+             |> then_(_res => coverage->Coverage.stopCSSCoverage)
              |> then_(res => {
                   report := res;
                   res |> resolve;
