@@ -1,111 +1,126 @@
 module Impl = (T: {type t;}) => {
-  [@bs.send.pipe: T.t]
-  external evaluate: (unit => 'r) => Js.Promise.t('r) = "";
+  [@bs.send] external evaluate: (T.t, unit => 'r) => Js.Promise.t('r) = "";
 
-  [@bs.send.pipe: T.t]
-  external evaluatePromise: (unit => Js.Promise.t('r)) => Js.Promise.t('r) =
+  [@bs.send]
+  external evaluatePromise:
+    (T.t, unit => Js.Promise.t('r)) => Js.Promise.t('r) =
     "";
 
-  [@bs.send.pipe: T.t]
-  external evaluate1: ([@bs.uncurry] ('a => 'r), 'a) => Js.Promise.t('r) =
+  [@bs.send]
+  external evaluate1: (T.t, [@bs.uncurry] ('a => 'r), 'a) => Js.Promise.t('r) =
     "evaluate";
 
-  [@bs.send.pipe: T.t]
+  [@bs.send]
   external evaluatePromise1:
-    ([@bs.uncurry] ('a => Js.Promise.t('r)), 'a) => Js.Promise.t('r) =
+    (T.t, [@bs.uncurry] ('a => Js.Promise.t('r)), 'a) => Js.Promise.t('r) =
     "evaluate";
 
-  [@bs.send.pipe: T.t]
+  [@bs.send]
   external evaluate2:
-    ([@bs.uncurry] (('a, 'b) => 'r), 'a, 'b) => Js.Promise.t('r) =
+    (T.t, [@bs.uncurry] (('a, 'b) => 'r), 'a, 'b) => Js.Promise.t('r) =
     "evaluate";
 
-  [@bs.send.pipe: T.t]
+  [@bs.send]
   external evaluatePromise2:
-    ([@bs.uncurry] (('a, 'b) => Js.Promise.t('r)), 'a, 'b) =>
+    (T.t, [@bs.uncurry] (('a, 'b) => Js.Promise.t('r)), 'a, 'b) =>
     Js.Promise.t('r) =
     "evaluate";
 
-  [@bs.send.pipe: T.t]
+  [@bs.send]
   external evaluate3:
-    ([@bs.uncurry] (('a, 'b, 'c) => 'r), 'a, 'b, 'c) => Js.Promise.t('r) =
+    (T.t, [@bs.uncurry] (('a, 'b, 'c) => 'r), 'a, 'b, 'c) => Js.Promise.t('r) =
     "evaluate";
 
-  [@bs.send.pipe: T.t]
+  [@bs.send]
   external evaluatePromise3:
-    ([@bs.uncurry] (('a, 'b, 'c) => Js.Promise.t('r)), 'a, 'b, 'c) =>
+    (T.t, [@bs.uncurry] (('a, 'b, 'c) => Js.Promise.t('r)), 'a, 'b, 'c) =>
     Js.Promise.t('r) =
     "evaluate";
 
-  [@bs.send.pipe: T.t]
+  [@bs.send]
   external evaluate4:
-    ([@bs.uncurry] (('a, 'b, 'c, 'd) => 'r), 'a, 'b, 'c, 'd) =>
+    (T.t, [@bs.uncurry] (('a, 'b, 'c, 'd) => 'r), 'a, 'b, 'c, 'd) =>
     Js.Promise.t('r) =
     "evaluate";
 
-  [@bs.send.pipe: T.t]
+  [@bs.send]
   external evaluatePromise4:
-    ([@bs.uncurry] (('a, 'b, 'c, 'd) => Js.Promise.t('r)), 'a, 'b, 'c, 'd) =>
+    (
+      T.t,
+      [@bs.uncurry] (('a, 'b, 'c, 'd) => Js.Promise.t('r)),
+      'a,
+      'b,
+      'c,
+      'd
+    ) =>
     Js.Promise.t('r) =
     "evaluate";
 
   /** Evaluate a js expression in context. Returns the result in a promise. */
-  [@bs.send.pipe: T.t]
-  external evaluateString: string => Js.Promise.t('r) = "evaluate";
+  [@bs.send]
+  external evaluateString: (T.t, string) => Js.Promise.t('r) = "evaluate";
 
-  [@bs.send.pipe: T.t]
-  external evaluateHandle: (unit => JSHandle.t) => Js.Promise.t(JSHandle.t) =
+  [@bs.send]
+  external evaluateHandle:
+    (T.t, unit => JSHandle.t) => Js.Promise.t(JSHandle.t) =
     "";
 
-  [@bs.send.pipe: T.t]
+  [@bs.send]
   external evaluateHandlePromise:
-    (unit => Js.Promise.t(JSHandle.t)) => Js.Promise.t(JSHandle.t) =
+    (T.t, unit => Js.Promise.t(JSHandle.t)) => Js.Promise.t(JSHandle.t) =
     "";
 
-  [@bs.send.pipe: T.t]
+  [@bs.send]
   external evaluateHandle1:
-    ([@bs.uncurry] ('a => JSHandle.t), 'a) => Js.Promise.t(JSHandle.t) =
+    (T.t, [@bs.uncurry] ('a => JSHandle.t), 'a) => Js.Promise.t(JSHandle.t) =
     "evaluateHandle";
 
-  [@bs.send.pipe: T.t]
+  [@bs.send]
   external evaluateHandlePromise1:
-    ([@bs.uncurry] ('a => Js.Promise.t(JSHandle.t)), 'a) =>
+    (T.t, [@bs.uncurry] ('a => Js.Promise.t(JSHandle.t)), 'a) =>
     Js.Promise.t(JSHandle.t) =
     "evaluateHandle";
 
-  [@bs.send.pipe: T.t]
+  [@bs.send]
   external evaluateHandle2:
-    ([@bs.uncurry] (('a, 'b) => JSHandle.t), 'a, 'b) =>
+    (T.t, [@bs.uncurry] (('a, 'b) => JSHandle.t), 'a, 'b) =>
     Js.Promise.t(JSHandle.t) =
     "evaluateHandle";
 
-  [@bs.send.pipe: T.t]
+  [@bs.send]
   external evaluateHandlePromise2:
-    ([@bs.uncurry] (('a, 'b) => Js.Promise.t(JSHandle.t)), 'a, 'b) =>
+    (T.t, [@bs.uncurry] (('a, 'b) => Js.Promise.t(JSHandle.t)), 'a, 'b) =>
     Js.Promise.t(JSHandle.t) =
     "evaluateHandle";
 
-  [@bs.send.pipe: T.t]
+  [@bs.send]
   external evaluateHandle3:
-    ([@bs.uncurry] (('a, 'b, 'c) => JSHandle.t), 'a, 'b, 'c) =>
+    (T.t, [@bs.uncurry] (('a, 'b, 'c) => JSHandle.t), 'a, 'b, 'c) =>
     Js.Promise.t('r) =
     "evaluateHandle";
 
-  [@bs.send.pipe: T.t]
+  [@bs.send]
   external evaluateHandlePromise3:
-    ([@bs.uncurry] (('a, 'b, 'c) => Js.Promise.t(JSHandle.t)), 'a, 'b, 'c) =>
+    (
+      T.t,
+      [@bs.uncurry] (('a, 'b, 'c) => Js.Promise.t(JSHandle.t)),
+      'a,
+      'b,
+      'c
+    ) =>
     Js.Promise.t('r) =
     "evaluateHandle";
 
-  [@bs.send.pipe: T.t]
+  [@bs.send]
   external evaluateHandle4:
-    ([@bs.uncurry] (('a, 'b, 'c, 'd) => JSHandle.t), 'a, 'b, 'c, 'd) =>
+    (T.t, [@bs.uncurry] (('a, 'b, 'c, 'd) => JSHandle.t), 'a, 'b, 'c, 'd) =>
     Js.Promise.t('r) =
     "evaluateHandle";
 
-  [@bs.send.pipe: T.t]
+  [@bs.send]
   external evaluateHandlePromise4:
     (
+      T.t,
       [@bs.uncurry] (('a, 'b, 'c, 'd) => Js.Promise.t(JSHandle.t)),
       'a,
       'b,
@@ -119,8 +134,8 @@ module Impl = (T: {type t;}) => {
    * Evaluates a string of a JavaScript expression in context.
    * Returns a promise containing a JSHandle.
    */
-  [@bs.send.pipe: T.t]
-  external evaluateStringHandle: string => Js.Promise.t(JSHandle.t) =
+  [@bs.send]
+  external evaluateStringHandle: (T.t, string) => Js.Promise.t(JSHandle.t) =
     "evaluateHandle";
 };
 

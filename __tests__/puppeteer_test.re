@@ -304,7 +304,7 @@ describe("Page", () => {
     let url = "file:///" ++ testPagePath;
     Js.Promise.all2((
       (page^)->Page.waitForResponseUrl(url, ()),
-      page^ |> Page.evaluate(() => fetch("/testPage.html")),
+      (page^)->Page.evaluate(() => fetch("/testPage.html")),
     ))
     |> Js.Promise.then_(((res, _)) =>
          res |> Response.url |> expect |> toEqual(url) |> Js.Promise.resolve
@@ -496,7 +496,7 @@ describe("Page", () => {
     Js.Promise.(
       {
         let eval = () => "ok";
-        page^ |> Page.evaluate(eval);
+        (page^)->Page.evaluate(eval);
       }
       |> then_(res => res |> expect |> toBe("ok") |> resolve)
     )
@@ -505,7 +505,7 @@ describe("Page", () => {
     Js.Promise.(
       {
         let eval = arg => arg ++ "iedoke";
-        page^ |> Page.evaluate1(eval, "ok");
+        (page^)->Page.evaluate1(eval, "ok");
       }
       |> then_(res => res |> expect |> toBe("okiedoke") |> resolve)
     )
@@ -514,7 +514,7 @@ describe("Page", () => {
     Js.Promise.(
       {
         let eval = (arg1, arg2) => arg1 ++ " " ++ arg2;
-        page^ |> Page.evaluate1(eval("hello"), "world");
+        (page^)->Page.evaluate1(eval("hello"), "world");
       }
       |> then_(res => res |> expect |> toBe("hello world") |> resolve)
     )
@@ -523,7 +523,7 @@ describe("Page", () => {
     Js.Promise.(
       {
         let eval = (arg1, arg2) => resolve(arg1 ++ " " ++ arg2);
-        page^ |> Page.evaluatePromise1(eval("hello"), "world");
+        (page^)->Page.evaluatePromise1(eval("hello"), "world");
       }
       |> then_(res => res |> expect |> toBe("hello world") |> resolve)
     )
@@ -532,7 +532,7 @@ describe("Page", () => {
     Js.Promise.(
       {
         let eval = (arg1, arg2, arg3) => resolve(arg1 ++ " " ++ arg2 ++ arg3);
-        page^ |> Page.evaluatePromise2(eval("hello"), "world", "!");
+        (page^)->Page.evaluatePromise2(eval("hello"), "world", "!");
       }
       |> then_(res => res |> expect |> toBe("hello world!") |> resolve)
     )
@@ -542,7 +542,7 @@ describe("Page", () => {
       {
         let eval = (arg1, arg2) =>
           (arg1 |> String.length |> Js.Int.toString) ++ arg1 ++ " " ++ arg2;
-        page^ |> Page.evaluate2(eval, "hello", "world");
+        (page^)->Page.evaluate2(eval, "hello", "world");
       }
       |> then_(res => res |> expect |> toBe("5hello world") |> resolve)
     )
@@ -552,8 +552,7 @@ describe("Page", () => {
     page^
     |> Page.setContent(testPageContent)
     |> Js.Promise.then_(() =>
-         page^
-         |> Page.evaluateString(getTitleStr)
+         (page^)->Page.evaluateString(getTitleStr)
          |> Js.Promise.then_(title =>
               title |> expect |> toBe("Test Page") |> Js.Promise.resolve
             )
@@ -563,7 +562,7 @@ describe("Page", () => {
     Js.Promise.(
       {
         let eval = () => [%raw {| document |}];
-        page^ |> Page.evaluateHandle(eval);
+        (page^)->Page.evaluateHandle(eval);
       }
       |> then_(jsHandler =>
            jsHandler |> expect |> ExpectJs.toBeTruthy |> resolve
