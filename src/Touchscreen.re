@@ -1,4 +1,3 @@
 type t;
 
-[@bs.send.pipe: t]
-external tap: (~x: float, ~y: float) => Js.Promise.t(unit) = "";
+[@bs.send] external tap: (t, ~x: float, ~y: float) => Js.Promise.t(unit) = "";
