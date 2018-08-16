@@ -19,7 +19,7 @@
     "build": "bsb -make-world",
     "clean": "bsb -clean-world",
     "lint-staged": "lint-staged",
-    "precommit": "lint-staged",
+    "precommit": "bsb -make-world && lint-staged",
     "start": "bsb -make-world -w",
     "test": "bsb -make-world && jest",
     "test:ci": "jest --bail --ci",
