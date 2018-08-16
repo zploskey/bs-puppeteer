@@ -724,13 +724,12 @@ describe("CDPSession", () => {
     Js.Promise.(
       browser^
       |> Browser.newPage
-      |> then_(page => page |> Page.target |> Target.createCDPSession)
+      |> then_(page => page->Page.target->Target.createCDPSession)
       |> then_(session =>
            session
            |> CDPSession.detach
            |> then_(() =>
-                session
-                |> CDPSession.send(~method_="Animation.getPlaybackRate")
+                session->CDPSession.send("Animation.getPlaybackRate", ())
               )
            |> then_(_res =>
                 failwith(
@@ -746,19 +745,19 @@ describe("CDPSession", () => {
     Js.Promise.(
       browser^
       |> Browser.newPage
-      |> then_(page => page |> Page.target |> Target.createCDPSession)
+      |> then_(page => page->Page.target->Target.createCDPSession)
       |> then_(session =>
            session
-           |> CDPSession.send(
-                ~method_="Animation.setPlaybackRate",
-                ~params={"playbackRate": 3.1415926535},
-              )
+           ->CDPSession.send(
+               "Animation.setPlaybackRate",
+               ~params={"playbackRate": 3.1415926535},
+               (),
+             )
            |> then_(_res =>
-                session
-                |> CDPSession.send(~method_="Animation.getPlaybackRate")
+                session->CDPSession.send("Animation.getPlaybackRate", ())
               )
            |> then_(res =>
-                res##playbackRate |> expect |> toBe(3.1415926535) |> resolve
+                expect(res##playbackRate) |> toBe(3.1415926535) |> resolve
               )
          )
     )
