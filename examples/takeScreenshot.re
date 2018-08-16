@@ -8,13 +8,12 @@ let takeScreenshot = () =>
        browser
        |> Browser.newPage
        |> then_(page =>
-            page
-            |> Page.goto("https://google.com", ())
+            page->Page.goto("https://google.com", ())
             |> then_(_ => {
                  Js.log("screenshotting");
                  let options =
                    Screenshot.makeOptions(~path="./screenshot.png", ());
-                 page |> Page.screenshot(~options, ());
+                 page->Page.screenshot(~options, ());
                })
           )
        |> then_(_ => Browser.close(browser))

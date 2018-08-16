@@ -245,8 +245,7 @@ describe("Page", () => {
   );
   testPromise("$eval() with 1 arg", () =>
     Js.Promise.(
-      page^
-      |> Page.setContent(testPageContent)
+      (page^)->Page.setContent(testPageContent)
       |> then_(() =>
            (page^)
            ->Page.selectOneEval1(
@@ -271,7 +270,7 @@ describe("Page", () => {
       |> Browser.newPage
       |> then_(page => {
            let options = Navigation.makeOptions(~timeout=25000., ());
-           page |> Page.goto("file://" ++ testPagePath, ~options, ());
+           page->Page.goto("file://" ++ testPagePath, ~options, ());
          })
       |> then_(res => res |> Js.Null.getExn |> Response.text)
       |> then_(text =>
@@ -284,8 +283,7 @@ describe("Page", () => {
   );
   testPromise("screenshot()", () =>
     Js.Promise.(
-      page^
-      |> Page.screenshot()
+      (page^)->Page.screenshot()
       |> then_(buf =>
            buf
            |> Node.Buffer.toString
@@ -328,11 +326,11 @@ describe("Page", () => {
   );
   testPromise("setExtraHTTPHeaders", () =>
     Js.Promise.(
-      page^
-      |> Page.setExtraHTTPHeaders(
-           ~headers=Js.Dict.fromList([("extra-http-header", "header01")]),
-           (),
-         )
+      (page^)
+      ->Page.setExtraHTTPHeaders(
+          ~headers=Js.Dict.fromList([("extra-http-header", "header01")]),
+          (),
+        )
       /* TODO: Better way to verify extra HTTP headers */
       |> then_(() => pass |> resolve)
     )
@@ -342,8 +340,7 @@ describe("Page", () => {
       browser^
       |> Browser.newPage
       |> then_(page =>
-           page
-           |> Page.setContent(testPageContent)
+           page->Page.setContent(testPageContent)
            |> then_(() => page->Page.type_("#input", "hello world", ()))
            |> then_(() =>
                 page->Page.selectOneEval("#input", getElementValueJs)
@@ -402,55 +399,55 @@ describe("Page", () => {
   );
   testPromise("cookies()", () =>
     Js.Promise.(
-      page^
-      |> Page.setCookie([|
-           Page.makeCookie(
-             ~name="foo",
-             ~value="bar",
-             ~url="http://localhost",
-             (),
-           ),
-         |])
-      |> then_(() => page^ |> Page.cookies([|"http://localhost"|]))
+      (page^)
+      ->Page.setCookie([|
+          Page.makeCookie(
+            ~name="foo",
+            ~value="bar",
+            ~url="http://localhost",
+            (),
+          ),
+        |])
+      |> then_(() => (page^)->Page.cookies([|"http://localhost"|]))
       |> then_(cookies => cookies |> expect |> toHaveLength(1) |> resolve)
     )
   );
   testPromise("setCookie()", () =>
     Js.Promise.(
-      page^
-      |> Page.setCookie([|
-           Page.makeCookie(
-             ~name="foo",
-             ~value="bar",
-             ~url="http://localhost",
-             (),
-           ),
-           Page.makeCookie(
-             ~name="foo2",
-             ~value="bar2",
-             ~url="http://localhost2",
-             (),
-           ),
-         |])
+      (page^)
+      ->Page.setCookie([|
+          Page.makeCookie(
+            ~name="foo",
+            ~value="bar",
+            ~url="http://localhost",
+            (),
+          ),
+          Page.makeCookie(
+            ~name="foo2",
+            ~value="bar2",
+            ~url="http://localhost2",
+            (),
+          ),
+        |])
       |> then_(() =>
-           page^ |> Page.cookies([|"http://localhost", "http://localhost2"|])
+           (page^)->Page.cookies([|"http://localhost", "http://localhost2"|])
          )
       |> then_(cookies => cookies |> expect |> toHaveLength(2) |> resolve)
     )
   );
   testPromise("deleteCookie()", () =>
     Js.Promise.(
-      page^
-      |> Page.setCookie([|
-           Page.makeCookie(
-             ~name="foo",
-             ~value="bar",
-             ~url="http://localhost",
-             (),
-           ),
-         |])
-      |> then_(() => page^ |> Page.deleteCookie([||]))
-      |> then_(() => page^ |> Page.cookies([||]))
+      (page^)
+      ->Page.setCookie([|
+          Page.makeCookie(
+            ~name="foo",
+            ~value="bar",
+            ~url="http://localhost",
+            (),
+          ),
+        |])
+      |> then_(() => (page^)->Page.deleteCookie([||]))
+      |> then_(() => (page^)->Page.cookies([||]))
       |> then_(cookies => cookies |> expect |> toHaveLength(0) |> resolve)
     )
   );
@@ -464,8 +461,7 @@ describe("Page", () => {
         (),
       );
     Js.Promise.(
-      page^
-      |> Page.emulate({"viewport": viewport, "userAgent": ""})
+      (page^)->Page.emulate({"viewport": viewport, "userAgent": ""})
       |> then_(() =>
            expect(Page.viewport(page^) |> Js.Option.getExn)
            |> toEqual(viewport)
@@ -475,12 +471,12 @@ describe("Page", () => {
   });
   testPromise("emulateMedia()", () =>
     Js.Promise.(
-      page^ |> Page.emulateMedia(`print) |> then_(() => pass |> resolve)
+      (page^)->Page.emulateMedia(`print) |> then_(() => pass |> resolve)
     )
   );
   testPromise("emulateMediaDisable()", () =>
     Js.Promise.(
-      page^ |> Page.emulateMediaDisable |> then_(() => pass |> resolve)
+      Page.emulateMediaDisable(page^) |> then_(() => pass |> resolve)
     )
   );
   testPromise("evaluate()", () =>
@@ -540,8 +536,7 @@ describe("Page", () => {
   );
   testPromise("evaluateString()", () => {
     let getTitleStr = {| document.getElementsByTagName("title")[0].innerHTML; |};
-    page^
-    |> Page.setContent(testPageContent)
+    (page^)->Page.setContent(testPageContent)
     |> Js.Promise.then_(() =>
          (page^)->Page.evaluateString(getTitleStr)
          |> Js.Promise.then_(title =>
@@ -562,30 +557,30 @@ describe("Page", () => {
   );
   testPromise("pdf()", () =>
     Js.Promise.(
-      page^
-      |> Page.pdf(
-           Page.makePDFOptions(
-             ~scale=1.,
-             ~displayHeaderFooter=true,
-             ~headerTemplate="[[header]]",
-             ~footerTemplate="[[footer]]",
-             ~printBackground=true,
-             ~landscape=true,
-             ~pageRanges="",
-             ~format=`A0,
-             ~width=10.0 |> Unit.cm,
-             ~height=200.0 |> Unit.mm,
-             ~margin=
-               Page.makeMargin(
-                 ~top=0.1 |> Unit.cm,
-                 ~right=10.0 |> Unit.px,
-                 ~bottom=1.0 |> Unit.mm,
-                 ~left=0.01 |> Unit.in_,
-                 (),
-               ),
-             (),
-           ),
-         )
+      (page^)
+      ->Page.pdf(
+          Page.makePDFOptions(
+            ~scale=1.,
+            ~displayHeaderFooter=true,
+            ~headerTemplate="[[header]]",
+            ~footerTemplate="[[footer]]",
+            ~printBackground=true,
+            ~landscape=true,
+            ~pageRanges="",
+            ~format=`A0,
+            ~width=10.0 |> Unit.cm,
+            ~height=200.0 |> Unit.mm,
+            ~margin=
+              Page.makeMargin(
+                ~top=0.1 |> Unit.cm,
+                ~right=10.0 |> Unit.px,
+                ~bottom=1.0 |> Unit.mm,
+                ~left=0.01 |> Unit.in_,
+                (),
+              ),
+            (),
+          ),
+        )
       |> then_(buffer =>
            buffer
            |> Node.Buffer.toString
@@ -620,7 +615,7 @@ describe("ElementHandle", () => {
          })
       |> then_(res => {
            page := res;
-           page^ |> Page.goto("file://" ++ testPagePath, ());
+           (page^)->Page.goto("file://" ++ testPagePath, ());
          })
       |> then_(_resp => Page.selectOne(page^, ~selector="#iframe"))
       |> then_(res =>
@@ -777,7 +772,7 @@ describe("Coverage", () => {
              let options =
                Coverage.makeJSCoverageOptions(~resetOnNavigation=true, ());
              coverage->Coverage.startJSCoverage(~options, ())
-             |> then_(() => page |> Page.goto("file://" ++ testPagePath, ()))
+             |> then_(() => page->Page.goto("file://" ++ testPagePath, ()))
              |> then_(_res => Coverage.stopJSCoverage(coverage))
              |> then_(res => {
                   report := res;
@@ -824,7 +819,7 @@ describe("Coverage", () => {
              let options =
                Coverage.makeCSSCoverageOptions(~resetOnNavigation=true, ());
              coverage->Coverage.startCSSCoverage(~options, ())
-             |> then_(() => page |> Page.goto("file://" ++ testPagePath, ()))
+             |> then_(() => page->Page.goto("file://" ++ testPagePath, ()))
              |> then_(_res => coverage->Coverage.stopCSSCoverage)
              |> then_(res => {
                   report := res;

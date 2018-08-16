@@ -164,21 +164,23 @@ external evaluateOnNewDocument: (unit => unit) => Js.Promise.t(unit) = "";
 [@bs.send]
 external frames: t => array(Frame.t) = "";
 
-[@bs.send.pipe: t] external setContent: string => Js.Promise.t(unit) = "";
+[@bs.send] external setContent: (t, string) => Js.Promise.t(unit) = "";
 
-[@bs.send.pipe: t]
+[@bs.send]
 external goBack:
-  (~options: Navigation.options=?, unit) => Js.Promise.t(Js.null(Response.t)) =
+  (t, ~options: Navigation.options=?, unit) =>
+  Js.Promise.t(Js.null(Response.t)) =
   "";
 
-[@bs.send.pipe: t]
+[@bs.send]
 external goForward:
-  (~options: Navigation.options=?, unit) => Js.Promise.t(Js.null(Response.t)) =
+  (t, ~options: Navigation.options=?, unit) =>
+  Js.Promise.t(Js.null(Response.t)) =
   "";
 
-[@bs.send.pipe: t]
+[@bs.send]
 external goto:
-  (string, ~options: Navigation.options=?, unit) =>
+  (t, string, ~options: Navigation.options=?, unit) =>
   Js.Promise.t(Js.null(Response.t)) =
   "";
 
@@ -203,66 +205,64 @@ external metrics: t => Js.Promise.t(Metrics.t) = "";
 [@bs.get]
 external mouse: t => Mouse.t = "";
 
-[@bs.send.pipe: t]
+[@bs.send]
 external screenshot:
-  (~options: Screenshot.options=?, unit) => Js.Promise.t(Node.Buffer.t) =
+  (t, ~options: Screenshot.options=?, unit) => Js.Promise.t(Node.Buffer.t) =
   "";
 
-[@bs.send.pipe: t]
+[@bs.send]
 external setExtraHTTPHeaders:
-  (~headers: Js.Dict.t(string), unit) => Js.Promise.t(unit) =
+  (t, ~headers: Js.Dict.t(string), unit) => Js.Promise.t(unit) =
   "";
 
-[@bs.send.pipe: t] [@bs.splice]
-external deleteCookie: array(cookie) => Js.Promise.t(unit) = "";
+[@bs.send] [@bs.splice]
+external deleteCookie: (t, array(cookie)) => Js.Promise.t(unit) = "";
 
-[@bs.send.pipe: t] [@bs.splice]
-external cookies: array(string) => Js.Promise.t(array(cookie)) = "";
+[@bs.send] [@bs.splice]
+external cookies: (t, array(string)) => Js.Promise.t(array(cookie)) = "";
 
-[@bs.send.pipe: t] [@bs.splice]
-external setCookie: array(cookie) => Js.Promise.t(unit) = "";
+[@bs.send] [@bs.splice]
+external setCookie: (t, array(cookie)) => Js.Promise.t(unit) = "";
 
-[@bs.send.pipe: t]
-external emulate: emulateOptions => Js.Promise.t(unit) = "";
+[@bs.send] external emulate: (t, emulateOptions) => Js.Promise.t(unit) = "";
 
 [@bs.send] [@bs.return nullable]
 external viewport: t => option(viewport) = "";
 
-[@bs.send.pipe: t]
+[@bs.send]
 external emulateMedia:
-  ([@bs.string] [ | `screen | `print]) => Js.Promise.t(unit) =
+  (t, [@bs.string] [ | `screen | `print]) => Js.Promise.t(unit) =
   "";
 
-[@bs.send.pipe: t]
+[@bs.send]
 external emulateMediaDisable:
-  ([@bs.as {json|null|json}] _) => Js.Promise.t(unit) =
+  (t, [@bs.as {json|null|json}] _) => Js.Promise.t(unit) =
   "emulateMedia";
 
-[@bs.send.pipe: t]
-external pdf: pdfOptions => Js.Promise.t(Node.Buffer.t) = "";
+[@bs.send] external pdf: (t, pdfOptions) => Js.Promise.t(Node.Buffer.t) = "";
 
 /* TODO:
       external on
       external once
    */
 /** Iterates the JS heap finding all the objects with the given prototype. */
-[@bs.send.pipe: t]
+[@bs.send]
 external queryObjects:
-  (~prototypeHandle: JSHandle.t) => Js.Promise.t(JSHandle.t) =
+  (t, ~prototypeHandle: JSHandle.t) => Js.Promise.t(JSHandle.t) =
   "";
 
 /** Reload the current page. */
-[@bs.send.pipe: t]
+[@bs.send]
 external reload:
-  (~options: Navigation.options=?, unit) => Js.Promise.t(Response.t) =
+  (t, ~options: Navigation.options=?, unit) => Js.Promise.t(Response.t) =
   "";
 
 /**
  * Toggles ignoring cache for each request based on the enabled state.
  * Caching is enabled by default.
  */
-[@bs.send.pipe: t]
-external setCacheEnabled: (~enabled: bool) => Js.Promise.t(unit) = "";
+[@bs.send]
+external setCacheEnabled: (t, ~enabled: bool) => Js.Promise.t(unit) = "";
 
 /**
  * Change the default maximum navigation time of 30 seconds for the following:
@@ -272,23 +272,24 @@ external setCacheEnabled: (~enabled: bool) => Js.Promise.t(unit) = "";
  * - `Page.reload`
  * - `Page.waitForNavigation`
  */
-[@bs.send.pipe: t]
-external setDefaultNavigationTimeout: (~timeout: float) => unit = "";
+[@bs.send]
+external setDefaultNavigationTimeout: (t, ~timeout: float) => unit = "";
 
 /** Set whether to enable JavaScript on the page. */
-[@bs.send.pipe: t]
-external setJavaScriptEnabled: (~enabled: bool) => Js.Promise.t(unit) = "";
+[@bs.send]
+external setJavaScriptEnabled: (t, ~enabled: bool) => Js.Promise.t(unit) = "";
 
 /** Set whether to enable offline mode for the page. */
-[@bs.send.pipe: t]
-external setOfflineMode: (~enabled: bool) => Js.Promise.t(unit) = "";
+[@bs.send]
+external setOfflineMode: (t, ~enabled: bool) => Js.Promise.t(unit) = "";
 
 /** Set whether to enable request interception for the page. */
-[@bs.send.pipe: t]
-external setRequestInterception: (~enabled: bool) => Js.Promise.t(unit) = "";
+[@bs.send]
+external setRequestInterception: (t, ~enabled: bool) => Js.Promise.t(unit) =
+  "";
 
-[@bs.send.pipe: t]
-external setUserAgent: (~userAgent: string) => Js.Promise.t(unit) = "";
+[@bs.send]
+external setUserAgent: (t, ~userAgent: string) => Js.Promise.t(unit) = "";
 
 /** Toggle bypassing page's Content-Security-Policy. */
 [@bs.send]
@@ -296,8 +297,8 @@ external setBypassCSP: (t, ~enabled: bool) => Js.Promise.t(unit) = "";
 
 let setBypassCSP = (~enabled, page) => setBypassCSP(page, ~enabled);
 
-[@bs.send.pipe: t]
-external setViewport: (~viewport: viewport) => Js.Promise.t(unit) = "";
+[@bs.send]
+external setViewport: (t, ~viewport: viewport) => Js.Promise.t(unit) = "";
 
 [@bs.send] external target: t => Types.target = "";
 
@@ -307,13 +308,13 @@ external setViewport: (~viewport: viewport) => Js.Promise.t(unit) = "";
 
 [@bs.get] external tracing: t => Tracing.t = "";
 
-[@bs.send.pipe: t]
+[@bs.send]
 external waitForNavigation:
-  (~options: Navigation.options) => Js.Promise.t(Js.nullable(Response.t)) =
+  (t, ~options: Navigation.options) => Js.Promise.t(Js.nullable(Response.t)) =
   "";
 
-let waitForNavigation = (~options, page) =>
-  waitForNavigation(~options, page)
+let waitForNavigation = (page, ~options) =>
+  waitForNavigation(page, ~options)
   |> Js.Promise.(then_(response => response |> Js.toOption |> resolve));
 
 module WaitForRequest = {
