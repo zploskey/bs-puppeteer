@@ -13,6 +13,7 @@ type loadEvents =
 
 type options = {
   .
+  "referer": Js.Nullable.t(string),
   "timeout": Js.Nullable.t(float),
   "waitUntil": Js.Nullable.t(string),
 };
@@ -20,6 +21,7 @@ type options = {
 [@bs.obj]
 external makeOptions:
   (
+    ~referer: string=?,
     ~timeout: float=?,
     ~waitUntil: [@bs.string] [
                   | `load
