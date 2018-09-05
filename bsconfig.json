@@ -16,7 +16,7 @@
     }
   ],
   "warnings": {
-    "number": "-44",
+    "number": "+a-44",
     "error": ""
   },
   "bs-dev-dependencies": [
