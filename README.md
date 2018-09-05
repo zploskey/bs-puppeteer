@@ -82,8 +82,6 @@ One great way to contribute is by writing tests for features that don't yet have
 Tests can be found in the `__tests__` directory.
 
 A git hook will automatically run `refmt` on your code and run the test suite each time you commit.
-Contributors should have the latest release version of `refmt`, which is included with Reason.
-See the [Reason installation instructions](https://reasonml.github.io/docs/en/installation).
 
 Good references for writing bindings are:
 
