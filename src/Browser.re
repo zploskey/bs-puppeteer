@@ -10,6 +10,8 @@ external empty: unit => t = "%identity";
 external createIncognitoBrowserContext: t => Js.Promise.t(BrowserContext.t) =
   "";
 
+[@bs.send] external defaultBrowserContext: t => BrowserContext.t = "";
+
 [@bs.send] external disconnect: t => unit = "";
 
 [@bs.send] external newPage: t => Js.Promise.t(Page.t) = "";
