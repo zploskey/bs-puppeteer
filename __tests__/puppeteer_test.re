@@ -42,12 +42,15 @@ let noSandbox = Puppeteer.makeLaunchOptions(~args=[|"--no-sandbox"|], ());
 
 describe("Puppeteer", () => {
   open Puppeteer;
+
   test("executablePath", () =>
     executablePath() |> expect |> toContainString("chromium")
   );
+
   test("defaultArgs()", () =>
     defaultArgs() |> Array.length |> expect |> toBeGreaterThan(0)
   );
+
   test("calling defaultArgs with options", () => {
     let options = DefaultArgsOptions.make(~headless=true, ());
     let args = defaultArgs(~options, ());
@@ -59,6 +62,7 @@ describe("BrowserFetcher", () => {
   open BrowserFetcher;
   let browserFetcher = ref(empty());
   let revision = ref("");
+
   beforeAll(() =>
     browserFetcher :=
       Puppeteer.createBrowserFetcher(
@@ -66,6 +70,7 @@ describe("BrowserFetcher", () => {
         (),
       )
   );
+
   testPromise("localRevisions", () =>
     (browserFetcher^)->localRevisions
     |> Js.Promise.(
@@ -75,22 +80,26 @@ describe("BrowserFetcher", () => {
          })
        )
   );
+
   Skip.testPromise("canDownload", () =>
     (browserFetcher^)->canDownload("533271")
     |> Js.Promise.(
          then_(boolean => boolean |> expect |> toBe(true) |> resolve)
        )
   );
+
   Skip.testPromise("download", ~timeout=30 |> seconds, () =>
     (browserFetcher^)->download(~revision="533271", ())
     |> Js.Promise.then_(info =>
          info##revision |> expect |> toBe("533271") |> Js.Promise.resolve
        )
   );
+
   /* TODO: Determine the platform from node and verify it properly. */
   test("platform", () =>
     (browserFetcher^)->platform |> expect |> toEqual(Some(`linux))
   );
+
   Skip.testPromise(
     "remove",
     ~timeout=30000,
@@ -105,22 +114,27 @@ describe("BrowserFetcher", () => {
          );
     },
   );
+
   test("t->revisionInfo##revision == t->revisions[0]", () => {
     let revisionInfo = (browserFetcher^)->revisionInfo(revision^);
     revisionInfo##revision |> expect |> toBe(revision^);
   });
+
   test("t->revisionInfo##folderPath should contain chromium", () => {
     let revisionInfo = (browserFetcher^)->revisionInfo(revision^);
     expect(revisionInfo##folderPath) |> toContainString("chromium");
   });
+
   test("t->revisionInfo##local property should be true", () => {
     let revisionInfo = (browserFetcher^)->revisionInfo(revision^);
     revisionInfo##local |> expect |> toBe(true);
   });
+
   test("t->revisionInfo##local property should be true", () => {
     let r = (browserFetcher^)->revisionInfo(revision^);
     expect(r##url) |> toContainString("https://storage.googleapis.com/");
   });
+
   test("revisionInfo##executablePath should contain \"chromium\"", () => {
     let revisionInfo = (browserFetcher^)->revisionInfo(revision^);
     expect(revisionInfo##executablePath) |> toContainString("chromium");
@@ -129,6 +143,7 @@ describe("BrowserFetcher", () => {
 
 describe("Browser", () => {
   let browser = ref(Browser.empty());
+
   beforeAllPromise(() =>
     Js.Promise.(
       Puppeteer.launch(~options=noSandbox, ())
@@ -138,11 +153,13 @@ describe("Browser", () => {
          })
     )
   );
+
   test("wsEndpoint()", () =>
     Browser.wsEndpoint(browser^)
     |> expect
     |> toContainString("ws://127.0.0.1:")
   );
+
   testPromise("userAgent()", () =>
     Js.Promise.(
       Browser.userAgent(browser^)
@@ -151,6 +168,7 @@ describe("Browser", () => {
          )
     )
   );
+
   testPromise("version()", () =>
     Js.Promise.(
       Browser.version(browser^)
@@ -162,12 +180,14 @@ describe("Browser", () => {
          )
     )
   );
+
   afterAllPromise(() => Browser.close(browser^));
 });
 
 describe("Page", () => {
   let browser = ref(Browser.empty());
   let page = ref(Page.empty());
+
   beforeAllPromise(() =>
     Js.Promise.(
       Puppeteer.launch(~options=noSandbox, ())
@@ -181,6 +201,7 @@ describe("Page", () => {
          })
     )
   );
+
   testPromise("$()", () =>
     Js.Promise.(
       Page.selectOne(page^, ~selector="body")
@@ -189,6 +210,7 @@ describe("Page", () => {
          )
     )
   );
+
   testPromise("content()", () =>
     Js.Promise.(
       Page.content(page^)
@@ -199,6 +221,7 @@ describe("Page", () => {
          )
     )
   );
+
   testPromise("$$()", () =>
     Js.Promise.(
       Page.selectAll(page^, ~selector="html,body")
@@ -207,6 +230,7 @@ describe("Page", () => {
          )
     )
   );
+
   testPromise("$x", () =>
     Js.Promise.(
       Page.selectXPath(page^, ~xpath="/html/body")
@@ -215,12 +239,14 @@ describe("Page", () => {
          )
     )
   );
+
   testPromise("$$eval()", () =>
     Js.Promise.(
       (page^)->Page.selectAllEval("html,body", getLengthOfElementsJs)
       |> then_(length => length |> expect |> toBe(2.0) |> resolve)
     )
   );
+
   testPromise("$eval() with 0 args", () =>
     Js.Promise.(
       (page^)->Page.selectOneEval("html", getElementOuterHTMLJs)
@@ -232,6 +258,7 @@ describe("Page", () => {
          )
     )
   );
+
   testPromise("$eval() with 0 args returning a promise", () =>
     Js.Promise.(
       (page^)->Page.selectOneEvalPromise("html", getElementOuterHTMLJsPromise)
@@ -243,6 +270,7 @@ describe("Page", () => {
          )
     )
   );
+
   testPromise("$eval() with 1 arg", () =>
     Js.Promise.(
       (page^)->Page.setContent(testPageContent)
@@ -259,11 +287,13 @@ describe("Page", () => {
       |> then_(id => id |> expect |> toBe("input") |> resolve)
     )
   );
+
   testPromise("click()", () =>
     Js.Promise.(
       (page^)->Page.click("body", ()) |> then_(() => pass |> resolve)
     )
   );
+
   testPromise("goto()", () =>
     Js.Promise.(
       browser^
@@ -281,6 +311,7 @@ describe("Page", () => {
          )
     )
   );
+
   testPromise("screenshot()", () =>
     Js.Promise.(
       (page^)->Page.screenshot()
@@ -294,6 +325,7 @@ describe("Page", () => {
          )
     )
   );
+
   /* TODO: Run a test http server so these fetches can actually work. */
   Skip.testPromise("waitForResponseUrl()", () => {
     let url = "file:///" ++ testPagePath;
@@ -305,12 +337,14 @@ describe("Page", () => {
          res |> Response.url |> expect |> toEqual(url) |> Js.Promise.resolve
        );
   });
+
   testPromise("waitForSelector()", () =>
     Js.Promise.(
       (page^)->Page.waitForSelector("body", ())
       |> then_(() => pass |> resolve)
     )
   );
+
   testPromise("waitForXPath()", () =>
     Js.Promise.(
       (page^)
@@ -324,6 +358,7 @@ describe("Page", () => {
          )
     )
   );
+
   testPromise("setExtraHTTPHeaders", () =>
     Js.Promise.(
       (page^)
@@ -335,6 +370,7 @@ describe("Page", () => {
       |> then_(() => pass |> resolve)
     )
   );
+
   testPromise("type()", () =>
     Js.Promise.(
       browser^
@@ -349,6 +385,7 @@ describe("Page", () => {
       |> then_(value => value |> expect |> toBe("hello world") |> resolve)
     )
   );
+
   testPromise("addScriptTag()", () =>
     Js.Promise.(
       browser^
@@ -369,6 +406,7 @@ describe("Page", () => {
          )
     )
   );
+
   testPromise("addStyleTag()", () =>
     Js.Promise.(
       Browser.newPage(browser^)
@@ -388,6 +426,7 @@ describe("Page", () => {
          )
     )
   );
+
   testPromise("authenticate()", () =>
     Js.Promise.(
       (page^)
@@ -397,6 +436,7 @@ describe("Page", () => {
       |> then_(() => pass |> resolve)
     )
   );
+
   testPromise("cookies()", () =>
     Js.Promise.(
       (page^)
@@ -412,6 +452,7 @@ describe("Page", () => {
       |> then_(cookies => cookies |> expect |> toHaveLength(1) |> resolve)
     )
   );
+
   testPromise("setCookie()", () =>
     Js.Promise.(
       (page^)
@@ -435,6 +476,7 @@ describe("Page", () => {
       |> then_(cookies => cookies |> expect |> toHaveLength(2) |> resolve)
     )
   );
+
   testPromise("deleteCookie()", () =>
     Js.Promise.(
       (page^)
@@ -451,6 +493,7 @@ describe("Page", () => {
       |> then_(cookies => cookies |> expect |> toHaveLength(0) |> resolve)
     )
   );
+
   testPromise("emulate()", () => {
     let viewport =
       Viewport.make(
@@ -469,16 +512,19 @@ describe("Page", () => {
          )
     );
   });
+
   testPromise("emulateMedia()", () =>
     Js.Promise.(
       (page^)->Page.emulateMedia(`print) |> then_(() => pass |> resolve)
     )
   );
+
   testPromise("emulateMediaDisable()", () =>
     Js.Promise.(
       Page.emulateMediaDisable(page^) |> then_(() => pass |> resolve)
     )
   );
+
   testPromise("evaluate()", () =>
     Js.Promise.(
       {
@@ -488,6 +534,7 @@ describe("Page", () => {
       |> then_(res => res |> expect |> toBe("ok") |> resolve)
     )
   );
+
   testPromise("evaluate() with 1 arg", () =>
     Js.Promise.(
       {
@@ -497,6 +544,7 @@ describe("Page", () => {
       |> then_(res => res |> expect |> toBe("okiedoke") |> resolve)
     )
   );
+
   testPromise("evaluate1() and a curried function", () =>
     Js.Promise.(
       {
@@ -506,6 +554,7 @@ describe("Page", () => {
       |> then_(res => res |> expect |> toBe("hello world") |> resolve)
     )
   );
+
   testPromise("evaluatePromise1() with a curried function", () =>
     Js.Promise.(
       {
@@ -515,6 +564,7 @@ describe("Page", () => {
       |> then_(res => res |> expect |> toBe("hello world") |> resolve)
     )
   );
+
   testPromise("evaluatePromise2() with a curried function", () =>
     Js.Promise.(
       {
@@ -524,6 +574,7 @@ describe("Page", () => {
       |> then_(res => res |> expect |> toBe("hello world!") |> resolve)
     )
   );
+
   testPromise("evaluate() with 2 args", () =>
     Js.Promise.(
       {
@@ -534,6 +585,7 @@ describe("Page", () => {
       |> then_(res => res |> expect |> toBe("5hello world") |> resolve)
     )
   );
+
   testPromise("evaluateString()", () => {
     let getTitleStr = {| document.getElementsByTagName("title")[0].innerHTML; |};
     (page^)->Page.setContent(testPageContent)
@@ -544,6 +596,7 @@ describe("Page", () => {
             )
        );
   });
+
   testPromise("evaluateHandle()", () =>
     Js.Promise.(
       {
@@ -555,6 +608,7 @@ describe("Page", () => {
          )
     )
   );
+
   testPromise("pdf()", () =>
     Js.Promise.(
       (page^)
@@ -591,12 +645,15 @@ describe("Page", () => {
          )
     )
   );
+
   test("target()", () =>
     page^ |> Page.target |> Target.url |> expect |> toBe("about:blank")
   );
+
   test("coverage", () =>
     Page.coverage(page^) |> expect |> ExpectJs.toBeTruthy
   );
+
   afterAllPromise(() =>
     Js.Promise.((page^)->Page.close() |> then_(() => Browser.close(browser^)))
   );
@@ -606,6 +663,7 @@ describe("ElementHandle", () => {
   let browser = ref(Browser.empty());
   let page = ref(Page.empty());
   let elementHandle = ref(ElementHandle.empty());
+
   beforeAllPromise(() =>
     Js.Promise.(
       Puppeteer.launch(~options=noSandbox, ())
@@ -629,6 +687,7 @@ describe("ElementHandle", () => {
          )
     )
   );
+
   testPromise("contentFrame()", () =>
     Js.Promise.(
       elementHandle^
@@ -643,6 +702,7 @@ describe("ElementHandle", () => {
          )
     )
   );
+
   afterAllPromise(() =>
     Js.Promise.((page^)->Page.close() |> then_(() => Browser.close(browser^)))
   );
@@ -651,6 +711,7 @@ describe("ElementHandle", () => {
 describe("Target", () => {
   let browser = ref(Browser.empty());
   let target = ref(Target.empty());
+
   beforeAllPromise(() =>
     Js.Promise.(
       Puppeteer.launch(~options=noSandbox, ())
@@ -664,6 +725,7 @@ describe("Target", () => {
          })
     )
   );
+
   testPromise("page", () =>
     Js.Promise.(
       target^
@@ -671,6 +733,7 @@ describe("Target", () => {
       |> then_(page => page |> expect |> ExpectJs.toBeTruthy |> resolve)
     )
   );
+
   test("type", () =>
     (
       switch (target^ |> Target.type_) {
@@ -681,9 +744,11 @@ describe("Target", () => {
     |> expect
     |> toBe(true)
   );
+
   test("url", () =>
     target^ |> Target.url |> expect |> toBe("about:blank")
   );
+
   testPromise("createCDPSession", () =>
     Js.Promise.(
       target^
@@ -691,11 +756,13 @@ describe("Target", () => {
       |> then_(session => session |> expect |> ExpectJs.toBeTruthy |> resolve)
     )
   );
+
   afterAllPromise(() => browser^ |> Browser.close);
 });
 
 describe("CDPSession", () => {
   let browser = ref(Browser.empty());
+
   beforeAllPromise(() =>
     Js.Promise.(
       Puppeteer.launch(~options=noSandbox, ())
@@ -705,6 +772,7 @@ describe("CDPSession", () => {
          })
     )
   );
+
   testPromise("detach", () =>
     Js.Promise.(
       browser^
@@ -726,6 +794,7 @@ describe("CDPSession", () => {
          )
     )
   );
+
   testPromise("send", () =>
     Js.Promise.(
       browser^
@@ -747,11 +816,13 @@ describe("CDPSession", () => {
          )
     )
   );
+
   afterAllPromise(() => browser^ |> Browser.close);
 });
 
 describe("Coverage", () => {
   let browser = ref(Browser.empty());
+
   beforeAllPromise(() =>
     Js.Promise.(
       Puppeteer.launch(~options=noSandbox, ())
@@ -761,6 +832,7 @@ describe("Coverage", () => {
          })
     )
   );
+
   describe("startJSCoverage, stopJSCoverage", () => {
     let report = ref([||]);
     beforeAllPromise(() =>
@@ -781,6 +853,7 @@ describe("Coverage", () => {
            })
       )
     );
+
     test("report.ranges[0]", () =>
       {
         let ranges = report^[0]##ranges;
@@ -789,6 +862,7 @@ describe("Coverage", () => {
       |> expect
       |> ExpectJs.toMatchObject({"end": 21, "start": 0})
     );
+
     test("report.ranges[1]", () =>
       {
         let ranges = report^[0]##ranges;
@@ -797,6 +871,7 @@ describe("Coverage", () => {
       |> expect
       |> ExpectJs.toMatchObject({"end": 65, "start": 39})
     );
+
     test("report.text", () =>
       report^[0]##text
       |> expect
@@ -805,12 +880,15 @@ describe("Coverage", () => {
     function foo() {function bar() { } console.log(1); } foo(); |j},
          )
     );
+
     test("report.url", () =>
       report^[0]##url |> expect |> toContainString("fixtures/testPage.html")
     );
   });
+
   describe("startCSSCoverage, stopCSSCoverage", () => {
     let report = ref([||]);
+
     beforeAllPromise(() =>
       Js.Promise.(
         (browser^)->Browser.newPage
@@ -828,6 +906,7 @@ describe("Coverage", () => {
            })
       )
     );
+
     test("report.ranges[0]", () =>
       {
         let ranges = report^[0]##ranges;
@@ -836,6 +915,7 @@ describe("Coverage", () => {
       |> expect
       |> ExpectJs.toMatchObject({"end": 30, "start": 7})
     );
+
     test("report.text", () =>
       report^[0]##text
       |> expect
@@ -846,9 +926,11 @@ describe("Coverage", () => {
     |j},
          )
     );
+
     test("report.url", () =>
       report^[0]##url |> expect |> toContainString("fixtures/testPage.html")
     );
   });
+
   afterAllPromise(() => browser^ |> Browser.close);
 });
