@@ -2,7 +2,13 @@ include FrameBase;
 
 [@bs.send] external childFrames: t => array(t) = "";
 
-[@bs.send] external executionContext: t => ExecutionContext.t = "";
+/** Promise of the frame's default execution context. */
+[@bs.send]
+external executionContext: t => Js.Promise.t(ExecutionContext.t) = "";
+
+/** Array of execution contexts associated with the frame. */
+[@bs.send]
+external executionContexts: t => array(ExecutionContext.t) = "";
 
 [@bs.send] external isDetached: t => bool = "";
 
