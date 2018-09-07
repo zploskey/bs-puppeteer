@@ -6,6 +6,10 @@ include FrameBase;
 [@bs.send]
 external executionContext: t => Js.Promise.t(ExecutionContext.t) = "";
 
+/** Array of execution contexts associated with the frame. */
+[@bs.send]
+external executionContexts: t => array(ExecutionContext.t) = "";
+
 [@bs.send] external isDetached: t => bool = "";
 
 [@bs.send] external name: t => string = "";
