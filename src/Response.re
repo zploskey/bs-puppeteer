@@ -27,6 +27,14 @@ external json: t => Js.Promise.t(Js.Json.t) = "";
 [@bs.send]
 external ok: t => bool = "";
 
+type remoteAddress = {
+  .
+  ip: string,
+  port: int,
+};
+
+[@bs.send] external remoteAddress: t => remoteAddress = "";
+
 /** A matching Request object. */
 [@bs.send]
 external request: t => Types.request = "";
