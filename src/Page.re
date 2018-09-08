@@ -277,6 +277,41 @@ external setCacheEnabled: (t, ~enabled: bool) => Js.Promise.t(unit) = "";
 [@bs.send]
 external setDefaultNavigationTimeout: (t, ~timeout: float) => unit = "";
 
+module GeolocationOptions = {
+  [@bs.deriving abstract]
+  type t = {
+    latitude: float,
+    longitude: float,
+    [@bs.optional]
+    accuracy: float,
+  };
+
+  /** Create a `GeolocationOptions` object.
+
+  When passed to `Page.setGeolocation` the following conditions must be met or
+  an error will be thrown:
+  - `latitude` must be in the range -90. to 90 degrees.
+  - `longitude` must be in the range -180. to 180 degrees.
+  - `accuracy` (optional) must be >= 0.
+  */
+  let make = t;
+};
+
+/** Set the page's geolocation.
+
+```
+let loc = Geolocation.make(~latitude=33.0, ~longitude=44.0, ());
+page->Page.setGeolocation(loc);
+```
+
+You'll probably need to use `BrowserContext.overridePermissions` to grant
+permission for the page to read its geolocation.
+*/
+[@bs.send]
+external setGeolocation:
+  (t, ~options: GeolocationOptions.t) => Js.Promise.t(unit) =
+  "";
+
 /** Set whether to enable JavaScript on the page. */
 [@bs.send]
 external setJavaScriptEnabled: (t, ~enabled: bool) => Js.Promise.t(unit) = "";
