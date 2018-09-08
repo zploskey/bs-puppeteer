@@ -332,8 +332,6 @@ external setUserAgent: (t, ~userAgent: string) => Js.Promise.t(unit) = "";
 [@bs.send]
 external setBypassCSP: (t, ~enabled: bool) => Js.Promise.t(unit) = "";
 
-let setBypassCSP = (~enabled, page) => setBypassCSP(page, ~enabled);
-
 [@bs.send]
 external setViewport: (t, ~viewport: viewport) => Js.Promise.t(unit) = "";
 
