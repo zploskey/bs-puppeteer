@@ -29,8 +29,8 @@ external ok: t => bool = "";
 
 type remoteAddress = {
   .
-  ip: string,
-  port: int,
+  "ip": string,
+  "port": int,
 };
 
 [@bs.send] external remoteAddress: t => remoteAddress = "";
