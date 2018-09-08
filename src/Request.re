@@ -2,6 +2,9 @@ type t = Types.request;
 
 type headers = Js.Dict.t(string);
 
+[@bs.deriving jsConverter]
+type method = [ | `GET | `POST | `PATCH | `PUT | `DELETE | `OPTIONS];
+
 type resourceType =
   | Document
   | Stylesheet
@@ -16,34 +19,6 @@ type resourceType =
   | WebSocket
   | Manifest
   | Other;
-
-type overrides = {
-  .
-  url: Js.Nullable.t(string),
-  method_: Js.Nullable.t(string),
-  postData: Js.Nullable.t(string),
-  headers: Js.Nullable.t(headers),
-};
-
-[@bs.obj]
-external makeOverrides:
-  (
-    ~url: string=?,
-    ~method_: [@bs.string] [
-                | `GET
-                | `POST
-                | `PATCH
-                | `PUT
-                | `DELETE
-                | `OPTIONS
-              ]
-                =?,
-    ~postData: string=?,
-    ~headers: headers=?,
-    unit
-  ) =>
-  overrides =
-  "";
 
 [@bs.send]
 external abort:
@@ -70,6 +45,27 @@ external abort:
   ) =>
   Js.Promise.t(unit) =
   "";
+
+module Overrides = {
+  [@bs.deriving abstract]
+  type t = {
+    [@bs.optional]
+    url: string,
+    [@bs.optional] [@bs.as "method"]
+    method_: string,
+    [@bs.optional]
+    postData: string,
+    [@bs.optional]
+    headers,
+  };
+
+  let make = (~url=?, ~method_=?, ~postData=?, ~headers=?, ()) => {
+    let method_ = method_->Belt.Option.map(methodToJs);
+    t(~url?, ~method_?, ~postData?, ~headers?);
+  };
+};
+
+type overrides = Overrides.t;
 
 [@bs.send]
 external continue: (t, ~overrides: overrides=?, unit) => Js.Promise.t(unit) =
