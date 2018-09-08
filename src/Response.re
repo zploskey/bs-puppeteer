@@ -39,6 +39,10 @@ external securityDetails: t => option(SecurityDetails.t) = "";
 [@bs.send]
 external status: t => int = "";
 
+/** The status text of the response. Typically success is "OK". */
+[@bs.send]
+external statusText: t => string = "";
+
 /** Promise which resolves to the text of the response body. */
 [@bs.send]
 external text: t => Js.Promise.t(string) = "";
