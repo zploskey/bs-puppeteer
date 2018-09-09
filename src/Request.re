@@ -61,7 +61,7 @@ module Overrides = {
 
   let make = (~url=?, ~method_=?, ~postData=?, ~headers=?, ()) => {
     let method_ = method_->Belt.Option.map(methodToJs);
-    t(~url?, ~method_?, ~postData?, ~headers?);
+    t(~url?, ~method_?, ~postData?, ~headers?, ());
   };
 };
 
