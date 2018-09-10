@@ -10,6 +10,7 @@ This release brings some major refactoring to convert all functions to the t-fir
 All functions are now compatible with fast pipe syntax (`->` in Reason, `|.` in BuckleScript).
 
 - Convert to object-first convention for use with fast pipe ([#77](https://github.com/bs-puppeteer/bs-puppeteer/pull/77))
+- Remove deprecated `Launcher` module.
 
 #### Upgrade instructions:
 
