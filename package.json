@@ -20,6 +20,8 @@
     "clean": "bsb -clean-world",
     "lint-staged": "lint-staged",
     "precommit": "lint-staged && bsb -clean-world -make-world && jest",
+    "snap": "bsb -clean-world -make-world && rm -rf snap/* && mkdir -p snap && cp -ar lib/js snap/",
+    "snap-diff": "git diff --no-index snap/js lib/js || true",
     "start": "bsb -make-world -w",
     "test": "bsb -make-world && jest",
     "test:ci": "jest --bail --ci",
