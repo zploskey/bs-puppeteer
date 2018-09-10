@@ -107,7 +107,6 @@ Good references for contributing to this library are:
 
 - [BuckleScript Interop Cheatsheet](https://bucklescript.github.io/docs/en/interop-cheatsheet.html)
 - [Puppeteer API Docs](https://pptr.dev)
-- [Puppeteer TypeScript Definitions](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/puppeteer/index.d.ts)
 
 ## Projects using bs-puppeteer
 
