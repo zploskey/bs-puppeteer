@@ -4,6 +4,8 @@ open BsPuppeteer;
 
 open Expect;
 
+module D = Webapi.Dom;
+
 let seconds = v => v * 1000;
 
 [@bs.val] external fetch: string => Js.Promise.t(Response.t) = "";
@@ -14,14 +16,6 @@ let getElementValueJs: Dom.element => string = [%raw
 
 let getLengthOfElementsJs = [%raw
   {| function (elements) { return elements.length; } |}
-];
-
-let getElementOuterHTMLJs: Dom.element => string = [%raw
-  {| function (element) { return element.outerHTML; } |}
-];
-
-let getElementOuterHTMLJsPromise: Dom.element => Js.Promise.t(string) = [%raw
-  {| function (element) { return Promise.resolve(element.outerHTML); } |}
 ];
 
 let fixturesPath =
@@ -265,7 +259,7 @@ describe("Page", () => {
 
   testPromise("$eval() with 0 args", () =>
     Js.Promise.(
-      (page^)->Page.selectOneEval("html", getElementOuterHTMLJs)
+      (page^)->Page.selectOneEval("html", D.Element.outerHTML)
       |> then_(html =>
            html
            |> expect
@@ -277,7 +271,10 @@ describe("Page", () => {
 
   testPromise("$eval() with 0 args returning a promise", () =>
     Js.Promise.(
-      (page^)->Page.selectOneEvalPromise("html", getElementOuterHTMLJsPromise)
+      (page^)
+      ->Page.selectOneEvalPromise("html", el =>
+          el->D.Element.outerHTML->Js.Promise.resolve
+        )
       |> then_(h =>
            h
            |> expect
