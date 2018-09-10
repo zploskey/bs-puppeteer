@@ -20,7 +20,8 @@
     "error": ""
   },
   "bs-dev-dependencies": [
-    "@glennsl/bs-jest"
+    "@glennsl/bs-jest",
+    "bs-webapi"
   ],
   "refmt": 3,
   "bsc-flags": [

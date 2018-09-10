@@ -506,6 +506,10 @@ bs-platform@^4.0.2:
   version "4.0.5"
   resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-4.0.5.tgz#d4fd9bbdd11765af5b75110a5655065ece05eed6"
 
+bs-webapi@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/bs-webapi/-/bs-webapi-0.11.0.tgz#b4302be75c8f4b3f88a64febd873da065924b26a"
+
 bser@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/bser/-/bser-2.0.0.tgz#9ac78d3ed5d915804fd87acb158bc797147a1719"
