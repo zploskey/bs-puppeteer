@@ -12,3 +12,4 @@ lib/bs/
 .bsb.lock
 package-lock.json
 screenshot.png
+snap/
