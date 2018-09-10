@@ -29,6 +29,20 @@ external connect:
 [@bs.val] [@bs.module "puppeteer"]
 external executablePath: unit => string = "";
 
+module IgnoreDefaultArgs = {
+  type t;
+  type arg =
+    | Bool(bool)
+    | Args(array(string));
+
+  let encode: arg => t =
+    fun
+    | Bool(b) => Obj.magic(b)
+    | Args(args) => Obj.magic(args);
+
+  let encodeOpt = Belt.Option.map(_, encode);
+};
+
 type launchOptions = {
   .
   "ignoreHTTPSErrors": Js.undefined(bool),
@@ -37,7 +51,7 @@ type launchOptions = {
   "slowMo": Js.undefined(float),
   "defaultViewport": Js.nullable(Viewport.t),
   "args": Js.undefined(array(string)),
-  "ignoreDefaultArgs": Js.undefined(bool),
+  "ignoreDefaultArgs": Js.undefined(IgnoreDefaultArgs.t),
   "handleSIGINT": Js.undefined(bool),
   "handleSIGTERM": Js.undefined(bool),
   "handleSIGHUP": Js.undefined(bool),
@@ -58,7 +72,7 @@ external makeLaunchOptions:
     ~slowMo: float=?,
     ~defaultViewport: Viewport.t=?,
     ~args: array(string)=?,
-    ~ignoreDefaultArgs: bool=?,
+    ~ignoreDefaultArgs: IgnoreDefaultArgs.t=?,
     ~handleSIGINT: bool=?,
     ~handleSIGTERM: bool=?,
     ~handleSIGHUP: bool=?,
@@ -72,6 +86,46 @@ external makeLaunchOptions:
   ) =>
   launchOptions =
   "";
+
+let makeLaunchOptions =
+    (
+      ~ignoreHTTPSErrors=?,
+      ~headless=?,
+      ~executablePath=?,
+      ~slowMo=?,
+      ~defaultViewport=?,
+      ~args=?,
+      ~ignoreDefaultArgs=?,
+      ~handleSIGINT=?,
+      ~handleSIGTERM=?,
+      ~handleSIGHUP=?,
+      ~timeout=?,
+      ~dumpio=?,
+      ~userDataDir=?,
+      ~env=?,
+      ~devtools=?,
+      ~pipe=?,
+      (),
+    ) =>
+  makeLaunchOptions(
+    ~ignoreHTTPSErrors?,
+    ~headless?,
+    ~executablePath?,
+    ~slowMo?,
+    ~defaultViewport?,
+    ~args?,
+    ~ignoreDefaultArgs=?IgnoreDefaultArgs.encodeOpt(ignoreDefaultArgs),
+    ~handleSIGINT?,
+    ~handleSIGTERM?,
+    ~handleSIGHUP?,
+    ~timeout?,
+    ~dumpio?,
+    ~userDataDir?,
+    ~env?,
+    ~devtools?,
+    ~pipe?,
+    (),
+  );
 
 /** Launch a browser instance. */
 [@bs.val] [@bs.module "puppeteer"]

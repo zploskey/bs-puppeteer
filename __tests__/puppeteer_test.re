@@ -56,6 +56,21 @@ describe("Puppeteer", () => {
     let args = defaultArgs(~options, ());
     args |> Array.length |> expect |> toBeGreaterThan(0);
   });
+
+  testPromise("should launch with ignoreDefaultArgs array of args", () => {
+    let ignoreDefaultArgs = IgnoreDefaultArgs.Args([|"--mute-audio"|]);
+    let options = makeLaunchOptions(~ignoreDefaultArgs, ());
+    Js.Promise.(
+      launch(~options, ())
+      |> then_(b =>
+           Js.Promise.all2((
+             Browser.close(b),
+             expect(b) |> ExpectJs.toBeTruthy |> resolve,
+           ))
+         )
+      |> Js.Promise.then_(((_, res)) => resolve(res))
+    );
+  });
 });
 
 describe("BrowserFetcher", () => {
