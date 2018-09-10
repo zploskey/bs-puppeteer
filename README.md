@@ -70,6 +70,8 @@ Contributions are welcome.
 Get started by cloning the respository and starting the compiler in watch mode.
 We recommend using [yarn](https://yarnpkg.com/), but `npm` should also work.
 
+### Basic development workflow
+
 ```sh
 git clone https://github.com/bs-puppeteer/bs-puppeteer.git
 cd bs-puppeteer
@@ -80,10 +82,28 @@ yarn start
 Any changes should pass the test suite (`yarn test`).
 One great way to contribute is by writing tests for features that don't yet have them.
 Tests can be found in the `__tests__` directory.
-
 A git hook will automatically run `refmt` on your code and run the test suite each time you commit.
 
-Good references for writing bindings are:
+### Snapshot diffs
+
+If you would like to see a diff of the compiled javascript code from your changes,
+you can take a snapshot of the built JS you would like to compare to with our `snap`
+and `snap-diff` package commands.
+A typical workflow might look like this:
+
+```sh
+git checkout master # you may want to stash any changes with git stash
+yarn snap # snapshot the built JS to the snap/ directory
+# edit the code to make whatever changes
+yarn snap-diff
+```
+
+This should rebuild and display `git diff --no-index` output comparing `lib/js` and `snap/js`.
+This can be handy in making sure that the right code is being generated.
+
+### References
+
+Good references for contributing to this library are:
 
 - [BuckleScript Interop Cheatsheet](https://bucklescript.github.io/docs/en/interop-cheatsheet.html)
 - [Puppeteer API Docs](https://pptr.dev)
