@@ -59,7 +59,8 @@ describe("Puppeteer", () => {
 
   testPromise("should launch with ignoreDefaultArgs array of args", () => {
     let ignoreDefaultArgs = IgnoreDefaultArgs.Args([|"--mute-audio"|]);
-    let options = makeLaunchOptions(~ignoreDefaultArgs, ());
+    let args = [|"--no-sandbox"|];
+    let options = makeLaunchOptions(~args, ~ignoreDefaultArgs, ());
     Js.Promise.(
       launch(~options, ())
       |> then_(b =>
