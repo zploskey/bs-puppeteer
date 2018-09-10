@@ -8,7 +8,7 @@ node_modules/
 .idea
 *.sublime*
 .merlin
-lib/bs/
+lib/
 .bsb.lock
 package-lock.json
 screenshot.png
