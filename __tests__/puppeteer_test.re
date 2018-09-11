@@ -283,13 +283,15 @@ describe("Page", () => {
            (page^)
            ->Page.selectOneEval1(
                "input",
-               [%raw
-                 {| function (el, prop) { return el.getAttribute(prop); } |}
-               ],
+               (element, prop) =>
+                 switch (D.Element.getAttribute(prop, element)) {
+                 | Some(s) => s
+                 | None => ""
+                 },
                "id",
              )
          )
-      |> then_(id => id |> expect |> toBe("input") |> resolve)
+      |> then_(id => expect(id) |> toBe("input") |> resolve)
     )
   );
 
