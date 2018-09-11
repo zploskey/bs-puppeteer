@@ -6,6 +6,8 @@ open Expect;
 
 module D = Webapi.Dom;
 
+[@bs.val] external document: D.Document.t = "";
+
 let seconds = v => v * 1000;
 
 [@bs.val] external fetch: string => Js.Promise.t(Response.t) = "";
@@ -605,13 +607,8 @@ describe("Page", () => {
 
   testPromise("evaluateHandle()", () =>
     Js.Promise.(
-      {
-        let eval = () => [%raw {| document |}];
-        (page^)->Page.evaluateHandle(eval);
-      }
-      |> then_(jsHandler =>
-           jsHandler |> expect |> ExpectJs.toBeTruthy |> resolve
-         )
+      (page^)->Page.evaluateHandle(() => document)
+      |> then_(doc => expect(doc) |> ExpectJs.toBeTruthy |> resolve)
     )
   );
 
