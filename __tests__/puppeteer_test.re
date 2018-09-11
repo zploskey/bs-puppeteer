@@ -4,25 +4,13 @@ open BsPuppeteer;
 
 open Expect;
 
+module D = Webapi.Dom;
+
+[@bs.val] external document: D.Document.t = "";
+
 let seconds = v => v * 1000;
 
 [@bs.val] external fetch: string => Js.Promise.t(Response.t) = "";
-
-let getElementValueJs: Dom.element => string = [%raw
-  {| function (element) { return element.value; } |}
-];
-
-let getLengthOfElementsJs = [%raw
-  {| function (elements) { return elements.length; } |}
-];
-
-let getElementOuterHTMLJs: Dom.element => string = [%raw
-  {| function (element) { return element.outerHTML; } |}
-];
-
-let getElementOuterHTMLJsPromise: Dom.element => Js.Promise.t(string) = [%raw
-  {| function (element) { return Promise.resolve(element.outerHTML); } |}
-];
 
 let fixturesPath =
   Node.Path.resolve(
@@ -258,14 +246,14 @@ describe("Page", () => {
 
   testPromise("$$eval()", () =>
     Js.Promise.(
-      (page^)->Page.selectAllEval("html,body", getLengthOfElementsJs)
-      |> then_(length => length |> expect |> toBe(2.0) |> resolve)
+      (page^)->Page.selectAllEval("html,body", D.NodeList.length)
+      |> then_(length => expect(length) |> toBe(2) |> resolve)
     )
   );
 
   testPromise("$eval() with 0 args", () =>
     Js.Promise.(
-      (page^)->Page.selectOneEval("html", getElementOuterHTMLJs)
+      (page^)->Page.selectOneEval("html", D.Element.outerHTML)
       |> then_(html =>
            html
            |> expect
@@ -277,7 +265,10 @@ describe("Page", () => {
 
   testPromise("$eval() with 0 args returning a promise", () =>
     Js.Promise.(
-      (page^)->Page.selectOneEvalPromise("html", getElementOuterHTMLJsPromise)
+      (page^)
+      ->Page.selectOneEvalPromise("html", el =>
+          el->D.Element.outerHTML->Js.Promise.resolve
+        )
       |> then_(h =>
            h
            |> expect
@@ -294,13 +285,15 @@ describe("Page", () => {
            (page^)
            ->Page.selectOneEval1(
                "input",
-               [%raw
-                 {| function (el, prop) { return el.getAttribute(prop); } |}
-               ],
+               (element, prop) =>
+                 switch (D.Element.getAttribute(prop, element)) {
+                 | Some(s) => s
+                 | None => ""
+                 },
                "id",
              )
          )
-      |> then_(id => id |> expect |> toBe("input") |> resolve)
+      |> then_(id => expect(id) |> toBe("input") |> resolve)
     )
   );
 
@@ -387,20 +380,19 @@ describe("Page", () => {
     )
   );
 
-  testPromise("type()", () =>
+  testPromise("type()", () => {
+    let getVal = el => el->D.Element.unsafeAsHtmlElement->D.HtmlElement.value;
     Js.Promise.(
       browser^
       |> Browser.newPage
       |> then_(page =>
            page->Page.setContent(testPageContent)
            |> then_(() => page->Page.type_("#input", "hello world", ()))
-           |> then_(() =>
-                page->Page.selectOneEval("#input", getElementValueJs)
-              )
+           |> then_(() => page->Page.selectOneEval("#input", getVal))
+           |> then_(value => expect(value) |> toBe("hello world") |> resolve)
          )
-      |> then_(value => value |> expect |> toBe("hello world") |> resolve)
-    )
-  );
+    );
+  });
 
   testPromise("addScriptTag()", () =>
     Js.Promise.(
@@ -615,13 +607,8 @@ describe("Page", () => {
 
   testPromise("evaluateHandle()", () =>
     Js.Promise.(
-      {
-        let eval = () => [%raw {| document |}];
-        (page^)->Page.evaluateHandle(eval);
-      }
-      |> then_(jsHandler =>
-           jsHandler |> expect |> ExpectJs.toBeTruthy |> resolve
-         )
+      (page^)->Page.evaluateHandle(() => document)
+      |> then_(doc => expect(doc) |> ExpectJs.toBeTruthy |> resolve)
     )
   );
 
