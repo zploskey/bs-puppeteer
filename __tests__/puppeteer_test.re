@@ -10,10 +10,6 @@ let seconds = v => v * 1000;
 
 [@bs.val] external fetch: string => Js.Promise.t(Response.t) = "";
 
-let getLengthOfElementsJs = [%raw
-  {| function (elements) { return elements.length; } |}
-];
-
 let fixturesPath =
   Node.Path.resolve(
     [%bs.node __dirname] |> Js.Option.getWithDefault(""),
@@ -248,8 +244,8 @@ describe("Page", () => {
 
   testPromise("$$eval()", () =>
     Js.Promise.(
-      (page^)->Page.selectAllEval("html,body", getLengthOfElementsJs)
-      |> then_(length => length |> expect |> toBe(2.0) |> resolve)
+      (page^)->Page.selectAllEval("html,body", D.NodeList.length)
+      |> then_(length => expect(length) |> toBe(2) |> resolve)
     )
   );
 
