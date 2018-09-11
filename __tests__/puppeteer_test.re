@@ -10,10 +10,6 @@ let seconds = v => v * 1000;
 
 [@bs.val] external fetch: string => Js.Promise.t(Response.t) = "";
 
-let getElementValueJs: Dom.element => string = [%raw
-  {| function (element) { return element.value; } |}
-];
-
 let getLengthOfElementsJs = [%raw
   {| function (elements) { return elements.length; } |}
 ];
@@ -384,20 +380,19 @@ describe("Page", () => {
     )
   );
 
-  testPromise("type()", () =>
+  testPromise("type()", () => {
+    let getVal = el => el->D.Element.unsafeAsHtmlElement->D.HtmlElement.value;
     Js.Promise.(
       browser^
       |> Browser.newPage
       |> then_(page =>
            page->Page.setContent(testPageContent)
            |> then_(() => page->Page.type_("#input", "hello world", ()))
-           |> then_(() =>
-                page->Page.selectOneEval("#input", getElementValueJs)
-              )
+           |> then_(() => page->Page.selectOneEval("#input", getVal))
+           |> then_(value => expect(value) |> toBe("hello world") |> resolve)
          )
-      |> then_(value => value |> expect |> toBe("hello world") |> resolve)
-    )
-  );
+    );
+  });
 
   testPromise("addScriptTag()", () =>
     Js.Promise.(
