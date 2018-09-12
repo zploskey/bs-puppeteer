@@ -61,51 +61,53 @@ module Impl = (T: {type t;}) => {
   external evaluateString: (T.t, string) => Js.Promise.t('r) = "evaluate";
 
   [@bs.send]
-  external evaluateHandle: (T.t, unit => 'r) => Js.Promise.t(JSHandle.t) = "";
+  external evaluateHandle: (T.t, unit => 'r) => Js.Promise.t(JSHandle.t('r)) =
+    "";
 
   [@bs.send]
   external evaluateHandlePromise:
-    (T.t, unit => Js.Promise.t('r)) => Js.Promise.t(JSHandle.t) =
+    (T.t, unit => Js.Promise.t('r)) => Js.Promise.t(JSHandle.t('r)) =
     "";
 
   [@bs.send]
   external evaluateHandle1:
-    (T.t, [@bs.uncurry] ('a => 'r), 'a) => Js.Promise.t(JSHandle.t) =
+    (T.t, [@bs.uncurry] ('a => 'r), 'a) => Js.Promise.t(JSHandle.t('r)) =
     "evaluateHandle";
 
   [@bs.send]
   external evaluateHandlePromise1:
     (T.t, [@bs.uncurry] ('a => Js.Promise.t('r)), 'a) =>
-    Js.Promise.t(JSHandle.t) =
+    Js.Promise.t(JSHandle.t('r)) =
     "evaluateHandle";
 
   [@bs.send]
   external evaluateHandle2:
-    (T.t, [@bs.uncurry] (('a, 'b) => 'r), 'a, 'b) => Js.Promise.t(JSHandle.t) =
+    (T.t, [@bs.uncurry] (('a, 'b) => 'r), 'a, 'b) =>
+    Js.Promise.t(JSHandle.t('r)) =
     "evaluateHandle";
 
   [@bs.send]
   external evaluateHandlePromise2:
     (T.t, [@bs.uncurry] (('a, 'b) => Js.Promise.t('r)), 'a, 'b) =>
-    Js.Promise.t(JSHandle.t) =
+    Js.Promise.t(JSHandle.t('r)) =
     "evaluateHandle";
 
   [@bs.send]
   external evaluateHandle3:
     (T.t, [@bs.uncurry] (('a, 'b, 'c) => 'r), 'a, 'b, 'c) =>
-    Js.Promise.t(JSHandle.t) =
+    Js.Promise.t(JSHandle.t('r)) =
     "evaluateHandle";
 
   [@bs.send]
   external evaluateHandlePromise3:
     (T.t, [@bs.uncurry] (('a, 'b, 'c) => Js.Promise.t('r)), 'a, 'b, 'c) =>
-    Js.Promise.t(JSHandle.t) =
+    Js.Promise.t(JSHandle.t('r)) =
     "evaluateHandle";
 
   [@bs.send]
   external evaluateHandle4:
     (T.t, [@bs.uncurry] (('a, 'b, 'c, 'd) => 'r), 'a, 'b, 'c, 'd) =>
-    Js.Promise.t(JSHandle.t) =
+    Js.Promise.t(JSHandle.t('r)) =
     "evaluateHandle";
 
   [@bs.send]
@@ -118,7 +120,7 @@ module Impl = (T: {type t;}) => {
       'c,
       'd
     ) =>
-    Js.Promise.t(JSHandle.t) =
+    Js.Promise.t(JSHandle.t('r)) =
     "evaluateHandle";
 
   /**
@@ -126,7 +128,8 @@ module Impl = (T: {type t;}) => {
    * Returns a promise containing a JSHandle.
    */
   [@bs.send]
-  external evaluateStringHandle: (T.t, string) => Js.Promise.t(JSHandle.t) =
+  external evaluateStringHandle:
+    (T.t, string) => Js.Promise.t(JSHandle.t('r)) =
     "evaluateHandle";
 };
 

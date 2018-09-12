@@ -250,7 +250,7 @@ external emulateMediaDisable:
 /** Iterates the JS heap finding all the objects with the given prototype. */
 [@bs.send]
 external queryObjects:
-  (t, ~prototypeHandle: JSHandle.t) => Js.Promise.t(JSHandle.t) =
+  (t, ~prototypeHandle: JSHandle.t('a)) => Js.Promise.t(JSHandle.t('b)) =
   "";
 
 /** Reload the current page. */
