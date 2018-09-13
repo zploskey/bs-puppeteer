@@ -22,5 +22,5 @@ external name: t => string = "";
  */
 [@bs.send]
 external queryObjects:
-  (t, ~prototypeHandle: JSHandle.t('a)) => JSHandle.t(array(Js.t({..}))) =
+  (t, ~prototypeHandle: JSHandle.t('a)) => JSHandle.t(array('b)) =
   "";
