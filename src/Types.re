@@ -1,10 +1,10 @@
 type browser;
 
-type elementHandle('a);
+type elementHandle(+'a);
 
 type executionContext;
 
-type jsHandle('a);
+type jsHandle(+'a);
 
 type request;
 
