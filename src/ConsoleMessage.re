@@ -3,7 +3,7 @@ type t;
 
 /** The message arguments. */
 [@bs.send]
-external args: t => array(JSHandle.t) = "";
+external args: t => array(JSHandle.t('a)) = "";
 
 /** The text of the console message. */
 [@bs.send]

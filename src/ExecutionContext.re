@@ -21,4 +21,6 @@ external name: t => string = "";
  * prototype. Returns a handle to an array of objects with this prototype.
  */
 [@bs.send]
-external queryObjects: (t, ~prototypeHandle: JSHandle.t) => JSHandle.t = "";
+external queryObjects:
+  (t, ~prototypeHandle: JSHandle.t('a)) => JSHandle.t(array('b)) =
+  "";

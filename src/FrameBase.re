@@ -26,17 +26,17 @@ external makeTagOptions:
 
 [@bs.send]
 external selectOne:
-  (t, ~selector: string) => Js.Promise.t(Js.Null.t(ElementHandle.t)) =
+  (t, ~selector: string) => Js.Promise.t(Js.Null.t(ElementHandle.t('a))) =
   "$";
 
 [@bs.send]
 external selectAll:
-  (t, ~selector: string) => Js.Promise.t(array(ElementHandle.t)) =
+  (t, ~selector: string) => Js.Promise.t(array(ElementHandle.t('a))) =
   "$$";
 
 [@bs.send]
 external selectXPath:
-  (t, ~xpath: string) => Js.Promise.t(array(ElementHandle.t)) =
+  (t, ~xpath: string) => Js.Promise.t(array(ElementHandle.t('a))) =
   "$x";
 
 type selectorOptions = {
@@ -62,7 +62,7 @@ external waitForSelector:
 [@bs.send]
 external waitForXPath:
   (t, ~xpath: string, ~options: selectorOptions=?, unit) =>
-  Js.Promise.t(ElementHandle.t) =
+  Js.Promise.t(ElementHandle.t('a)) =
   "";
 
 /**
@@ -280,10 +280,14 @@ external selectAllEvalPromise4:
   "$$eval";
 
 [@bs.send]
-external addScriptTag: (t, tagOptions) => Js.Promise.t(ElementHandle.t) = "";
+external addScriptTag:
+  (t, tagOptions) => Js.Promise.t(ElementHandle.t(Dom.element)) =
+  "";
 
 [@bs.send]
-external addStyleTag: (t, tagOptions) => Js.Promise.t(ElementHandle.t) = "";
+external addStyleTag:
+  (t, tagOptions) => Js.Promise.t(ElementHandle.t(Dom.element)) =
+  "";
 
 [@bs.send]
 external click:
