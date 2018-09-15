@@ -1,7 +1,5 @@
 open Jest;
 
-open BsPuppeteer;
-
 open Expect;
 
 module D = Webapi.Dom;

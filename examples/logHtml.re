@@ -1,5 +1,5 @@
 /* Navigate to a page and log the html from the response. */
-open BsPuppeteer;
+open! BsPuppeteer;
 
 open Js.Promise;
 

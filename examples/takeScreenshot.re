@@ -1,4 +1,4 @@
-open BsPuppeteer;
+open! BsPuppeteer;
 
 open Js.Promise;
 
