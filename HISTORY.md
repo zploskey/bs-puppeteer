@@ -1,6 +1,6 @@
 # History
 
-## 0.11.0 (unreleased)
+## 0.11.0
 
 Update to support Puppeteer 1.8 features, fix a number of bugs,
 and refactor API to be more in line with the direction of the ecosystem
