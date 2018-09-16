@@ -64,6 +64,9 @@ The `Puppeteer` module should now be available in your Reason source files.
 While the `start` command is running, it will attempt to recompile your code each time you save it.
 One-off builds can be done with `yarn build`.
 
+For interacting with the DOM on pages you navigate to we recommend using
+[bs-webapi](https://github.com/reasonml-community/bs-webapi-incubator).
+
 ## Contributing
 
 Contributions are welcome.
