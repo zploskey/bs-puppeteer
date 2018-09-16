@@ -1,0 +1,13 @@
+.vscode/
+examples/
+__tests__/
+lib/
+snap/
+jest.config.js
+yarn.lock
+.bsb.lock
+.gitattributes
+.lintstagedrc
+.huskyrc
+.merlin
+.travis.yml
