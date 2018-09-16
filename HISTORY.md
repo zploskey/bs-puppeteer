@@ -2,7 +2,9 @@
 
 ## 0.11.0 (unreleased)
 
-Update to support Puppeteer 1.8.
+Update to support Puppeteer 1.8 features, fix a number of bugs,
+and refactor API to be more in line with the direction of the ecosystem
+by being compatible with fast pipe.
 
 ### Breaking changes
 
@@ -10,7 +12,10 @@ This release brings some major refactoring to convert all functions to the t-fir
 All functions are now compatible with fast pipe syntax (`->` in Reason, `|.` in BuckleScript).
 
 - Convert to object-first convention for use with fast pipe ([#77](https://github.com/bs-puppeteer/bs-puppeteer/pull/77))
-- Remove deprecated `Launcher` module.
+- Remove deprecated `Launcher` module ([cbf2e30](https://github.com/bs-puppeteer/bs-puppeteer/commit/cbf2e30a3f928f3ddbffd93b2ace89f8f41bf8ec))
+- Alter `JSHandle.t` and `ElementHandle.t` to track the type of what they contain ([#91](https://github.com/bs-puppeteer/bs-puppeteer/pull/91))
+- Reconcile the types of the two `queryObjects` functions ([25cda07](https://github.com/bs-puppeteer/bs-puppeteer/commit/25cda070b845633c654c7ba2b7ff4ce0db9734f1))
+- Launch option `ignoreDefaultArgs` now takes the variant `Puppeteer.IgnoreDefaultArgs.t` containing a bool or an array of args ([cadd87b](https://github.com/bs-puppeteer/bs-puppeteer/pull/88/commits/cadd87b30a01a415827f94f1e8454cf10d639332))
 
 #### Upgrade instructions:
 
@@ -18,16 +23,20 @@ Change usage of the `|>` operator to `->` (or `|.` in BS) when applied to bs-pup
 Check that use of bs-puppeteer function not using a pipe operator are supplying an instance of the type as their first argument.
 Functions which take 1 or no arguments won't require any changes.
 
+If you used `queryObjects`, either of the handle types, or launched with `ignoreDefaultArgs` 
+you may need to adjust your usage to fix a compile error.
+
 ### Bug fixes
 
 - Frame.executionContext should return a promise ([#87](https://github.com/bs-puppeteer/bs-puppeteer/pull/87/commits/35b4bedcf505c7b19652393262edd3bbe69c1002))
 - fix: remove t-last wrapper for setBypassCSP ([a340d23](https://github.com/bs-puppeteer/bs-puppeteer/commit/a340d23ae5868f4bbe64853688c64b7888c21ed3))
 - Fix some issues with Request.continue overrides ([5310e36](https://github.com/bs-puppeteer/bs-puppeteer/commit/5310e36d0fbc45092a98573b67db014d25536ebf), [d422900](https://github.com/bs-puppeteer/bs-puppeteer/commit/d422900d8157595a5692bb8f014e9ea5de30e6c5))
   - *NOTE:*
-The API of `Request.continue`'s `overrides` argument was refactored.
-While this is technically breaking, the overrides were not previously usable.
+    The API of `Request.continue`'s `overrides` argument was refactored.
+    While this is technically breaking, the overrides were not previously usable.
 - fix: Response.remoteAddress needs to be a Js.t ([2c10aa1](https://github.com/bs-puppeteer/bs-puppeteer/commit/2c10aa199840a03b19de473999c95419e954374c))
   - Previously this was typed incorrectly.
+- Fix `evaluateHandle` return types to make callbacks return handles ([370ca6e](https://github.com/bs-puppeteer/bs-puppeteer/commit/370ca6e5463966520bc18a3ef36d4f21a0dfd3e8))
 
 ### New features
 
