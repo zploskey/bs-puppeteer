@@ -16,7 +16,7 @@ from BuckleScript or Reason.
 These bindings are a work in progress.
 Most bindings for navigation and interaction with web pages have been implemented.
 There may be some minor breaking changes as we refine the API.
-Bindings to the the page events API are planned for a future version.
+Bindings to the page events API are planned for a future version.
 See [examples](examples/) and the [test suite](__tests__/puppeteer_test.re)
 for examples of usage.
 Features of the Puppeteer API are implemented as we need or get to them.
