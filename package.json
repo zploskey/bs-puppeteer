@@ -10,9 +10,9 @@
     "scraping"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/bs-puppeteer/bs-puppeteer",
-  "bugs": "https://github.com/bs-puppeteer/bs-puppeteer/issues",
-  "repository": "github:bs-puppeteer/bs-puppeteer",
+  "homepage": "https://github.com/zploskey/bs-puppeteer",
+  "bugs": "https://github.com/zploskey/bs-puppeteer/issues",
+  "repository": "github:zploskey/bs-puppeteer",
   "author": "Zach Ploskey <zach@ploskey.com>",
   "main": "src/Puppeteer.re",
   "scripts": {

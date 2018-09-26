@@ -8,8 +8,8 @@ This allows programmatic control of an instance of the Chrome or Chromium browse
 from BuckleScript or Reason.
 
 [![NPM bs-puppeteer package](https://img.shields.io/npm/v/bs-puppeteer.svg)](https://npmjs.org/package/bs-puppeteer)
-[![Travis build status](https://travis-ci.org/bs-puppeteer/bs-puppeteer.svg?branch=master)](https://travis-ci.org/bs-puppeteer/bs-puppeteer)
-[![Greenkeeper badge](https://badges.greenkeeper.io/bs-puppeteer/bs-puppeteer.svg)](https://greenkeeper.io/)
+[![Travis build status](https://travis-ci.org/zploskey/bs-puppeteer.svg?branch=master)](https://travis-ci.org/zploskey/bs-puppeteer)
+[![Greenkeeper badge](https://badges.greenkeeper.io/zploskey/bs-puppeteer.svg)](https://greenkeeper.io/)
 
 ## Status
 
@@ -78,7 +78,7 @@ We recommend using [yarn](https://yarnpkg.com/), but `npm` should also work.
 ### Basic development workflow
 
 ```sh
-git clone https://github.com/bs-puppeteer/bs-puppeteer.git
+git clone https://github.com/zploskey/bs-puppeteer.git
 cd bs-puppeteer
 yarn
 yarn start
