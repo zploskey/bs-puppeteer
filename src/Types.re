@@ -10,6 +10,8 @@ type request;
 
 type response;
 
+type frame;
+
 type frameBase;
 
 type target;

@@ -4,6 +4,13 @@ type t = Types.response;
 [@bs.send]
 external buffer: t => Js.Promise.t(Node.Buffer.t) = "";
 
+/**
+ * The frame that initiated the response. Will be null if navigating to
+ * error pages.
+ */
+[@bs.send]
+external frame: t => Js.Null.t(Types.frame) = "";
+
 /** If the response was served from the disk cache or memory cache. */
 [@bs.send]
 external fromCache: t => bool = "";
