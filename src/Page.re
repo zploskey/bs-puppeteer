@@ -180,12 +180,6 @@ external goForward:
   Js.Promise.t(Js.null(Response.t)) =
   "";
 
-[@bs.send]
-external goto:
-  (t, string, ~options: Navigation.options=?, unit) =>
-  Js.Promise.t(Js.null(Response.t)) =
-  "";
-
 [@bs.send] external isClosed: t => bool = "";
 
 /** The page's virtual keyboard. */
@@ -342,15 +336,6 @@ external setViewport: (t, ~viewport: viewport) => Js.Promise.t(unit) = "";
 [@bs.get] external touchscreen: t => Touchscreen.t = "";
 
 [@bs.get] external tracing: t => Tracing.t = "";
-
-[@bs.send]
-external waitForNavigation:
-  (t, ~options: Navigation.options) => Js.Promise.t(Js.nullable(Response.t)) =
-  "";
-
-let waitForNavigation = (page, ~options) =>
-  waitForNavigation(page, ~options)
-  |> Js.Promise.(then_(response => response |> Js.toOption |> resolve));
 
 module WaitForRequest = {
   [@bs.deriving abstract]
