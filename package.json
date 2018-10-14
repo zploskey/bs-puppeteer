@@ -28,13 +28,13 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
-    "puppeteer": "^1.8.0"
+    "puppeteer": "^1.9.0"
   },
   "devDependencies": {
-    "@glennsl/bs-jest": "^0.4.2",
-    "bs-platform": "^4.0.2",
+    "@glennsl/bs-jest": "^0.4.4",
+    "bs-platform": "^4.0.6",
     "bs-webapi": "^0.13.0",
-    "husky": "^1.0.0-rc.13",
-    "lint-staged": "^7.2"
+    "husky": "^1.1.0",
+    "lint-staged": "^7.3.0"
   }
 }
