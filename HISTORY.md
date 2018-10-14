@@ -1,5 +1,15 @@
 # History
 
+## 0.12.0
+
+Add support for changes introduced in Puppeteer 1.9.
+
+- Support goto and waitForNavigation on frames
+- Add Browser.target()
+- Add Response.frame()
+
+See the main commits in [#97](https://github.com/zploskey/bs-puppeteer/pull/97).
+
 ## 0.11.0
 
 Update to support Puppeteer 1.8 features, fix a number of bugs,
@@ -23,7 +33,7 @@ Change usage of the `|>` operator to `->` (or `|.` in BS) when applied to bs-pup
 Check that use of bs-puppeteer function not using a pipe operator are supplying an instance of the type as their first argument.
 Functions which take 1 or no arguments won't require any changes.
 
-If you used `queryObjects`, either of the handle types, or launched with `ignoreDefaultArgs` 
+If you used `queryObjects`, either of the handle types, or launched with `ignoreDefaultArgs`
 you may need to adjust your usage to fix a compile error.
 
 ### Bug fixes
