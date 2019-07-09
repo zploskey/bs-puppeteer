@@ -348,7 +348,9 @@ describe("Page", () => {
   testPromise("waitForSelector()", () =>
     Js.Promise.(
       (page^)->Page.waitForSelector("body", ())
-      |> then_(() => pass |> resolve)
+      |> then_(elementHandle =>
+           elementHandle |> expect |> ExpectJs.toBeTruthy |> resolve
+         )
     )
   );
 

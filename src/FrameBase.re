@@ -71,7 +71,7 @@ let waitForNavigation = (page, ~options) =>
 
 [@bs.send]
 external waitForSelector:
-  (t, string, ~options: selectorOptions=?, unit) => Js.Promise.t(unit) =
+  (t, string, ~options: selectorOptions=?, unit) => Js.Promise.t(Js.Null.t(ElementHandle.t('a))) =
   "";
 
 [@bs.send]
