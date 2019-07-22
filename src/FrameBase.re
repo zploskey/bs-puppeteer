@@ -326,7 +326,7 @@ external hover: (t, ~selector: string) => Js.Promise.t(unit) = "";
  * once all the provided options have been selected. If there's no `<select>`
  * element matching selector it throws an error.
  */
-[@bs.send]
+[@bs.send] [@bs.variadic]
 external select:
   (t, ~selector: string, ~values: array(string)) =>
   Js.Promise.t(array(string)) =
