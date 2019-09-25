@@ -33,7 +33,7 @@
   "devDependencies": {
     "@glennsl/bs-jest": "^0.4.5",
     "bs-platform": "^5.0.6",
-    "bs-webapi": "^0.13.1",
+    "bs-webapi": "^0.15.4",
     "husky": "^1.1.0",
     "lint-staged": "^8.1.0"
   }
