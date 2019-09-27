@@ -44,7 +44,7 @@ external abort:
     unit
   ) =>
   Js.Promise.t(unit) =
-  "";
+  "abort";
 
 module Overrides = {
   [@bs.deriving abstract]
@@ -69,28 +69,29 @@ type overrides = Overrides.t;
 
 [@bs.send]
 external continue: (t, ~overrides: overrides=?, unit) => Js.Promise.t(unit) =
-  "";
+  "continue";
 
 [@bs.send] [@bs.return nullable]
-external failure: t => option({. "errorText": string}) = "";
+external failure: t => option({. "errorText": string}) = "failure";
 
 [@bs.send] [@bs.return nullable]
-external frame: t => option(FrameBase.t) = "";
+external frame: t => option(FrameBase.t) = "frame";
 
-[@bs.send] external headers: t => headers = "";
+[@bs.send] external headers: t => headers = "headers";
 
-[@bs.send] external isNavigationRequest: t => bool = "";
+[@bs.send] external isNavigationRequest: t => bool = "isNavigationRequest";
 
-[@bs.send] external method_: t => string = "";
+[@bs.send] external method_: t => string = "method";
 
-[@bs.send] [@bs.return nullable] external postData: t => option(string) = "";
+[@bs.send] [@bs.return nullable]
+external postData: t => option(string) = "postData";
 
 /**
  * The chain of requests initiated to fetch a resource. If there were no
  * redirects the chain will be empty.
  */
 [@bs.send]
-external redirectChain: t => array(t) = "";
+external redirectChain: t => array(t) = "redirectChain";
 
 /**
  * The request's resource type as it was perceived by the rendering engine.
@@ -99,7 +100,7 @@ external redirectChain: t => array(t) = "";
  * eventsource, websocket, manifest, other.
  */
 [@bs.send]
-external resourceType: t => string = "";
+external resourceType: t => string = "resourceType";
 
 let resourceType = req =>
   switch (resourceType(req)) {
@@ -140,9 +141,10 @@ external makeRespondOptions:
   respondOptions =
   "";
 
-[@bs.send] external respond: (t, respondOptions) => Js.Promise.t(unit) = "";
+[@bs.send]
+external respond: (t, respondOptions) => Js.Promise.t(unit) = "respond";
 
 [@bs.send] [@bs.return nullable]
-external response: t => option(Types.response) = "";
+external response: t => option(Types.response) = "response";
 
-[@bs.send] external url: t => string = "";
+[@bs.send] external url: t => string = "url";

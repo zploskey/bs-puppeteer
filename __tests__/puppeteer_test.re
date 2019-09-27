@@ -4,11 +4,11 @@ open Expect;
 
 module D = Webapi.Dom;
 
-[@bs.val] external document: D.Document.t = "";
+[@bs.val] external document: D.Document.t = "document";
 
 let seconds = v => v * 1000;
 
-[@bs.val] external fetch: string => Js.Promise.t(Response.t) = "";
+[@bs.val] external fetch: string => Js.Promise.t(Response.t) = "fetch";
 
 let fixturesPath =
   Node.Path.resolve(
@@ -399,8 +399,9 @@ describe("Page", () => {
       browser^
       |> Browser.newPage
       |> then_(page =>
-           page
-           ->Page.addScriptTag(Page.makeTagOptions(~path=testPageJsPath, ()))
+           page->Page.addScriptTag(
+             Page.makeTagOptions(~path=testPageJsPath, ()),
+           )
            |> then_(_elementHandle => Page.content(page))
            |> then_(content =>
                 page->Page.close()
@@ -419,8 +420,9 @@ describe("Page", () => {
     Js.Promise.(
       Browser.newPage(browser^)
       |> then_(page =>
-           page
-           ->Page.addStyleTag(Page.makeTagOptions(~path=testPageCssPath, ()))
+           page->Page.addStyleTag(
+             Page.makeTagOptions(~path=testPageCssPath, ()),
+           )
            |> then_(_elementHandle => Page.content(page))
            |> then_(content =>
                 page->Page.close()
@@ -804,12 +806,11 @@ describe("CDPSession", () => {
       |> Browser.newPage
       |> then_(page => page->Page.target->Target.createCDPSession)
       |> then_(session =>
-           session
-           ->CDPSession.send(
-               "Animation.setPlaybackRate",
-               ~params={"playbackRate": 3.1415926535},
-               (),
-             )
+           session->CDPSession.send(
+             "Animation.setPlaybackRate",
+             ~params={"playbackRate": 3.1415926535},
+             (),
+           )
            |> then_(_res =>
                 session->CDPSession.send("Animation.getPlaybackRate", ())
               )

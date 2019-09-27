@@ -17,11 +17,11 @@ type mousePressOptions = {
 external click:
   (t, ~x: float, ~y: float, ~options: Click.clickOptions=?, unit) =>
   Js.Promise.t(unit) =
-  "";
+  "click";
 
 [@bs.send]
 external down: (t, ~options: mousePressOptions=?, unit) => Js.Promise.t(unit) =
-  "";
+  "down";
 
 type moveOptions = {. "steps": int};
 
@@ -29,8 +29,8 @@ type moveOptions = {. "steps": int};
 external move:
   (t, ~x: float, ~y: float, ~options: moveOptions=?, unit) =>
   Js.Promise.t(unit) =
-  "";
+  "move";
 
 [@bs.send]
 external up: (t, ~options: mousePressOptions=?, unit) => Js.Promise.t(unit) =
-  "";
+  "up";

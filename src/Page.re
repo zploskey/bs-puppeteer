@@ -136,13 +136,13 @@ external makePDFOptions:
 
 [@bs.send]
 external authenticate: (t, Js.Null.t(authOptions)) => Js.Promise.t(unit) =
-  "";
+  "authenticate";
 
 /** Bring the page to front (activate the tab). */
 [@bs.send]
-external bringToFront: t => Js.Promise.t(unit) = "";
+external bringToFront: t => Js.Promise.t(unit) = "bringToFront";
 
-[@bs.send] external browser: t => Types.browser = "";
+[@bs.send] external browser: t => Types.browser = "browser";
 
 type closeOptions = {. "runBeforeUnload": Js.nullable(bool)};
 
@@ -152,90 +152,96 @@ external makeCloseOptions: (~runBeforeUnload: bool=?, unit) => closeOptions =
 
 [@bs.send]
 external close: (t, ~options: closeOptions=?, unit) => Js.Promise.t(unit) =
-  "";
+  "close";
 
-[@bs.get] external coverage: t => Coverage.t = "";
+[@bs.get] external coverage: t => Coverage.t = "coverage";
 
 /* TODO: versions handling args */
 [@bs.send]
-external evaluateOnNewDocument: (t, unit => unit) => Js.Promise.t(unit) = "";
+external evaluateOnNewDocument: (t, unit => unit) => Js.Promise.t(unit) =
+  "evaluateOnNewDocument";
 
 /* TODO: exposeFunction */
 
 /** Array of all frames attached to the page. */
 [@bs.send]
-external frames: t => array(Frame.t) = "";
+external frames: t => array(Frame.t) = "frames";
 
-[@bs.send] external setContent: (t, string) => Js.Promise.t(unit) = "";
+[@bs.send]
+external setContent: (t, string) => Js.Promise.t(unit) = "setContent";
 
 [@bs.send]
 external goBack:
   (t, ~options: Navigation.options=?, unit) =>
   Js.Promise.t(Js.null(Response.t)) =
-  "";
+  "goBack";
 
 [@bs.send]
 external goForward:
   (t, ~options: Navigation.options=?, unit) =>
   Js.Promise.t(Js.null(Response.t)) =
-  "";
+  "goForward";
 
-[@bs.send] external isClosed: t => bool = "";
+[@bs.send] external isClosed: t => bool = "isClosed";
 
 /** The page's virtual keyboard. */
 [@bs.get]
-external keyboard: t => Keyboard.t = "";
+external keyboard: t => Keyboard.t = "keyboard";
 
 /**
  * The main Frame that a page is guaranteed to have which persists during
  * navigation.
  */
 [@bs.send]
-external mainFrame: t => Frame.t = "";
+external mainFrame: t => Frame.t = "mainFrame";
 
 /** Gets the page metrics. */
 [@bs.send]
-external metrics: t => Js.Promise.t(Metrics.t) = "";
+external metrics: t => Js.Promise.t(Metrics.t) = "metrics";
 
 /** Get the page's virtual mouse. */
 [@bs.get]
-external mouse: t => Mouse.t = "";
+external mouse: t => Mouse.t = "mouse";
 
 [@bs.send]
 external screenshot:
   (t, ~options: Screenshot.options=?, unit) => Js.Promise.t(Node.Buffer.t) =
-  "";
+  "screenshot";
 
 [@bs.send]
 external setExtraHTTPHeaders:
   (t, ~headers: Js.Dict.t(string), unit) => Js.Promise.t(unit) =
-  "";
+  "setExtraHTTPHeaders";
 
 [@bs.send] [@bs.splice]
-external deleteCookie: (t, array(cookie)) => Js.Promise.t(unit) = "";
+external deleteCookie: (t, array(cookie)) => Js.Promise.t(unit) =
+  "deleteCookie";
 
 [@bs.send] [@bs.splice]
-external cookies: (t, array(string)) => Js.Promise.t(array(cookie)) = "";
+external cookies: (t, array(string)) => Js.Promise.t(array(cookie)) =
+  "cookies";
 
 [@bs.send] [@bs.splice]
-external setCookie: (t, array(cookie)) => Js.Promise.t(unit) = "";
+external setCookie: (t, array(cookie)) => Js.Promise.t(unit) = "setCookie";
 
-[@bs.send] external emulate: (t, emulateOptions) => Js.Promise.t(unit) = "";
+[@bs.send]
+external emulate: (t, emulateOptions) => Js.Promise.t(unit) = "emulate";
 
 [@bs.send] [@bs.return nullable]
-external viewport: t => option(viewport) = "";
+external viewport: t => option(viewport) = "viewport";
 
 [@bs.send]
 external emulateMedia:
   (t, [@bs.string] [ | `screen | `print]) => Js.Promise.t(unit) =
-  "";
+  "emulateMedia";
 
 [@bs.send]
 external emulateMediaDisable:
   (t, [@bs.as {json|null|json}] _) => Js.Promise.t(unit) =
   "emulateMedia";
 
-[@bs.send] external pdf: (t, pdfOptions) => Js.Promise.t(Node.Buffer.t) = "";
+[@bs.send]
+external pdf: (t, pdfOptions) => Js.Promise.t(Node.Buffer.t) = "pdf";
 
 /* TODO:
       external on
@@ -245,20 +251,21 @@ external emulateMediaDisable:
 [@bs.send]
 external queryObjects:
   (t, ~prototypeHandle: JSHandle.t('a)) => Js.Promise.t(JSHandle.t('b)) =
-  "";
+  "queryObjects";
 
 /** Reload the current page. */
 [@bs.send]
 external reload:
   (t, ~options: Navigation.options=?, unit) => Js.Promise.t(Response.t) =
-  "";
+  "reload";
 
 /**
  * Toggles ignoring cache for each request based on the enabled state.
  * Caching is enabled by default.
  */
 [@bs.send]
-external setCacheEnabled: (t, ~enabled: bool) => Js.Promise.t(unit) = "";
+external setCacheEnabled: (t, ~enabled: bool) => Js.Promise.t(unit) =
+  "setCacheEnabled";
 
 /**
  * Change the default maximum navigation time of 30 seconds for the following:
@@ -269,7 +276,8 @@ external setCacheEnabled: (t, ~enabled: bool) => Js.Promise.t(unit) = "";
  * - `Page.waitForNavigation`
  */
 [@bs.send]
-external setDefaultNavigationTimeout: (t, ~timeout: float) => unit = "";
+external setDefaultNavigationTimeout: (t, ~timeout: float) => unit =
+  "setDefaultNavigationTimeout";
 
 module GeolocationOptions = {
   [@bs.deriving abstract]
@@ -304,38 +312,43 @@ permission for the page to read its geolocation.
 [@bs.send]
 external setGeolocation:
   (t, ~options: GeolocationOptions.t) => Js.Promise.t(unit) =
-  "";
+  "setGeolocation";
 
 /** Set whether to enable JavaScript on the page. */
 [@bs.send]
-external setJavaScriptEnabled: (t, ~enabled: bool) => Js.Promise.t(unit) = "";
+external setJavaScriptEnabled: (t, ~enabled: bool) => Js.Promise.t(unit) =
+  "setJavaScriptEnabled";
 
 /** Set whether to enable offline mode for the page. */
 [@bs.send]
-external setOfflineMode: (t, ~enabled: bool) => Js.Promise.t(unit) = "";
+external setOfflineMode: (t, ~enabled: bool) => Js.Promise.t(unit) =
+  "setOfflineMode";
 
 /** Set whether to enable request interception for the page. */
 [@bs.send]
 external setRequestInterception: (t, ~enabled: bool) => Js.Promise.t(unit) =
-  "";
+  "setRequestInterception";
 
 [@bs.send]
-external setUserAgent: (t, ~userAgent: string) => Js.Promise.t(unit) = "";
+external setUserAgent: (t, ~userAgent: string) => Js.Promise.t(unit) =
+  "setUserAgent";
 
 /** Toggle bypassing page's Content-Security-Policy. */
 [@bs.send]
-external setBypassCSP: (t, ~enabled: bool) => Js.Promise.t(unit) = "";
+external setBypassCSP: (t, ~enabled: bool) => Js.Promise.t(unit) =
+  "setBypassCSP";
 
 [@bs.send]
-external setViewport: (t, ~viewport: viewport) => Js.Promise.t(unit) = "";
+external setViewport: (t, ~viewport: viewport) => Js.Promise.t(unit) =
+  "setViewport";
 
-[@bs.send] external target: t => Types.target = "";
+[@bs.send] external target: t => Types.target = "target";
 
-[@bs.send] external title: t => Js.Promise.t(string) = "";
+[@bs.send] external title: t => Js.Promise.t(string) = "title";
 
-[@bs.get] external touchscreen: t => Touchscreen.t = "";
+[@bs.get] external touchscreen: t => Touchscreen.t = "touchscreen";
 
-[@bs.get] external tracing: t => Tracing.t = "";
+[@bs.get] external tracing: t => Tracing.t = "tracing";
 
 module WaitForRequest = {
   [@bs.deriving abstract]
@@ -348,7 +361,7 @@ module WaitForRequest = {
   external waitForRequest:
     (t, Request.t => bool, ~options: options=?, unit) =>
     Js.Promise.t(Request.t) =
-    "";
+    "waitForRequest";
 
   [@bs.send]
   external waitForRequestRe:
@@ -373,7 +386,7 @@ module WaitForResponse = {
   external waitForResponse:
     (t, Response.t => bool, ~options: options=?, unit) =>
     Js.Promise.t(Response.t) =
-    "";
+    "waitForResponse";
 
   [@bs.send]
   external waitForResponseRe:
@@ -394,4 +407,4 @@ let waitForResponse = WaitForResponse.waitForResponse;
 let waitForResponseRe = WaitForResponse.waitForResponseRe;
 let waitForResponseUrl = WaitForResponse.waitForResponseUrl;
 
-[@bs.send] external workers: t => array(Worker.t) = "";
+[@bs.send] external workers: t => array(Worker.t) = "workers";

@@ -1,10 +1,11 @@
 module Impl = (T: {type t;}) => {
-  [@bs.send] external evaluate: (T.t, unit => 'r) => Js.Promise.t('r) = "";
+  [@bs.send]
+  external evaluate: (T.t, unit => 'r) => Js.Promise.t('r) = "evaluate";
 
   [@bs.send]
   external evaluatePromise:
     (T.t, unit => Js.Promise.t('r)) => Js.Promise.t('r) =
-    "";
+    "evaluatePromise";
 
   [@bs.send]
   external evaluate1: (T.t, [@bs.uncurry] ('a => 'r), 'a) => Js.Promise.t('r) =
@@ -62,12 +63,12 @@ module Impl = (T: {type t;}) => {
 
   [@bs.send]
   external evaluateHandle: (T.t, unit => 'r) => Js.Promise.t(JSHandle.t('r)) =
-    "";
+    "evaluateHandle";
 
   [@bs.send]
   external evaluateHandlePromise:
     (T.t, unit => Js.Promise.t('r)) => Js.Promise.t(JSHandle.t('r)) =
-    "";
+    "evaluateHandlePromise";
 
   [@bs.send]
   external evaluateHandle1:

@@ -28,7 +28,7 @@ external makeTagOptions:
 external goto:
   (t, string, ~options: Navigation.options=?, unit) =>
   Js.Promise.t(Js.null(Response.t)) =
-  "";
+  "goto";
 
 [@bs.send]
 external selectOne:
@@ -63,7 +63,7 @@ external makeSelectorOptions:
 [@bs.send]
 external waitForNavigation:
   (t, ~options: Navigation.options) => Js.Promise.t(Js.nullable(Response.t)) =
-  "";
+  "waitForNavigation";
 
 let waitForNavigation = (page, ~options) =>
   waitForNavigation(page, ~options)
@@ -71,14 +71,15 @@ let waitForNavigation = (page, ~options) =>
 
 [@bs.send]
 external waitForSelector:
-  (t, string, ~options: selectorOptions=?, unit) => Js.Promise.t(Js.Null.t(ElementHandle.t('a))) =
-  "";
+  (t, string, ~options: selectorOptions=?, unit) =>
+  Js.Promise.t(Js.Null.t(ElementHandle.t('a))) =
+  "waitForSelector";
 
 [@bs.send]
 external waitForXPath:
   (t, ~xpath: string, ~options: selectorOptions=?, unit) =>
   Js.Promise.t(ElementHandle.t('a)) =
-  "";
+  "waitForXPath";
 
 /**
  * selectOneEval(page, selector, fn)
@@ -297,21 +298,22 @@ external selectAllEvalPromise4:
 [@bs.send]
 external addScriptTag:
   (t, tagOptions) => Js.Promise.t(ElementHandle.t(Dom.element)) =
-  "";
+  "addScriptTag";
 
 [@bs.send]
 external addStyleTag:
   (t, tagOptions) => Js.Promise.t(ElementHandle.t(Dom.element)) =
-  "";
+  "addStyleTag";
 
 [@bs.send]
 external click:
   (t, string, ~options: Click.clickOptions=?, unit) => Js.Promise.t(unit) =
-  "";
+  "click";
 
-[@bs.send] external content: t => Js.Promise.t(string) = "";
+[@bs.send] external content: t => Js.Promise.t(string) = "content";
 
-[@bs.send] external focus: (t, ~selector: string) => Js.Promise.t(unit) = "";
+[@bs.send]
+external focus: (t, ~selector: string) => Js.Promise.t(unit) = "focus";
 
 /**
  * Fetches the first element matching `selector`, scrolls it into view if not
@@ -319,7 +321,7 @@ external click:
  * [Page.mouse]. Throws an error if no element matches `selector`.
  */
 [@bs.send]
-external hover: (t, ~selector: string) => Js.Promise.t(unit) = "";
+external hover: (t, ~selector: string) => Js.Promise.t(unit) = "hover";
 
 /**
  * Selects options in a `<select>` tag. Triggers a `change` and `input` event
@@ -330,9 +332,9 @@ external hover: (t, ~selector: string) => Js.Promise.t(unit) = "";
 external select:
   (t, ~selector: string, ~values: array(string)) =>
   Js.Promise.t(array(string)) =
-  "";
+  "select";
 
-[@bs.send] external tap: (t, ~selector: string) => Js.Promise.t(unit) = "";
+[@bs.send] external tap: (t, ~selector: string) => Js.Promise.t(unit) = "tap";
 
 type typeOptions = {. "delay": float};
 
@@ -341,4 +343,4 @@ external type_:
   (t, string, string, ~options: typeOptions=?, unit) => Js.Promise.t(unit) =
   "type";
 
-[@bs.send] external url: t => string = "";
+[@bs.send] external url: t => string = "url";

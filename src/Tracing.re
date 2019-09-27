@@ -15,6 +15,6 @@ external makeTracingOptions:
 
 [@bs.send]
 external start: (t, ~options: tracingOptions, unit) => Js.Promise.t(unit) =
-  "";
+  "start";
 
-[@bs.send] external stop: t => Js.Promise.t(Node.Buffer.t) = "";
+[@bs.send] external stop: t => Js.Promise.t(Node.Buffer.t) = "stop";

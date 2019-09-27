@@ -23,11 +23,11 @@ external makeConnectOptions:
 [@bs.val] [@bs.module "puppeteer"]
 external connect:
   (~options: connectOptions=?, unit) => Js.Promise.t(Browser.t) =
-  "";
+  "connect";
 
 /** Path where Puppeteer expects to find bundled Chromium. */
 [@bs.val] [@bs.module "puppeteer"]
-external executablePath: unit => string = "";
+external executablePath: unit => string = "executablePath";
 
 module IgnoreDefaultArgs = {
   type t;
@@ -130,7 +130,7 @@ let makeLaunchOptions =
 /** Launch a browser instance. */
 [@bs.val] [@bs.module "puppeteer"]
 external launch: (~options: launchOptions=?, unit) => Js.Promise.t(Browser.t) =
-  "";
+  "launch";
 
 module DefaultArgsOptions = {
   [@bs.deriving abstract]
@@ -151,7 +151,7 @@ module DefaultArgsOptions = {
 [@bs.val] [@bs.module "puppeteer"]
 external defaultArgs:
   (~options: DefaultArgsOptions.t=?, unit) => array(string) =
-  "";
+  "defaultArgs";
 
 type browserFetcherOptions = {
   .
@@ -179,4 +179,4 @@ let makeBrowserFetcherOptions =
 [@bs.val] [@bs.module "puppeteer"]
 external createBrowserFetcher:
   (~options: browserFetcherOptions=?, unit) => BrowserFetcher.t =
-  "";
+  "createBrowserFetcher";

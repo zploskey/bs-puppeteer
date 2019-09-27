@@ -6,15 +6,15 @@ include Evaluator.Impl({
 });
 
 [@bs.send] [@bs.return nullable]
-external frame: t => option(FrameBase.t) = "";
+external frame: t => option(FrameBase.t) = "frame";
 
 /** True if the execution context is the main one for a frame. */
 [@bs.send]
-external isDefault: t => bool = "";
+external isDefault: t => bool = "isDefault";
 
 /** Name of the execution context. */
 [@bs.send]
-external name: t => string = "";
+external name: t => string = "name";
 
 /**
  * Iterates the JavaScript heap and finds all the objects with the given
@@ -23,4 +23,4 @@ external name: t => string = "";
 [@bs.send]
 external queryObjects:
   (t, ~prototypeHandle: JSHandle.t('a)) => JSHandle.t(array('b)) =
-  "";
+  "queryObjects";

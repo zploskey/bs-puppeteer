@@ -3,11 +3,11 @@ type t;
 
 /** The message arguments. */
 [@bs.send]
-external args: t => array(JSHandle.t('a)) = "";
+external args: t => array(JSHandle.t('a)) = "args";
 
 /** The text of the console message. */
 [@bs.send]
-external text: t => string = "";
+external text: t => string = "text";
 
 [@bs.deriving jsConverter]
 type messageType = [
