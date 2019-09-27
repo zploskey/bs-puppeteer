@@ -10,30 +10,27 @@ let search = () =>
        browser
        |> Browser.newPage
        |> then_(page => {
-            let allResultsSelector = ".devsite-suggest-all-results";
             let options =
-              Navigation.makeOptions(~timeout=20000., ~waitUntil=`load, ());
+              Navigation.makeOptions(~timeout=5000., ~waitUntil=`load, ());
+            let allResultsSelector = ".devsite-suggest-all-results";
+            let resultsSelector = "a.gs-title";
             page->Page.goto(
               "https://developers.google.com/web/",
               ~options,
               (),
             )
+            /* Click search icon to show search box */
+            |> then_(_ => page->Page.click(".devsite-search-button", ()))
             /* Type into the search box */
-            |> then_(_ =>
-                 page->Page.type_("#searchbox input", "puppeteer", ())
-               )
-            /* Wait for suggestion overlay to show up then click "all results". */
+            |> then_(_ => page->Page.type_("input[name=q]", "puppeteer", ()))
             |> then_(_ => page->Page.waitForSelector(allResultsSelector, ()))
-            |> then_(elmt => Js.Null.getExn(elmt)->ElementHandle.click())
+            |> then_(_ => page->Page.click(allResultsSelector, ()))
             /* Wait for load of results page. */
-            |> then_(() => {
-                 let resultsSelector = ".gsc-results .gsc-thumbnail-inside a.gs-title";
-                 page->Page.waitForSelector(resultsSelector, ());
-               })
+            |> then_(() => page->Page.waitForSelector(resultsSelector, ()))
             /* Get the title of the first result. */
             |> then_(_ =>
                  page->Page.selectOneEval(
-                   "a.gs-title",
+                   resultsSelector,
                    Webapi.Dom.Element.textContent,
                  )
                )
