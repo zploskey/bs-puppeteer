@@ -726,10 +726,10 @@ browser-resolve@^1.11.3:
   dependencies:
     resolve "1.1.7"
 
-bs-platform@^5.0.6:
-  version "5.0.6"
-  resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-5.0.6.tgz#88c13041fb020479800de3d82c680bf971091425"
-  integrity sha512-6Boa2VEcWJp2WJr38L7bp3J929nYha7gDarjxb070jWzgfPJ/WbzjipmSfnu2eqqk1MfjEIpBipbPz6n1NISwA==
+bs-platform@^7.0.2-dev.1:
+  version "7.0.2-dev.1"
+  resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-7.0.2-dev.1.tgz#9f9bf2daae0bc6ca122bb0446236e7eab8b79bdd"
+  integrity sha512-RuGk0eTIhvtQ8/X3YVISoKX5oIsOpMS/qQHvmnpmLKvwaKVYaTBxVpL8ktjkDkbvvzZoM6Xw93jwqRlQV6IDHQ==
 
 bs-webapi@^0.15.4:
   version "0.15.4"
