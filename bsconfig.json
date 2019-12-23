@@ -18,7 +18,7 @@
   ],
   "warnings": {
     "number": "+a",
-    "error": ""
+    "error": "+a"
   },
   "bs-dev-dependencies": [
     "@glennsl/bs-jest",
