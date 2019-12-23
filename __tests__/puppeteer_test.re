@@ -98,7 +98,7 @@ describe("BrowserFetcher", () => {
   );
 
   /* TODO: Determine the platform from node and verify it properly. */
-  test("platform", () =>
+  Skip.test("platform", () =>
     (browserFetcher^)->platform |> expect |> toEqual(Some(`linux))
   );
 
