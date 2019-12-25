@@ -19,7 +19,7 @@ module Impl = (T: {type t('a);}) => {
     "getProperty";
 
   [@bs.send]
-  external jsonValue: T.t('a) => Js.Promise.t(Js.t({..})) = "jsonValue";
+  external jsonValue: T.t('a) => Js.Promise.t(Js.Json.t) = "jsonValue";
 };
 
 type t('a) = Types.jsHandle('a);
