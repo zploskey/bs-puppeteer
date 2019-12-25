@@ -713,6 +713,53 @@ describe("ElementHandle", () => {
   );
 });
 
+describe("JSHandle", () => {
+  let browser = ref(Browser.empty());
+  let page = ref(Page.empty());
+  let elementHandle = ref(ElementHandle.empty());
+
+  beforeAllPromise(() =>
+    Js.Promise.(
+      Puppeteer.launch(~options=noSandbox, ())
+      |> then_(res => {
+           browser := res;
+           browser^ |> Browser.newPage;
+         })
+      |> then_(res => {
+           page := res;
+           (page^)->Page.goto("file://" ++ testPagePath, ());
+         })
+      |> then_(_resp => Page.selectOne(page^, ~selector="#input"))
+      |> then_(res =>
+           switch (res |> Js.nullToOption) {
+           | Some(v) =>
+             elementHandle := v;
+             resolve();
+           | None =>
+             reject(Js.Exn.raiseError("failed to initial an elementhandle"))
+           }
+         )
+    )
+  );
+
+  testPromise("jsonValue()", () =>
+    Js.Promise.(
+      elementHandle^
+      |> ElementHandle.getProperty(~propertyName="className")
+      |> then_(ElementHandle.jsonValue)
+      |> then_(classListJson =>
+           expect(classListJson |> Js.Json.decodeString)
+           |> toEqual(Some("class1 class2"))
+           |> resolve
+         )
+    )
+  );
+
+  afterAllPromise(() =>
+    Js.Promise.((page^)->Page.close() |> then_(() => Browser.close(browser^)))
+  );
+});
+
 describe("Target", () => {
   let browser = ref(Browser.empty());
   let target = ref(Target.empty());
