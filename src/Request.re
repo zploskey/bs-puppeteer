@@ -52,7 +52,7 @@ module Overrides = {
     [@bs.optional]
     url: string,
     [@bs.optional] [@bs.as "method"]
-    method_: string,
+    requestMethod: string,
     [@bs.optional]
     postData: string,
     [@bs.optional]
@@ -60,8 +60,8 @@ module Overrides = {
   };
 
   let make = (~url=?, ~method_=?, ~postData=?, ~headers=?, ()) => {
-    let method_ = method_->Belt.Option.map(method_ToJs);
-    t(~url?, ~method_?, ~postData?, ~headers?, ());
+    let requestMethod = method_->Belt.Option.map(method_ToJs);
+    t(~url?, ~requestMethod?, ~postData?, ~headers?, ());
   };
 };
 
