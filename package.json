@@ -34,7 +34,7 @@
     "@glennsl/bs-jest": "^0.4.9",
     "bs-platform": "^7.0.2-dev.1",
     "bs-webapi": "^0.15.4",
-    "husky": "^3.0.0",
+    "husky": "^4.0.2",
     "lint-staged": "^9.3.0"
   }
 }
