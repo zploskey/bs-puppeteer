@@ -1,4 +1,3 @@
 ---
 "{src,examples,__tests__}/**/*.{re,rei}":
   - "bsrefmt --in-place"
-  - "git add"
