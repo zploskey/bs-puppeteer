@@ -1,5 +1,16 @@
 # History
 
+## 0.13.0
+
+Upgraded and tested on Puppeteer 2.0+.
+
+This release now runs on Bucklescript 7 (#123, @scottoasis)
+
+### Bug Fixes
+
+* Changed `jsonValue` return type to be `Js.Json.t` (#124, @leeor)
+* replaced `method_` with `requestMethod` (#125, @leeor)
+
 ## 0.12.0
 
 Add support for changes introduced in Puppeteer 1.9.
