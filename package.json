@@ -35,6 +35,6 @@
     "bs-platform": "^7.2.2",
     "bs-webapi": "^0.15.4",
     "husky": "^4.2.3",
-    "lint-staged": "^10.0.9"
+    "lint-staged": "10.1.2"
   }
 }
