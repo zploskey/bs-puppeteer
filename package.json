@@ -28,7 +28,7 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
-    "puppeteer": "^2.0"
+    "puppeteer": "^3.0.2"
   },
   "devDependencies": {
     "@glennsl/bs-jest": "^0.5.0",
